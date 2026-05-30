@@ -9,10 +9,6 @@ headers = {
     "x-apisports-key": API_KEY
 }
 
-hoje = (datetime.utcnow() - timedelta(hours=3)).strftime("%Y-%m-%d")
-
-url = f"https://v3.football.api-sports.io/fixtures?date={hoje}"
-
 ligas_permitidas = [
     ("Brazil", "Serie A"),
     ("Brazil", "Serie B"),
@@ -53,64 +49,63 @@ def calcular_confianca(pais, liga, horario):
 
     over15 = min(score + 10, 95)
     over25 = min(score - 5, 90)
-
     geral = int((over15 + over25) / 2)
 
     return geral, over15, over25
 
-resposta = requests.get(url, headers=headers)
-dados = resposta.json()
-
 analises = []
 
-for jogo in dados.get("response", []):
-    pais = jogo["league"]["country"]
-    liga = jogo["league"]["name"]
+for dias in range(0, 3):
 
-    if (pais, liga) not in ligas_permitidas:
-        continue
+    data_busca = (datetime.utcnow() - timedelta(hours=3) + timedelta(days=dias)).strftime("%Y-%m-%d")
 
-    casa = jogo["teams"]["home"]["name"]
-    fora = jogo["teams"]["away"]["name"]
+    url = f"https://v3.football.api-sports.io/fixtures?date={data_busca}"
 
-    horario = jogo["fixture"]["date"][11:16]
+    resposta = requests.get(url, headers=headers)
+    dados = resposta.json()
 
-    geral, over15, over25 = calcular_confianca(pais, liga, horario)
+    for jogo in dados.get("response", []):
 
-    if geral >= 90:
-        categoria = "🟢 ELITE"
-        status = "🔥 OPORTUNIDADE PREMIUM"
-    elif geral >= 80:
-        categoria = "🟡 FORTE"
-        status = "🔥 OPORTUNIDADE FORTE"
-    elif geral >= 70:
-        categoria = "🔵 BOA"
-        status = "⚠️ OPORTUNIDADE MODERADA"
-    else:
-        categoria = "🔴 EVITAR"
-        status = "❌ EVITAR"
+        pais = jogo["league"]["country"]
+        liga = jogo["league"]["name"]
 
-    analises.append({
-        "jogo": f"{casa} x {fora}",
-        "liga": liga,
-        "pais": pais,
-        "horario": horario,
-        "confianca": geral,
-        "over15": over15,
-        "over25": over25,
-        "categoria": categoria,
-        "status": status
-    })
+        if (pais, liga) not in ligas_permitidas:
+            continue
+
+        casa = jogo["teams"]["home"]["name"]
+        fora = jogo["teams"]["away"]["name"]
+        horario = jogo["fixture"]["date"][11:16]
+
+        geral, over15, over25 = calcular_confianca(pais, liga, horario)
+
+        if geral >= 90:
+            categoria = "🟢 ELITE"
+            status = "🔥 OPORTUNIDADE PREMIUM"
+        elif geral >= 80:
+            categoria = "🟡 FORTE"
+            status = "🔥 OPORTUNIDADE FORTE"
+        elif geral >= 70:
+            categoria = "🔵 BOA"
+            status = "⚠️ OPORTUNIDADE MODERADA"
+        else:
+            categoria = "🔴 EVITAR"
+            status = "❌ EVITAR"
+
+        analises.append({
+            "jogo": f"{casa} x {fora}",
+            "liga": liga,
+            "pais": pais,
+            "horario": horario,
+            "confianca": geral,
+            "over15": over15,
+            "over25": over25,
+            "categoria": categoria,
+            "status": status
+        })
 
 analises = sorted(analises, key=lambda x: x["confianca"], reverse=True)
 
 top5 = analises[:5]
-
-# Se não encontrar jogos, mantém arquivos antigos
-if len(top5) == 0:
-    print("⚠️ Nenhum jogo encontrado hoje nas ligas filtradas.")
-    print("✅ Mantendo dados.json e bilhete.json antigos.")
-    exit()
 
 with open("dados.json", "w", encoding="utf-8") as arquivo:
     json.dump(top5, arquivo, ensure_ascii=False, indent=4)
@@ -137,4 +132,4 @@ with open("bilhete.json", "w", encoding="utf-8") as arquivo:
 
 print("✅ dados.json atualizado")
 print("✅ bilhete.json atualizado")
-print(f"📅 Data usada: {hoje}")
+print(f"Jogos encontrados: {len(top5)}")
