@@ -5,6 +5,10 @@ from datetime import datetime, timedelta
 
 API_KEY = os.getenv("508c2ae3d61ffd21296011f844cf9154")
 
+if not API_KEY:
+    print("❌ ERRO: API_FOOTBALL_KEY não encontrada no GitHub Secrets.")
+    exit()
+
 headers = {
     "x-apisports-key": API_KEY
 }
@@ -49,20 +53,31 @@ def calcular_confianca(pais, liga, horario):
 
     over15 = min(score + 10, 95)
     over25 = min(score - 5, 90)
+
     geral = int((over15 + over25) / 2)
 
     return geral, over15, over25
 
 analises = []
 
-for dias in range(0, 3):
+for dias in range(0, 7):
 
-    data_busca = (datetime.utcnow() - timedelta(hours=3) + timedelta(days=dias)).strftime("%Y-%m-%d")
+    data_busca = (
+        datetime.utcnow()
+        - timedelta(hours=3)
+        + timedelta(days=dias)
+    ).strftime("%Y-%m-%d")
 
     url = f"https://v3.football.api-sports.io/fixtures?date={data_busca}"
 
     resposta = requests.get(url, headers=headers)
     dados = resposta.json()
+
+    print("----------------------------------------")
+    print("DATA:", data_busca)
+    print("STATUS:", resposta.status_code)
+    print("TOTAL DA API:", len(dados.get("response", [])))
+    print("ERROS:", dados.get("errors"))
 
     for jogo in dados.get("response", []):
 
@@ -76,7 +91,11 @@ for dias in range(0, 3):
         fora = jogo["teams"]["away"]["name"]
         horario = jogo["fixture"]["date"][11:16]
 
-        geral, over15, over25 = calcular_confianca(pais, liga, horario)
+        geral, over15, over25 = calcular_confianca(
+            pais,
+            liga,
+            horario
+        )
 
         if geral >= 90:
             categoria = "🟢 ELITE"
@@ -103,12 +122,24 @@ for dias in range(0, 3):
             "status": status
         })
 
-analises = sorted(analises, key=lambda x: x["confianca"], reverse=True)
+print("----------------------------------------")
+print("TOTAL FILTRADO:", len(analises))
+
+analises = sorted(
+    analises,
+    key=lambda x: x["confianca"],
+    reverse=True
+)
 
 top5 = analises[:5]
 
 with open("dados.json", "w", encoding="utf-8") as arquivo:
-    json.dump(top5, arquivo, ensure_ascii=False, indent=4)
+    json.dump(
+        top5,
+        arquivo,
+        ensure_ascii=False,
+        indent=4
+    )
 
 bilhete = []
 
@@ -128,8 +159,13 @@ bilhete_json = {
 }
 
 with open("bilhete.json", "w", encoding="utf-8") as arquivo:
-    json.dump(bilhete_json, arquivo, ensure_ascii=False, indent=4)
+    json.dump(
+        bilhete_json,
+        arquivo,
+        ensure_ascii=False,
+        indent=4
+    )
 
 print("✅ dados.json atualizado")
 print("✅ bilhete.json atualizado")
-print(f"Jogos encontrados: {len(top5)}")
+print("Jogos no TOP 5:", len(top5))
