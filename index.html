@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -8,7 +7,6 @@
 <title>Prado Sports AI</title>
 
 <style>
-
 body{
     margin:0;
     font-family:Arial,sans-serif;
@@ -24,7 +22,7 @@ header{
 
 h1{
     color:#2563EB;
-    font-size:50px;
+    font-size:46px;
     margin-bottom:10px;
 }
 
@@ -35,39 +33,28 @@ h1{
 
 .hero{
     text-align:center;
-    padding:60px 20px;
+    padding:50px 20px;
 }
 
 .hero h2{
-    font-size:36px;
+    font-size:34px;
 }
 
 .hero p{
     color:#CBD5E1;
-    max-width:700px;
+    max-width:750px;
     margin:auto;
-}
-
-.btn{
-    display:inline-block;
-    margin-top:25px;
-    background:#2563EB;
-    color:white;
-    padding:15px 30px;
-    border-radius:10px;
-    text-decoration:none;
-    font-weight:bold;
 }
 
 .section-title{
     text-align:center;
     color:#2563EB;
-    margin-top:50px;
+    margin-top:40px;
 }
 
 .cards{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
     gap:20px;
     padding:40px;
 }
@@ -83,77 +70,40 @@ h1{
     color:#22C55E;
 }
 
+.status{
+    color:#22C55E;
+    font-weight:bold;
+}
+
 footer{
     text-align:center;
     padding:30px;
     background:#020617;
     color:#94A3B8;
 }
-
 </style>
-
 </head>
 
 <body>
 
 <header>
     <h1>PRADO SPORTS AI</h1>
-    <p class="slogan">
-        Inteligência esportiva baseada em dados
-    </p>
+    <p class="slogan">Inteligência esportiva baseada em dados</p>
 </header>
 
 <section class="hero">
-
-    <h2>Análises esportivas com tecnologia e IA</h2>
-
+    <h2>Top oportunidades do dia</h2>
     <p>
-        Plataforma para análise de gols, escanteios,
-        cartões, confrontos diretos e estatísticas
-        avançadas do futebol.
+        Plataforma de análise esportiva com IA para gols,
+        escanteios, cartões e ranking de confiança.
     </p>
-
-    <a href="#" class="btn">
-        Entrar na Plataforma
-    </a>
-
 </section>
 
-<h2 class="section-title">
-🔥 Jogos de Hoje
-</h2>
+<h2 class="section-title">🔥 TOP 5 Jogos do Dia</h2>
 
-<div class="cards">
+<div class="cards" id="jogos"></div>
 
-<div class="card">
-<h3>⚽ Flamengo x Palmeiras</h3>
-<p>🟢 Confiança Geral: 88%</p>
-<p>Over 1.5 → 93%</p>
-<p>Over 2.5 → 78%</p>
-<p>Escanteios +8.5 → 86%</p>
-</div>
-
-<div class="card">
-<h3>⚽ Corinthians x São Paulo</h3>
-<p>🟢 Confiança Geral: 81%</p>
-<p>Over 1.5 → 89%</p>
-<p>Over 2.5 → 70%</p>
-<p>Escanteios +8.5 → 82%</p>
-</div>
-
-<div class="card">
-<h3>⚽ Grêmio x Internacional</h3>
-<p>🟢 Confiança Geral: 84%</p>
-<p>Over 1.5 → 91%</p>
-<p>Over 2.5 → 75%</p>
-<p>Escanteios +8.5 → 83%</p>
-</div>
-
-</div>
-
-<h2 class="section-title">
-🤖 Recursos da Plataforma
-</h2>
+<h2 class="section-title">🤖 Recursos da Plataforma</h2>
 
 <div class="cards">
 
@@ -183,6 +133,34 @@ footer{
 Prado Sports AI © 2026
 </footer>
 
+<script>
+fetch("dados.json")
+.then(response => response.json())
+.then(dados => {
+    const container = document.getElementById("jogos");
+
+    dados.forEach((item, index) => {
+        const card = document.createElement("div");
+        card.className = "card";
+
+        card.innerHTML = `
+            <h3>${index + 1}️⃣ ${item.jogo}</h3>
+            <p>🏆 ${item.liga} - ${item.pais}</p>
+            <p>⏰ ${item.horario}</p>
+            <p>⭐ Confiança: ${item.confianca}%</p>
+            <p>🟢 Over 1.5: ${item.over15}%</p>
+            <p>🟡 Over 2.5: ${item.over25}%</p>
+            <p class="status">${item.status}</p>
+        `;
+
+        container.appendChild(card);
+    });
+})
+.catch(error => {
+    document.getElementById("jogos").innerHTML =
+    "<p>Erro ao carregar dados.</p>";
+});
+</script>
+
 </body>
 </html>
-```
