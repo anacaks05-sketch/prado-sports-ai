@@ -1,0 +1,57 @@
+[
+    {
+        "jogo": "Flamengo x Coritiba",
+        "liga": "Serie A",
+        "pais": "Brazil",
+        "horario": "19:00",
+        "confianca": 90,
+        "over15": 95,
+        "over25": 85,
+        "categoria": "🟢 ELITE",
+        "status": "🔥 OPORTUNIDADE PREMIUM"
+    },
+    {
+        "jogo": "Santos x Vitoria",
+        "liga": "Serie A",
+        "pais": "Brazil",
+        "horario": "23:00",
+        "confianca": 89,
+        "over15": 95,
+        "over25": 84,
+        "categoria": "🟡 FORTE",
+        "status": "🔥 OPORTUNIDADE FORTE"
+    },
+    {
+        "jogo": "Atletico Paranaense x Mirassol",
+        "liga": "Serie A",
+        "pais": "Brazil",
+        "horario": "19:00",
+        "confianca": 86,
+        "over15": 94,
+        "over25": 79,
+        "categoria": "🟡 FORTE",
+        "status": "🔥 OPORTUNIDADE FORTE"
+    },
+    {
+        "jogo": "Bahia x Botafogo",
+        "liga": "Serie A",
+        "pais": "Brazil",
+        "horario": "20:30",
+        "confianca": 81,
+        "over15": 89,
+        "over25": 74,
+        "categoria": "🟡 FORTE",
+        "status": "🔥 OPORTUNIDADE FORTE"
+    },
+    {
+        "jogo": "Gremio x Corinthians",
+        "liga": "Serie A",
+        "pais": "Brazil",
+        "horario": "20:30",
+        "confianca": 76,
+        "over15": 84,
+        "over25": 69,
+        "categoria": "🔵 BOA",
+        "status": "⚠️ OPORTUNIDADE MODERADA"
+    }
+]
