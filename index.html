@@ -75,6 +75,12 @@ h1{
     font-weight:bold;
 }
 
+hr{
+    border:0;
+    border-top:1px solid #334155;
+    margin:15px 0;
+}
+
 footer{
     text-align:center;
     padding:30px;
@@ -102,6 +108,10 @@ footer{
 <h2 class="section-title">🔥 TOP 5 Jogos do Dia</h2>
 
 <div class="cards" id="jogos"></div>
+
+<h2 class="section-title">🎟 Bilhete Prado do Dia</h2>
+
+<div class="cards" id="bilhete"></div>
 
 <h2 class="section-title">🤖 Recursos da Plataforma</h2>
 
@@ -150,6 +160,7 @@ fetch("dados.json")
             <p>⭐ Confiança: ${item.confianca}%</p>
             <p>🟢 Over 1.5: ${item.over15}%</p>
             <p>🟡 Over 2.5: ${item.over25}%</p>
+            <p>${item.categoria}</p>
             <p class="status">${item.status}</p>
         `;
 
@@ -159,6 +170,43 @@ fetch("dados.json")
 .catch(error => {
     document.getElementById("jogos").innerHTML =
     "<p>Erro ao carregar dados.</p>";
+});
+
+
+fetch("bilhete.json")
+.then(response => response.json())
+.then(bilhete => {
+
+    const container = document.getElementById("bilhete");
+
+    const card = document.createElement("div");
+    card.className = "card";
+
+    let html = `
+        <h3>${bilhete.titulo}</h3>
+    `;
+
+    bilhete.entradas.forEach(item => {
+        html += `
+            <p>⚽ ${item.jogo}</p>
+            <p>📈 ${item.mercado}</p>
+            <p>⭐ Confiança: ${item.confianca}%</p>
+            <hr>
+        `;
+    });
+
+    html += `
+        <h3>💰 Odd Estimada: ${bilhete.odd_estimativa}</h3>
+    `;
+
+    card.innerHTML = html;
+
+    container.appendChild(card);
+
+})
+.catch(error => {
+    document.getElementById("bilhete").innerHTML =
+    "<p>Erro ao carregar bilhete.</p>";
 });
 </script>
 
