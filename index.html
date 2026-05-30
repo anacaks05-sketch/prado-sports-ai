@@ -1,43 +1,130 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-    <title>Prado Sports AI</title>
-    <style>
-        body{
-            background:#0F172A;
-            color:white;
-            font-family:Arial;
-            text-align:center;
-            padding-top:100px;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prado Sports AI</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0F172A;
+      color: white;
+    }
 
-        h1{
-            color:#2563EB;
-            font-size:50px;
-        }
+    header {
+      padding: 30px;
+      text-align: center;
+      background: #020617;
+    }
 
-        p{
-            font-size:22px;
-        }
+    h1 {
+      color: #2563EB;
+      font-size: 48px;
+      margin-bottom: 10px;
+    }
 
-        .btn{
-            background:#22C55E;
-            color:white;
-            padding:15px 30px;
-            border:none;
-            border-radius:10px;
-            font-size:20px;
-        }
-    </style>
+    .slogan {
+      font-size: 20px;
+      color: #CBD5E1;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 70px 20px;
+    }
+
+    .hero h2 {
+      font-size: 36px;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      color: #CBD5E1;
+      font-size: 18px;
+      max-width: 700px;
+      margin: auto;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      padding: 40px;
+    }
+
+    .card {
+      background: #1E293B;
+      border-radius: 15px;
+      padding: 25px;
+      border: 1px solid #334155;
+    }
+
+    .card h3 {
+      color: #22C55E;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 30px;
+      background: #2563EB;
+      color: white;
+      padding: 15px 30px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: #94A3B8;
+      background: #020617;
+    }
+  </style>
 </head>
-
 <body>
 
-<h1>PRADO SPORTS AI</h1>
+<header>
+  <h1>PRADO SPORTS AI</h1>
+  <p class="slogan">Inteligência esportiva baseada em dados</p>
+</header>
 
-<p>Inteligência esportiva baseada em dados</p>
+<section class="hero">
+  <h2>Análises esportivas com tecnologia e IA</h2>
+  <p>
+    Plataforma para análise de gols, escanteios, cartões, últimos 10 jogos,
+    confrontos diretos e oportunidades com ranking de confiança.
+  </p>
 
-<button class="btn">Em Breve</button>
+  <a href="#" class="btn">Entrar na Plataforma</a>
+</section>
+
+<section class="cards">
+  <div class="card">
+    <h3>⚽ Gols</h3>
+    <p>Over 1.5, Over 2.5, BTTS e tendências ofensivas.</p>
+  </div>
+
+  <div class="card">
+    <h3>🚩 Escanteios</h3>
+    <p>Médias, pressão ofensiva e oportunidades em cantos.</p>
+  </div>
+
+  <div class="card">
+    <h3>🟨 Cartões</h3>
+    <p>Análise de cartões por times, árbitros e competições.</p>
+  </div>
+
+  <div class="card">
+    <h3>🤖 IA Prado</h3>
+    <p>Ranking de confiança com base em dados e estatísticas.</p>
+  </div>
+</section>
+
+<footer>
+  Prado Sports AI © 2026 — Análise inteligente para decisões melhores.
+</footer>
 
 </body>
 </html>
