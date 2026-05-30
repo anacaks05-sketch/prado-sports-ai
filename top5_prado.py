@@ -1,7 +1,7 @@
 import requests
 import json
 import os
-from datetime import date
+from datetime import datetime, timedelta
 
 API_KEY = os.getenv("508c2ae3d61ffd21296011f844cf9154")
 
@@ -9,7 +9,7 @@ headers = {
     "x-apisports-key": API_KEY
 }
 
-hoje = date.today().strftime("%Y-%m-%d")
+hoje = (datetime.utcnow() - timedelta(hours=3)).strftime("%Y-%m-%d")
 
 url = f"https://v3.football.api-sports.io/fixtures?date={hoje}"
 
@@ -75,11 +75,7 @@ for jogo in dados.get("response", []):
 
     horario = jogo["fixture"]["date"][11:16]
 
-    geral, over15, over25 = calcular_confianca(
-        pais,
-        liga,
-        horario
-    )
+    geral, over15, over25 = calcular_confianca(pais, liga, horario)
 
     if geral >= 90:
         categoria = "🟢 ELITE"
@@ -106,21 +102,18 @@ for jogo in dados.get("response", []):
         "status": status
     })
 
-analises = sorted(
-    analises,
-    key=lambda x: x["confianca"],
-    reverse=True
-)
+analises = sorted(analises, key=lambda x: x["confianca"], reverse=True)
 
 top5 = analises[:5]
 
+# Se não encontrar jogos, mantém arquivos antigos
+if len(top5) == 0:
+    print("⚠️ Nenhum jogo encontrado hoje nas ligas filtradas.")
+    print("✅ Mantendo dados.json e bilhete.json antigos.")
+    exit()
+
 with open("dados.json", "w", encoding="utf-8") as arquivo:
-    json.dump(
-        top5,
-        arquivo,
-        ensure_ascii=False,
-        indent=4
-    )
+    json.dump(top5, arquivo, ensure_ascii=False, indent=4)
 
 bilhete = []
 
@@ -140,12 +133,8 @@ bilhete_json = {
 }
 
 with open("bilhete.json", "w", encoding="utf-8") as arquivo:
-    json.dump(
-        bilhete_json,
-        arquivo,
-        ensure_ascii=False,
-        indent=4
-    )
+    json.dump(bilhete_json, arquivo, ensure_ascii=False, indent=4)
 
 print("✅ dados.json atualizado")
 print("✅ bilhete.json atualizado")
+print(f"📅 Data usada: {hoje}")
