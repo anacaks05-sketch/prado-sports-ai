@@ -1,0 +1,21 @@
+{
+    "titulo": "🎟 Bilhete Prado do Dia",
+    "entradas": [
+        {
+            "jogo": "Bahia x Botafogo",
+            "mercado": "Over 1.5",
+            "confianca": 85
+        },
+        {
+            "jogo": "Gremio x Corinthians",
+            "mercado": "Over 1.5",
+            "confianca": 85
+        },
+        {
+            "jogo": "Santos x Vitoria",
+            "mercado": "Over 1.5",
+            "confianca": 85
+        }
+    ],
+    "odd_estimativa": 2.46
+}
