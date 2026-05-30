@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Prado Sports AI</title>
 
 <style>
@@ -18,62 +17,76 @@ header{
     background:#020617;
     padding:30px;
     text-align:center;
+    border-bottom:1px solid #1E293B;
 }
 
 h1{
     color:#2563EB;
-    font-size:46px;
-    margin-bottom:10px;
+    font-size:42px;
+    margin:0;
 }
 
 .slogan{
     color:#CBD5E1;
-    font-size:20px;
+    font-size:18px;
 }
 
 .hero{
     text-align:center;
-    padding:50px 20px;
+    padding:40px 20px;
 }
 
 .hero h2{
-    font-size:34px;
-}
-
-.hero p{
-    color:#CBD5E1;
-    max-width:750px;
-    margin:auto;
+    font-size:32px;
 }
 
 .section-title{
     text-align:center;
     color:#2563EB;
-    margin-top:40px;
+    margin-top:35px;
 }
 
 .cards{
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
     gap:20px;
-    padding:40px;
+    padding:30px;
 }
 
 .card{
     background:#1E293B;
-    border-radius:15px;
-    padding:20px;
+    border-radius:16px;
+    padding:22px;
     border:1px solid #334155;
+    box-shadow:0 10px 30px rgba(0,0,0,0.25);
 }
 
 .card h3{
     color:#22C55E;
 }
 
-.status{
+.destaque{
+    max-width:850px;
+    margin:30px auto;
+    background:linear-gradient(135deg,#1E293B,#0F172A);
+    border:1px solid #2563EB;
+    border-radius:20px;
+    padding:28px;
+    text-align:center;
+}
+
+.destaque h2{
     color:#22C55E;
+}
+
+.status{
     font-weight:bold;
 }
+
+.elite{ color:#22C55E; font-weight:bold; }
+.forte{ color:#FACC15; font-weight:bold; }
+.boa{ color:#38BDF8; font-weight:bold; }
+.evitar{ color:#EF4444; font-weight:bold; }
 
 hr{
     border:0;
@@ -86,6 +99,7 @@ footer{
     padding:30px;
     background:#020617;
     color:#94A3B8;
+    margin-top:30px;
 }
 </style>
 </head>
@@ -98,45 +112,43 @@ footer{
 </header>
 
 <section class="hero">
-    <h2>Top oportunidades do dia</h2>
-    <p>
-        Plataforma de análise esportiva com IA para gols,
-        escanteios, cartões e ranking de confiança.
-    </p>
+    <h2>Dashboard de oportunidades esportivas</h2>
+    <p>Top jogos do dia, bilhete automático e ranking de confiança da IA Prado.</p>
 </section>
 
-<h2 class="section-title">🔥 TOP 5 Jogos do Dia</h2>
-
-<div class="cards" id="jogos"></div>
+<section class="destaque" id="melhor-jogo">
+    <h2>🏆 Melhor Jogo do Dia</h2>
+    <p>Carregando análise...</p>
+</section>
 
 <h2 class="section-title">🎟 Bilhete Prado do Dia</h2>
-
 <div class="cards" id="bilhete"></div>
+
+<h2 class="section-title">🔥 TOP 5 Jogos do Dia</h2>
+<div class="cards" id="jogos"></div>
 
 <h2 class="section-title">🤖 Recursos da Plataforma</h2>
 
 <div class="cards">
+    <div class="card">
+        <h3>⚽ Gols</h3>
+        <p>Over 1.5, Over 2.5 e ambas marcam.</p>
+    </div>
 
-<div class="card">
-<h3>⚽ Gols</h3>
-<p>Over 1.5, Over 2.5 e ambas marcam.</p>
-</div>
+    <div class="card">
+        <h3>🚩 Escanteios</h3>
+        <p>Análise avançada de cantos.</p>
+    </div>
 
-<div class="card">
-<h3>🚩 Escanteios</h3>
-<p>Análise avançada de cantos.</p>
-</div>
+    <div class="card">
+        <h3>🟨 Cartões</h3>
+        <p>Média dos times e árbitros.</p>
+    </div>
 
-<div class="card">
-<h3>🟨 Cartões</h3>
-<p>Média dos times e árbitros.</p>
-</div>
-
-<div class="card">
-<h3>🤖 IA Prado</h3>
-<p>Ranking de confiança baseado em dados.</p>
-</div>
-
+    <div class="card">
+        <h3>🤖 IA Prado</h3>
+        <p>Ranking de confiança baseado em dados.</p>
+    </div>
 </div>
 
 <footer>
@@ -144,9 +156,31 @@ Prado Sports AI © 2026
 </footer>
 
 <script>
+function classeCategoria(categoria){
+    if(categoria.includes("ELITE")) return "elite";
+    if(categoria.includes("FORTE")) return "forte";
+    if(categoria.includes("BOA")) return "boa";
+    return "evitar";
+}
+
 fetch("dados.json")
 .then(response => response.json())
 .then(dados => {
+
+    const melhor = dados[0];
+
+    document.getElementById("melhor-jogo").innerHTML = `
+        <h2>🏆 Melhor Jogo do Dia</h2>
+        <h3>${melhor.jogo}</h3>
+        <p>🏆 ${melhor.liga} - ${melhor.pais}</p>
+        <p>⏰ ${melhor.horario}</p>
+        <p>⭐ Confiança: ${melhor.confianca}%</p>
+        <p>🟢 Over 1.5: ${melhor.over15}%</p>
+        <p>🟡 Over 2.5: ${melhor.over25}%</p>
+        <p class="${classeCategoria(melhor.categoria)}">${melhor.categoria}</p>
+        <p class="status">${melhor.status}</p>
+    `;
+
     const container = document.getElementById("jogos");
 
     dados.forEach((item, index) => {
@@ -160,7 +194,7 @@ fetch("dados.json")
             <p>⭐ Confiança: ${item.confianca}%</p>
             <p>🟢 Over 1.5: ${item.over15}%</p>
             <p>🟡 Over 2.5: ${item.over25}%</p>
-            <p>${item.categoria}</p>
+            <p class="${classeCategoria(item.categoria)}">${item.categoria}</p>
             <p class="status">${item.status}</p>
         `;
 
@@ -171,7 +205,6 @@ fetch("dados.json")
     document.getElementById("jogos").innerHTML =
     "<p>Erro ao carregar dados.</p>";
 });
-
 
 fetch("bilhete.json")
 .then(response => response.json())
@@ -200,7 +233,6 @@ fetch("bilhete.json")
     `;
 
     card.innerHTML = html;
-
     container.appendChild(card);
 
 })
