@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Prado Sports V30.9</title>
+<title>Prado Sports V30.10</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&display=swap');
 :root{--gold:#f4bd3b;--gold2:#ffd86f;--muted:#aab0bb;--line:rgba(255,255,255,.09);--card:#151a23;--card2:#202633;--green:#52e78a}
@@ -782,6 +782,46 @@ body,button,input{
   font-weight:760!important;
 }
 
+
+/* ===== V30.10 CONFIG LINKS FUNCIONANDO ===== */
+.configPage{
+  padding:18px 18px 110px!important;
+}
+.configBack{
+  width:34px!important;height:34px!important;border:0!important;background:transparent!important;
+  color:#fff!important;font-size:38px!important;line-height:30px!important;margin:4px 0 22px!important;
+}
+.configPage h1{
+  font-size:24px!important;line-height:1.05!important;margin:0 0 16px!important;
+  font-weight:820!important;letter-spacing:-.65px!important;
+}
+.configSub{
+  font-size:13.5px!important;color:#9ca3af!important;font-weight:720!important;margin:-8px 0 16px!important;
+}
+.optionList{display:grid!important;gap:10px!important}
+.optionRow{
+  min-height:56px!important;border-radius:16px!important;background:#141923!important;
+  border:1px solid rgba(255,255,255,.09)!important;padding:0 14px!important;
+  display:flex!important;align-items:center!important;justify-content:space-between!important;
+}
+.optionRow b{font-size:15.5px!important;font-weight:760!important}
+.switch{
+  width:46px!important;height:28px!important;border-radius:999px!important;background:#262d3a!important;display:block!important;position:relative!important;
+}
+.switch:after{
+  content:"";position:absolute;width:22px;height:22px;border-radius:50%;background:#fff;left:3px;top:3px;
+}
+.radio{
+  width:25px!important;height:25px!important;border:3px solid #6df27c!important;border-radius:50%!important;
+  display:grid!important;place-items:center!important;color:#111!important;font-size:15px!important;font-weight:900!important;
+}
+.radio.on{background:#6df27c!important}
+.saveBtn{
+  height:50px!important;width:calc(100% - 36px)!important;left:18px!important;right:18px!important;
+  position:fixed!important;bottom:calc(12px + env(safe-area-inset-bottom))!important;border:0!important;
+  border-radius:999px!important;background:#70f65f!important;color:#061006!important;font-size:17px!important;font-weight:850!important;
+}
+
 </style>
 </head>
 <body>
@@ -802,9 +842,9 @@ body,button,input{
 <details class="nativeMenu">
   <summary>☰</summary>
   <div class="nativeMenuCard">
-    <button type="button" onclick="show('notifications')">🔔 <span>Notificações</span></button>
-    <button type="button" onclick="show('language')">🌐 <span>Idioma</span></button>
-    <button type="button" onclick="show('theme')">🌙 <span>Tema</span></button>
+    <button type="button" onclick="openMenuPage('notifications')">🔔 <span>Notificações</span></button>
+    <button type="button" onclick="openMenuPage('language')">🌐 <span>Idioma</span></button>
+    <button type="button" onclick="openMenuPage('theme')">🌙 <span>Tema</span></button>
   </div>
 </details>
 </div></header>
@@ -1231,7 +1271,7 @@ document.addEventListener("DOMContentLoaded", function(){
   renderSetup();
   renderApp();
   renderFavorites();
-  if("serviceWorker" in navigator){navigator.serviceWorker.register("service-worker.js?v=309")}
+  if("serviceWorker" in navigator){navigator.serviceWorker.register("service-worker.js?v=3010")}
 });
 
 (function(){
@@ -1251,6 +1291,44 @@ document.addEventListener("DOMContentLoaded", function(){
 </script>
 
 
+
+
+<script>
+function openMenuPage(id){
+  var details = document.querySelector('.nativeMenu');
+  if(details){ details.removeAttribute('open'); }
+  document.querySelectorAll('.page').forEach(function(p){
+    p.classList.remove('active');
+    p.style.display = 'none';
+  });
+  var el = document.getElementById(id);
+  if(el){
+    el.classList.add('active');
+    el.style.display = 'block';
+  }
+  window.scrollTo(0,0);
+}
+function goHome(){
+  document.querySelectorAll('.page').forEach(function(p){
+    p.classList.remove('active');
+    p.style.display = 'none';
+  });
+  var home = document.getElementById('home');
+  if(home){
+    home.classList.add('active');
+    home.style.display = 'block';
+  }
+  window.scrollTo(0,0);
+}
+document.addEventListener('click', function(e){
+  var item = e.target.closest('.nativeMenuCard button');
+  if(!item) return;
+  var txt = item.textContent || '';
+  if(txt.indexOf('Notificações') !== -1){ e.preventDefault(); openMenuPage('notifications'); }
+  if(txt.indexOf('Idioma') !== -1){ e.preventDefault(); openMenuPage('language'); }
+  if(txt.indexOf('Tema') !== -1){ e.preventDefault(); openMenuPage('theme'); }
+});
+</script>
 
 </body>
 </html>
