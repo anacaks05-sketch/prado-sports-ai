@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Prado Sports">
 <link rel="manifest" href="manifest.json">
-<title>Prado Sports Mobile V9</title>
+<title>Prado Sports Mobile V10</title>
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{--bg:#050505;--card:#11141b;--card2:#202431;--gold:#f6b83f;--gold2:#ffd66f;--red:#ff3e52;--green:#38d87b;--muted:#a7aab3;--line:rgba(255,255,255,.09)}
@@ -625,6 +625,152 @@ html,body{
 .install-card{display:none}
 @media(max-width:430px){.home-hero-3d h1{font-size:31px!important}.score{font-size:28px!important}.crest{width:58px!important;height:58px!important}}
 
+
+/* ===== V10 MAIS LIMPO E FUNCIONAL ===== */
+.home-hero-3d{
+  min-height:255px!important;
+  padding:20px!important;
+}
+.home-hero-3d h1{
+  font-size:28px!important;
+  line-height:1.02!important;
+}
+.home-hero-3d p{
+  font-size:13px!important;
+  line-height:1.35!important;
+}
+.app-badge-row{
+  margin-top:9px!important;
+}
+.app-badge{
+  padding:7px 9px!important;
+  font-size:11px!important;
+}
+.hero-buttons{
+  gap:8px!important;
+  margin-top:12px!important;
+}
+.hero-btn{
+  padding:12px!important;
+  border-radius:15px!important;
+}
+.live-summary{
+  grid-template-columns:repeat(3,1fr)!important;
+  gap:8px!important;
+}
+.live-summary-card{
+  padding:10px 6px!important;
+  border-radius:16px!important;
+}
+.live-summary-card b{
+  font-size:18px!important;
+}
+.section-title{
+  margin:20px 0 10px!important;
+}
+.section-title h2{
+  font-size:25px!important;
+}
+.compact-featured{
+  display:grid;
+  gap:10px;
+}
+.main-feature{
+  background:linear-gradient(145deg,#171d29,#252d3b);
+  border:1px solid rgba(255,255,255,.11);
+  border-radius:24px;
+  padding:15px;
+}
+.main-feature-teams{
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  gap:8px;
+  align-items:center;
+}
+.main-feature .crest{
+  width:58px!important;
+  height:58px!important;
+}
+.mini-feature-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.mini-feature{
+  background:linear-gradient(145deg,#151923,#202633);
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:20px;
+  padding:12px;
+}
+.mini-feature .crest{
+  width:42px!important;
+  height:42px!important;
+}
+.mini-feature-title{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:5px;
+  font-size:12px;
+  color:var(--muted);
+  font-weight:950;
+}
+.mini-teams{
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  align-items:center;
+  margin-top:10px;
+  gap:5px;
+  text-align:center;
+  font-size:11px;
+  font-weight:950;
+}
+.quick-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+}
+.quick-btn{
+  background:linear-gradient(145deg,#161b24,#222938);
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:18px;
+  padding:13px 6px;
+  text-align:center;
+  font-size:11px;
+  font-weight:950;
+}
+.quick-btn span{
+  display:block;
+  font-size:22px;
+  margin-bottom:5px;
+}
+.match-card{
+  padding:14px!important;
+}
+.score-row{
+  margin:10px 0!important;
+}
+.metrics{
+  gap:7px!important;
+}
+.crest{
+  width:54px!important;
+  height:54px!important;
+}
+.news-card{
+  padding:13px!important;
+}
+.bottom-inner{
+  padding-top:6px!important;
+}
+.bottom-inner button{
+  padding:7px 2px!important;
+}
+@media(max-width:430px){
+  .home-hero-3d h1{font-size:26px!important}
+  .section-title h2{font-size:23px!important}
+}
+
 </style>
 </head>
 <body>
@@ -640,43 +786,42 @@ html,body{
   <div class="home-hero-3d">
     <div>
       <div class="hero-kicker">🏆 PRADO SPORTS ULTRA</div>
-      <h1>O futebol do mundo inteiro<br><span class="gold">na palma da sua mão</span></h1>
-      <p>Placares, escalações, estatísticas, alertas e Escanteios IA em tempo real.</p>
+      <h1>Futebol ao vivo<br><span class="gold">simples e completo</span></h1>
+      <p>Placares, favoritos, escalações, estatísticas e Escanteios IA no celular.</p>
       <div class="app-badge-row">
         <div class="app-badge">📱 iPhone</div>
         <div class="app-badge">🤖 Android</div>
         <div class="app-badge">⚡ Leve</div>
       </div>
       <div class="hero-buttons">
-        <button class="hero-btn" onclick="appPage('livePage')">🔴 Ver ao vivo</button>
+        <button class="hero-btn" onclick="appPage('livePage')">🔴 Ao vivo</button>
         <button class="hero-btn dark" onclick="appPage('cornersPage')">🚩 Escanteios IA</button>
       </div>
     </div>
     <div class="live-pill">AO VIVO AGORA</div>
   </div>
 
-  <div class="install-card">
-    <h3>📱 Feito para iPhone e Android</h3>
-    <p>Depois você pode colocar na tela inicial e abrir como aplicativo.</p>
-    <div class="install-steps">
-      <div class="install-step">iPhone: Safari → Compartilhar → Adicionar à Tela de Início</div>
-      <div class="install-step">Android: Chrome → Menu ⋮ → Adicionar à tela inicial</div>
-    </div>
-  </div>
-
   <div class="live-summary">
     <div class="live-summary-card"><b>3</b><small>Ao vivo</small></div>
-    <div class="live-summary-card"><b>7</b><small>Gols hoje</small></div>
+    <div class="live-summary-card"><b>7</b><small>Gols</small></div>
     <div class="live-summary-card"><b>29</b><small>Escanteios</small></div>
   </div>
 
-  <div class="section-title"><h2>⚽ Jogos em destaque</h2><span>Premium</span></div>
-  <div id="featuredMatches" class="featured-row"></div>
+  <div class="section-title"><h2>⚡ Acesso rápido</h2><span>Hoje</span></div>
+  <div class="quick-grid">
+    <div class="quick-btn" onclick="appPage('livePage')"><span>🔴</span>Ao vivo</div>
+    <div class="quick-btn" onclick="appPage('cornersPage')"><span>🚩</span>IA</div>
+    <div class="quick-btn" onclick="appPage('compPage')"><span>🏆</span>Ligas</div>
+    <div class="quick-btn" onclick="appPage('alertsPage')"><span>🔔</span>Alertas</div>
+  </div>
+
+  <div class="section-title"><h2>⚽ Destaque</h2><span>Principal</span></div>
+  <div id="featuredCompact" class="compact-featured"></div>
 
   <div class="section-title"><h2>📺 Ao Vivo Agora</h2><span>Tempo real</span></div>
   <div id="homeMatches" class="grid2"></div>
 
-  <div class="section-title"><h2>⭐ Seus favoritos</h2><span>Personalizado</span></div>
+  <div class="section-title"><h2>⭐ Favoritos</h2><span>Próximo</span></div>
   <div class="hero-mini">
     <small>Próximo jogo favorito</small>
     <div class="next-game" onclick="openMatch(4)">
@@ -689,17 +834,9 @@ html,body{
   <div class="section-title"><h2>🚩 Escanteios IA</h2><span>Top do dia</span></div>
   <div id="homeAI" class="grid2"></div>
 
-  <div class="section-title"><h2>🏆 Competições</h2><span>Continentes</span></div>
-  <div class="home-actions">
-    <div class="action" onclick="appPage('compPage')"><span>🇧🇷</span>Brasil</div>
-    <div class="action" onclick="appPage('compPage')"><span>🇪🇺</span>Europa</div>
-    <div class="action" onclick="appPage('compPage')"><span>🌎</span>América</div>
-    <div class="action" onclick="appPage('compPage')"><span>🌍</span>África / Ásia</div>
-  </div>
-
-  <div class="section-title"><h2>📰 Notícias</h2><span>Favoritos</span></div>
-  <div class="news-card"><b>Escalações confirmadas para Vasco x Flamengo</b><small>Pré-jogo começa com alerta ativo no Prado Sports.</small></div>
-  <div class="news-card"><b>Palmeiras lidera ranking de escanteios do dia</b><small>IA aponta média projetada acima de 12 cantos.</small></div>
+  <div class="section-title"><h2>📰 Notícias</h2><span>Resumo</span></div>
+  <div class="news-card"><b>Escalações confirmadas para Vasco x Flamengo</b><small>Pré-jogo com alerta ativo no Prado Sports.</small></div>
+  <div class="news-card"><b>Palmeiras lidera ranking de escanteios</b><small>IA aponta média projetada acima de 12 cantos.</small></div>
 </div>
 
 <div id="livePage" class="app-page"><div class="section-title"><h2>🔴 Ao Vivo</h2><span>Tempo real</span></div><div id="liveMatches" class="grid2"></div></div>
@@ -755,19 +892,27 @@ function teamBlock(name){return `<img class="crest" src="${logo(name)}">${name}`
 function matchCard(m){let live=m.status==='live',sc=m.score.includes(' - ')?m.score.split(' - '):[m.score,''];return `<div class="match-card" onclick="openMatch(${m.id})"><div class="match-head"><span>${m.league}</span><span class="${live?'live':'pregame'}">${live?'<i class="live-dot"></i>2º Tempo • '+m.min:'Pré-jogo • '+m.min}</span></div><div class="score-row"><div class="score-team">${teamBlock(m.home)}</div><div class="score">${live?sc[0]+' - '+sc[1]:m.score}</div><div class="score-team">${teamBlock(m.away)}</div></div><div class="metrics"><div class="metric"><small>Escanteios</small><b>${m.corners}</b></div><div class="metric"><small>Pressão IA</small><b>${m.pressure}%</b></div><div class="metric"><small>Status</small><b>${live?'Ao vivo':'Pré'}</b></div></div></div>`}
 function aiCard(m){return `<div class="ai-card"><div class="match-head"><span>${m.home} x ${m.away}</span><span>${m.league}</span></div><div class="ai-bar"><div style="width:${m.pressure}%"></div></div><div class="pred"><span>Over 8.5 escanteios</span><b>${m.pressure>=80?'Forte':'Moderado'}</b></div><div class="pred"><span>Média projetada</span><b>${m.corners==='-'?'9.2':(m.corners+2.4).toFixed(1)}</b></div></div>`}
 function renderApp(){
-featuredMatches.innerHTML=matches.slice(0,3).map(m=>`<div class="feature-card" onclick="openMatch(${m.id})">
-  <div class="feature-top"><span>${m.league}</span><span>${m.status==='live'?'<span class="live-pill">AO VIVO</span>':m.min}</span></div>
-  <div class="feature-teams">
-    <div class="score-team">${teamBlock(m.home)}</div>
-    <div class="vs">${m.status==='live'?m.score:'VS'}</div>
-    <div class="score-team">${teamBlock(m.away)}</div>
+featuredCompact.innerHTML=(()=>{
+let main=matches[0], mini=matches.slice(1,3);
+return `<div class="main-feature" onclick="openMatch(${main.id})">
+  <div class="feature-top"><span>${main.league}</span><span class="live-pill">AO VIVO</span></div>
+  <div class="main-feature-teams">
+    <div class="score-team">${teamBlock(main.home)}</div>
+    <div class="score">${main.score}</div>
+    <div class="score-team">${teamBlock(main.away)}</div>
   </div>
   <div class="mini-prob">
-    <div class="metric"><small>Prob. IA</small><b>${m.pressure}%</b></div>
-    <div class="metric"><small>Cantos proj.</small><b>${m.corners==='-'?'9.2':(m.corners+2.4).toFixed(1)}</b></div>
+    <div class="metric"><small>Prob. IA</small><b>${main.pressure}%</b></div>
+    <div class="metric"><small>Cantos proj.</small><b>${(main.corners+2.4).toFixed(1)}</b></div>
   </div>
-</div>`).join('');
+</div>
+<div class="mini-feature-row">${mini.map(m=>`<div class="mini-feature" onclick="openMatch(${m.id})">
+  <div class="mini-feature-title"><span>${m.league}</span><span>AO VIVO</span></div>
+  <div class="mini-teams"><div>${teamBlock(m.home)}</div><b>${m.score}</b><div>${teamBlock(m.away)}</div></div>
+</div>`).join('')}</div>`;
+})();
 homeMatches.innerHTML=matches.filter(m=>m.status==='live').slice(0,2).map(matchCard).join('');liveMatches.innerHTML=matches.filter(m=>m.status==='live').map(matchCard).join('');cornerCards.innerHTML=matches.slice().sort((a,b)=>b.pressure-a.pressure).map(aiCard).join('');
+homeAI.innerHTML=matches.slice().sort((a,b)=>b.pressure-a.pressure).slice(0,2).map(aiCard).join('');
 compCards.innerHTML=comps.map(c=>`<div class="comp-card"><div class="match-head"><span>${c[0]} ${c[1]}</span><span>${c[2]}</span></div><div class="pred"><span>Jogos hoje</span><b>${Math.floor(Math.random()*9)+1}</b></div></div>`).join('');
 statsCards.innerHTML=['Gols por jogo|2.74','Escanteios por jogo|9.8','Cartões por jogo|4.3','Jogos com pressão alta|8'].map(x=>{let p=x.split('|');return `<div class="stat-card"><h3>${p[0]}</h3><div class="ai-bar"><div style="width:${Math.floor(Math.random()*35)+55}%"></div></div><div class="pred"><span>Média</span><b>${p[1]}</b></div></div>`}).join('');
 favContent.innerHTML=`
@@ -818,7 +963,7 @@ alertsBox.innerHTML=`
   <div class="notification-switch"><span>⏱️ Início, intervalo e fim</span><div class="toggle"></div></div>
 </div>`;
 rankBox.innerHTML=['Palmeiras|7.8','Flamengo|7.5','Arsenal|7.4','São Paulo|6.9','Vasco|6.7'].map(x=>{let p=x.split('|');return `<div class="comp-card"><div class="pred"><span>${p[0]}</span><b>${p[1]} cantos</b></div></div>`}).join('');
-settingsBox.innerHTML=['Tema escuro premium','Notificações','Idioma Português','Versão Prado Sports Mobile V9'].map(x=>`<div class="comp-card"><div class="pred"><span>${x}</span><b>✓</b></div></div>`).join('');
+settingsBox.innerHTML=['Tema escuro premium','Notificações','Idioma Português','Versão Prado Sports Mobile V10'].map(x=>`<div class="comp-card"><div class="pred"><span>${x}</span><b>✓</b></div></div>`).join('');
 }
 function appPage(id,btn){document.querySelectorAll('.app-page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');if(btn){document.querySelectorAll('.bn').forEach(b=>b.classList.remove('active'));btn.classList.add('active')}scrollTo(0,0)}
 function openMatch(id){
