@@ -136,6 +136,198 @@ body,button,input{
   font-weight:850!important;
 }
 
+
+/* ===== V28 FAVORITOS INTELIGENTES ===== */
+.favTabs{
+  display:flex;
+  gap:26px;
+  align-items:flex-end;
+  margin:22px 0 18px;
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+.favTab{
+  border:0;
+  background:transparent;
+  color:#8f96a3;
+  font-size:22px;
+  font-weight:760;
+  letter-spacing:-.55px;
+  padding:0 0 12px;
+  position:relative;
+}
+.favTab.active{
+  color:#fff;
+}
+.favTab.active:after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:-1px;
+  height:3px;
+  background:var(--gold);
+  border-radius:999px;
+}
+.favPanel{display:none}
+.favPanel.active{display:block}
+.favList{
+  display:grid;
+  gap:2px;
+}
+.favItem{
+  min-height:74px;
+  display:grid;
+  grid-template-columns:52px 1fr auto;
+  align-items:center;
+  gap:12px;
+  padding:11px 0;
+  border-bottom:1px solid rgba(255,255,255,.07);
+}
+.favItem img{
+  width:46px;
+  height:46px;
+  object-fit:contain;
+  filter:drop-shadow(0 4px 7px rgba(0,0,0,.28));
+}
+.favItem .iconLogo{
+  width:46px;
+  height:46px;
+  display:grid;
+  place-items:center;
+  font-size:27px;
+}
+.favItem b{
+  display:block;
+  font-size:17px;
+  font-weight:760;
+  letter-spacing:-.35px;
+}
+.favItem small{
+  color:#9ca3af;
+  font-size:12px;
+  font-weight:760;
+}
+.favChevron{
+  color:var(--gold);
+  font-size:24px;
+  font-weight:700;
+}
+.emptyFav{
+  padding:22px;
+  border-radius:20px;
+  border:1px solid rgba(255,255,255,.09);
+  background:linear-gradient(145deg,#151a23,#202633);
+  color:#aeb3bd;
+  font-weight:760;
+  line-height:1.4;
+}
+.profilePage{
+  padding-top:10px;
+}
+.profileBack{
+  border:0;
+  background:transparent;
+  color:#fff;
+  font-size:48px;
+  line-height:38px;
+  width:42px;
+  height:42px;
+  margin:6px 0 12px;
+}
+.profileHero{
+  border-radius:24px;
+  padding:18px;
+  background:
+    radial-gradient(circle at 84% 10%,rgba(244,189,59,.14),transparent 28%),
+    linear-gradient(145deg,#151a23,#202633);
+  border:1px solid rgba(255,255,255,.09);
+  margin-bottom:14px;
+}
+.profileTop{
+  display:grid;
+  grid-template-columns:62px 1fr;
+  gap:14px;
+  align-items:center;
+}
+.profileTop img{
+  width:62px;
+  height:62px;
+  object-fit:contain;
+  filter:drop-shadow(0 5px 8px rgba(0,0,0,.30));
+}
+.profileIcon{
+  width:62px;
+  height:62px;
+  display:grid;
+  place-items:center;
+  font-size:38px;
+}
+.profileHero h1{
+  margin:0;
+  font-size:26px;
+  line-height:1.04;
+  letter-spacing:-.9px;
+  font-weight:820;
+}
+.profileHero p{
+  margin:5px 0 0;
+  color:#aeb3bd;
+  font-size:13px;
+  font-weight:760;
+}
+.profileGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.profileCard{
+  min-height:92px;
+  border-radius:18px;
+  padding:14px;
+  background:linear-gradient(145deg,#141923,#1d2330);
+  border:1px solid rgba(255,255,255,.08);
+}
+.profileCard span{
+  font-size:24px;
+}
+.profileCard b{
+  display:block;
+  margin-top:10px;
+  font-size:15px;
+  font-weight:780;
+}
+.profileCard small{
+  color:#9ca3af;
+  font-size:12px;
+  font-weight:760;
+}
+.compactTable{
+  border-radius:18px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.08);
+  margin-top:10px;
+}
+.compactRow{
+  display:grid;
+  grid-template-columns:34px 1fr 45px;
+  padding:12px;
+  border-bottom:1px solid rgba(255,255,255,.07);
+  font-size:13px;
+  font-weight:760;
+}
+.compactRow:last-child{border-bottom:0}
+.compactRow.head{
+  color:var(--gold);
+  background:#0d1117;
+  font-weight:850;
+}
+body,button,input{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,Arial,sans-serif!important;
+}
+.box b,.team,.favItem b,.profileCard b{
+  font-weight:760!important;
+}
+
 </style>
 </head>
 <body>
@@ -155,7 +347,25 @@ body,button,input{
 <header class="header"><div class="topRow"><div class="brand">PRADO <b>SPORTS</b></div></div></header>
 <section id="home" class="page active"><div class="searchBar homeSearch">🔍 Buscar jogos, times e ligas</div><div class="dates" id="dates"></div><div class="section"><h2>⚽ Jogos de hoje</h2><small>Principal</small></div><div id="todayList"></div><div class="section"><h2>🚩 Escanteios IA</h2><small>Top do dia</small></div><div id="aiList"></div></section>
 <section id="live" class="page"><div class="section"><h2>🔴 Ao vivo</h2><small>Tempo real</small></div><div id="liveList"></div></section>
-<section id="fav" class="page"><div class="section"><h2>⭐ Favoritos</h2><small>Seu app</small></div><div class="box"><b>Vasco x Flamengo</b><small>Hoje • 21:30</small></div></section>
+<section id="fav" class="page">
+  <div class="favTabs">
+    <button class="favTab active" data-favtab="teams">Times</button>
+    <button class="favTab" data-favtab="competitions">Competições</button>
+  </div>
+  <div id="favTeamsPanel" class="favPanel active"></div>
+  <div id="favCompsPanel" class="favPanel"></div>
+</section>
+
+<section id="teamPage" class="page profilePage">
+  <button class="profileBack" data-profileback="fav">‹</button>
+  <div id="teamProfile"></div>
+</section>
+
+<section id="competitionPage" class="page profilePage">
+  <button class="profileBack" data-profileback="fav">‹</button>
+  <div id="competitionProfile"></div>
+</section>
+
 <section id="comp" class="page"><div class="section"><h2>🏆 Competições</h2><small>Mundo</small></div><div class="grid" id="compGrid"></div></section>
 <section id="more" class="page">
   <div class="moreTop"><small>Organizado</small></div>
@@ -398,8 +608,96 @@ document.addEventListener("DOMContentLoaded", function(){
     });
   });
 
+
+  function getTeamLogo(name){
+    var map = {
+      "Vasco":"https://media.api-sports.io/football/teams/133.png",
+      "Flamengo":"https://media.api-sports.io/football/teams/127.png",
+      "Corinthians":"https://media.api-sports.io/football/teams/131.png",
+      "Palmeiras":"https://media.api-sports.io/football/teams/121.png",
+      "Santos":"https://media.api-sports.io/football/teams/128.png",
+      "São Paulo":"https://media.api-sports.io/football/teams/126.png",
+      "Internacional":"https://media.api-sports.io/football/teams/119.png"
+    };
+    return map[name] || "https://media.api-sports.io/football/teams/33.png";
+  }
+  function getCompIcon(name){
+    var map = {
+      "Copa do Mundo":"🌎",
+      "Libertadores":"🏆",
+      "Sul-Americana":"🏆",
+      "Brasileirão Série A":"🇧🇷",
+      "Premier League":"🦁",
+      "La Liga":"🇪🇸",
+      "Champions League":"⭐",
+      "Serie A":"🇮🇹"
+    };
+    return map[name] || "🏆";
+  }
+  function readFavs(){
+    var teams = [];
+    var comps = [];
+    try{ teams = JSON.parse(localStorage.getItem("psTeams") || "[]"); }catch(e){}
+    try{ comps = JSON.parse(localStorage.getItem("psComps") || "[]"); }catch(e){}
+    return {teams:teams, comps:comps};
+  }
+  function renderFavorites(){
+    var favs = readFavs();
+    var teamsPanel = document.getElementById("favTeamsPanel");
+    var compsPanel = document.getElementById("favCompsPanel");
+    if(!teamsPanel || !compsPanel) return;
+    if(!favs.teams.length){
+      teamsPanel.innerHTML = '<div class="emptyFav">Nenhum time favorito escolhido ainda. Volte na seleção inicial ou toque em Pular para usar o app sem favoritos.</div>';
+    }else{
+      teamsPanel.innerHTML = '<div class="favList">' + favs.teams.map(function(name){
+        return '<div class="favItem" data-team="'+name+'"><img src="'+getTeamLogo(name)+'"><div><b>'+name+'</b><small>Próximo jogo, escalação e estatísticas</small></div><div class="favChevron">›</div></div>';
+      }).join("") + '</div>';
+    }
+    if(!favs.comps.length){
+      compsPanel.innerHTML = '<div class="emptyFav">Nenhuma competição favorita escolhida ainda.</div>';
+    }else{
+      compsPanel.innerHTML = '<div class="favList">' + favs.comps.map(function(name){
+        return '<div class="favItem" data-comp="'+name+'"><div class="iconLogo">'+getCompIcon(name)+'</div><div><b>'+name+'</b><small>Tabela, rodada, jogos e estatísticas</small></div><div class="favChevron">›</div></div>';
+      }).join("") + '</div>';
+    }
+    document.querySelectorAll("[data-team]").forEach(function(el){
+      el.addEventListener("click", function(){ openTeamProfile(this.getAttribute("data-team")); });
+    });
+    document.querySelectorAll("[data-comp]").forEach(function(el){
+      el.addEventListener("click", function(){ openCompetitionProfile(this.getAttribute("data-comp")); });
+    });
+  }
+  function openTeamProfile(name){
+    var box = document.getElementById("teamProfile");
+    box.innerHTML = '<div class="profileHero"><div class="profileTop"><img src="'+getTeamLogo(name)+'"><div><h1>'+name+'</h1><p>Perfil do time favorito</p></div></div></div><div class="profileGrid"><div class="profileCard"><span>📋</span><b>Escalação</b><small>Provável equipe</small></div><div class="profileCard"><span>📊</span><b>Estatísticas</b><small>Forma e médias</small></div><div class="profileCard"><span>🏆</span><b>Classificação</b><small>Posição e pontos</small></div><div class="profileCard"><span>⚔️</span><b>Confrontos</b><small>Últimos jogos</small></div><div class="profileCard"><span>📰</span><b>Notícias</b><small>Resumo do clube</small></div><div class="profileCard"><span>📅</span><b>Próximos jogos</b><small>Calendário</small></div></div>';
+    show("teamPage");
+    window.scrollTo(0,0);
+  }
+  function openCompetitionProfile(name){
+    var box = document.getElementById("competitionProfile");
+    box.innerHTML = '<div class="profileHero"><div class="profileTop"><div class="profileIcon">'+getCompIcon(name)+'</div><div><h1>'+name+'</h1><p>Competição favorita</p></div></div></div><div class="profileGrid"><div class="profileCard"><span>🏆</span><b>Tabela</b><small>Classificação</small></div><div class="profileCard"><span>📅</span><b>Rodadas</b><small>Jogos e datas</small></div><div class="profileCard"><span>🎯</span><b>Artilheiros</b><small>Gols e assistências</small></div><div class="profileCard"><span>🔴</span><b>Ao vivo</b><small>Jogos em andamento</small></div></div><div class="compactTable"><div class="compactRow head"><span>#</span><span>Time</span><span>PTS</span></div><div class="compactRow"><span>1</span><span>Flamengo</span><span>28</span></div><div class="compactRow"><span>2</span><span>Palmeiras</span><span>26</span></div><div class="compactRow"><span>3</span><span>Vasco</span><span>21</span></div></div>';
+    show("competitionPage");
+    window.scrollTo(0,0);
+  }
+  document.querySelectorAll(".favTab").forEach(function(tab){
+    tab.addEventListener("click", function(){
+      document.querySelectorAll(".favTab").forEach(function(t){t.classList.remove("active")});
+      this.classList.add("active");
+      document.querySelectorAll(".favPanel").forEach(function(p){p.classList.remove("active")});
+      if(this.getAttribute("data-favtab") === "teams"){
+        document.getElementById("favTeamsPanel").classList.add("active");
+      }else{
+        document.getElementById("favCompsPanel").classList.add("active");
+      }
+    });
+  });
+  document.querySelectorAll(".profileBack").forEach(function(btn){
+    btn.addEventListener("click", function(){show(this.getAttribute("data-profileback") || "fav");});
+  });
+
   renderSetup();
   renderApp();
+  renderFavorites();
   if("serviceWorker" in navigator){navigator.serviceWorker.register("service-worker.js?v=23")}
 });
 </script>
