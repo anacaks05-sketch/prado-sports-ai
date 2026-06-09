@@ -48,6 +48,30 @@ button{font-family:inherit}
 .pitch{position:relative;height:640px;border-radius:20px;background:#e9ecef;overflow:hidden;border:1px solid #cfd4d8;margin-bottom:12px;color:#0b2430}
 .pitch:before{content:"";position:absolute;inset:20px;border:4px solid rgba(80,95,95,.25);border-radius:4px}.mid{position:absolute;left:0;right:0;top:50%;height:4px;background:rgba(80,95,95,.25)}.circle{position:absolute;left:50%;top:50%;width:130px;height:130px;border:4px solid rgba(80,95,95,.25);border-radius:50%;transform:translate(-50%,-50%)}
 .player{position:absolute;transform:translate(-50%,-50%);text-align:center}.face{width:42px;height:42px;border-radius:50%;background:linear-gradient(#fff,#ddd);display:grid;place-items:center;margin:0 auto 2px;font-size:22px}.pname{background:#fff;border-radius:7px;padding:3px 6px;color:#0b2430;font-weight:900;font-size:11px;box-shadow:0 2px 4px rgba(0,0,0,.18);white-space:nowrap}
+
+/* ===== V26 MENU MAIS CORRIGIDO ===== */
+.moreCard{min-height:118px!important;cursor:pointer}
+.moreCard span{font-size:28px}
+.moreCard b{font-size:18px;margin-top:14px!important}
+.configPage{padding:calc(12px + env(safe-area-inset-top)) 4px 105px;min-height:100dvh}
+.configBack{width:42px;height:42px;border:0;background:transparent;color:#fff;font-size:48px;line-height:38px;margin:8px 0 18px}
+.ghostLogo{position:absolute;top:calc(32px + env(safe-area-inset-top));left:0;right:0;text-align:center;color:rgba(255,255,255,.10);font-size:22px;font-weight:950;letter-spacing:1px;pointer-events:none}
+.configPage h1{font-size:30px;margin:20px 0 24px;letter-spacing:-.8px}
+.configSub{color:#8f96a3;font-weight:850;margin:-16px 0 18px}
+.optionList{display:grid;gap:14px}
+.optionRow{min-height:66px;border-radius:15px;background:#141923;border:1px solid rgba(255,255,255,.09);display:flex;align-items:center;justify-content:space-between;padding:0 18px;font-size:18px}
+.optionRow b{font-weight:950}
+.switch{width:54px;height:32px;border-radius:999px;background:#252b36;position:relative;flex:none}
+.switch:after{content:"";position:absolute;width:26px;height:26px;border-radius:50%;background:#fff;left:3px;top:3px;transition:.18s ease}
+.switch.on{background:#6df06e}.switch.on:after{left:25px}
+.radio span{width:28px;height:28px;border-radius:50%;border:2px solid #6df06e;display:grid;place-items:center;color:#0b111b;font-weight:950}
+.radio.selected span{background:#6df06e}
+.saveBtn{position:fixed;left:18px;right:18px;bottom:calc(18px + env(safe-area-inset-bottom));height:58px;border:0;border-radius:999px;background:#7cff68;color:#102010;font-size:19px;font-weight:950;z-index:80}
+body.lightMode{background:#f4f5f7;color:#111}
+body.lightMode .app,body.lightMode .screen,body.lightMode .header{background:#f4f5f7;color:#111}
+body.lightMode .searchBar,body.lightMode .box,body.lightMode .match,body.lightMode .ai,body.lightMode .optionRow{background:#fff!important;color:#111!important}
+body.lightMode .bottom{background:#fff}
+
 </style>
 </head>
 <body>
@@ -69,7 +93,57 @@ button{font-family:inherit}
 <section id="live" class="page"><div class="section"><h2>🔴 Ao vivo</h2><small>Tempo real</small></div><div id="liveList"></div></section>
 <section id="fav" class="page"><div class="section"><h2>⭐ Favoritos</h2><small>Seu app</small></div><div class="box"><b>Vasco x Flamengo</b><small>Hoje • 21:30</small></div></section>
 <section id="comp" class="page"><div class="section"><h2>🏆 Competições</h2><small>Mundo</small></div><div class="grid" id="compGrid"></div></section>
-<section id="more" class="page"><div class="section"><h2>☰ Mais</h2><small>Organizado</small></div><div class="grid"><div class="box"><span>🏆</span><b>Tabelas</b><small>Classificações</small></div><div class="box"><span>🎯</span><b>Artilheiros</b><small>Gols</small></div><div class="box"><span>⚙️</span><b>Configurações</b><small>Alertas</small></div></div></section>
+<section id="more" class="page">
+  <div class="section"><h2>☰ Mais</h2><small>Organizado</small></div>
+  <div class="grid">
+    <div class="box moreCard" data-open="notifications"><span>🔔</span><b>Notificações</b><small>Gol, cartão e escanteio</small></div>
+    <div class="box moreCard" data-open="language"><span>🌐</span><b>Idioma</b><small>Português, Espanhol e Inglês</small></div>
+    <div class="box moreCard" data-open="theme"><span>🌙</span><b>Tema</b><small>Modo claro / escuro</small></div>
+  </div>
+</section>
+
+<section id="notifications" class="page configPage">
+  <button class="configBack" data-back="more">‹</button>
+  <div class="ghostLogo">PRADO SPORTS</div>
+  <h1>Notificações</h1>
+  <p class="configSub">Personalize os alertas que deseja receber.</p>
+  <div class="optionList">
+    <div class="optionRow"><b>Início de jogo</b><span class="switch"></span></div>
+    <div class="optionRow"><b>Lembrete início de jogo</b><span class="switch"></span></div>
+    <div class="optionRow"><b>1º / 2º Tempo</b><span class="switch"></span></div>
+    <div class="optionRow"><b>Fim de jogo</b><span class="switch"></span></div>
+    <div class="optionRow"><b>Pênalti</b><span class="switch"></span></div>
+    <div class="optionRow"><b>Gols</b><span class="switch on"></span></div>
+    <div class="optionRow"><b>Escanteios</b><span class="switch on"></span></div>
+    <div class="optionRow"><b>Cartão amarelo</b><span class="switch"></span></div>
+    <div class="optionRow"><b>Cartão vermelho</b><span class="switch"></span></div>
+    <div class="optionRow"><b>VAR</b><span class="switch"></span></div>
+    <div class="optionRow"><b>Melhores momentos</b><span class="switch"></span></div>
+  </div>
+  <button class="saveBtn" data-back="more">Salvar</button>
+</section>
+
+<section id="language" class="page configPage">
+  <button class="configBack" data-back="more">‹</button>
+  <div class="ghostLogo">PRADO SPORTS</div>
+  <h1>Idioma</h1>
+  <div class="optionList">
+    <div class="optionRow radio selected"><b>Português</b><span>✓</span></div>
+    <div class="optionRow radio"><b>Espanhol</b><span></span></div>
+    <div class="optionRow radio"><b>Inglês</b><span></span></div>
+  </div>
+</section>
+
+<section id="theme" class="page configPage">
+  <button class="configBack" data-back="more">‹</button>
+  <div class="ghostLogo">PRADO SPORTS</div>
+  <h1>Tema</h1>
+  <div class="optionList">
+    <div class="optionRow radio"><b>Modo claro</b><span></span></div>
+    <div class="optionRow radio selected"><b>Modo escuro</b><span>✓</span></div>
+  </div>
+</section>
+
 <section id="detail" class="page"><button class="back" id="backBtn">← Voltar</button><div id="detailScore"></div><div class="tabs"><button class="on" data-tab="stats">Stats</button><button data-tab="lineup">Escalações</button><button data-tab="h2h">H2H</button><button data-tab="table">Classificação</button><button data-tab="ia">IA</button></div><div id="detailContent"></div></section>
 </div>
 <nav class="bottom"><div class="nav"><button class="on" data-page="home"><span>🏠</span>Hoje</button><button data-page="live"><span>🔴</span>Ao vivo</button><button data-page="fav"><span>⭐</span>Favoritos</button><button data-page="comp"><span>🏆</span>Ligas</button><button data-page="more"><span>☰</span>Mais</button></div></nav>
@@ -229,6 +303,36 @@ document.addEventListener("DOMContentLoaded", function(){
       return '<div class="player" style="left:'+pos[i][0]+'%;top:'+pos[i][1]+'%"><div class="face">👤</div><div class="pname">'+p+'</div></div>';
     }).join("")+'</div>';
   }
+
+
+  document.querySelectorAll(".moreCard").forEach(function(card){
+    card.addEventListener("click", function(){
+      show(this.getAttribute("data-open"));
+      window.scrollTo(0,0);
+    });
+  });
+  document.querySelectorAll(".configBack, .saveBtn").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      show(this.getAttribute("data-back") || "more");
+      window.scrollTo(0,0);
+    });
+  });
+  document.querySelectorAll(".switch").forEach(function(sw){
+    sw.addEventListener("click", function(){ this.classList.toggle("on"); });
+  });
+  document.querySelectorAll("#language .radio").forEach(function(row){
+    row.addEventListener("click", function(){
+      document.querySelectorAll("#language .radio").forEach(function(r){r.classList.remove("selected"); r.querySelector("span").textContent="";});
+      this.classList.add("selected"); this.querySelector("span").textContent="✓";
+    });
+  });
+  document.querySelectorAll("#theme .radio").forEach(function(row){
+    row.addEventListener("click", function(){
+      document.querySelectorAll("#theme .radio").forEach(function(r){r.classList.remove("selected"); r.querySelector("span").textContent="";});
+      this.classList.add("selected"); this.querySelector("span").textContent="✓";
+      if(this.textContent.indexOf("claro")>-1){document.body.classList.add("lightMode")}else{document.body.classList.remove("lightMode")}
+    });
+  });
 
   renderSetup();
   renderApp();
