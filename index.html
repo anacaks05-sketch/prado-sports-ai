@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="apple-mobile-web-app-title" content="Prado Sports">
 <link rel="manifest" href="manifest.json">
-<title>Prado Sports Mobile V12</title>
+<title>Prado Sports Mobile V13</title>
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{--bg:#050505;--card:#11141b;--card2:#202431;--gold:#f6b83f;--gold2:#ffd66f;--red:#ff3e52;--green:#38d87b;--muted:#a7aab3;--line:rgba(255,255,255,.09)}
@@ -1095,6 +1095,224 @@ body{
   .page-heading h2{font-size:26px}
 }
 
+
+/* ===== V13 LIMPO: HOME MENOR + FAVORITOS MODELO APP ===== */
+.header{
+  background:#050505!important;
+  padding:calc(8px + env(safe-area-inset-top)) 14px 10px!important;
+}
+.brand{
+  font-size:18px!important;
+  letter-spacing:-.3px!important;
+}
+.header-icons{
+  gap:14px!important;
+}
+.header-icons span{
+  font-size:21px!important;
+}
+.home-hero-3d{
+  margin-top:12px!important;
+  min-height:168px!important;
+  border-radius:24px!important;
+  padding:14px!important;
+  background:
+    linear-gradient(110deg,rgba(0,0,0,.78),rgba(0,0,0,.32)),
+    radial-gradient(circle at 75% 25%,rgba(246,184,63,.16),transparent 28%),
+    url('https://images.unsplash.com/photo-1459865264687-595d652de67e?auto=format&fit=crop&w=1200&q=80') center/cover!important;
+}
+.home-hero-3d h1{
+  font-size:20px!important;
+  line-height:1.08!important;
+  margin:0 0 8px!important;
+}
+.home-hero-3d p{
+  font-size:11px!important;
+  line-height:1.25!important;
+  max-width:78%!important;
+}
+.hero-buttons{
+  margin-top:10px!important;
+  grid-template-columns:1fr 1fr!important;
+  gap:8px!important;
+}
+.hero-btn{
+  padding:9px 7px!important;
+  font-size:12px!important;
+  border-radius:14px!important;
+}
+.live-summary{
+  gap:7px!important;
+  margin-top:10px!important;
+}
+.live-summary-card{
+  padding:7px 4px!important;
+  border-radius:14px!important;
+}
+.live-summary-card b{font-size:15px!important}
+.live-summary-card small{font-size:9px!important}
+.section-title{
+  margin:16px 0 8px!important;
+}
+.section-title h2{
+  font-size:20px!important;
+  letter-spacing:-.4px!important;
+}
+.section-title span{
+  font-size:12px!important;
+}
+.quick-btn{
+  padding:9px 4px!important;
+  border-radius:14px!important;
+  font-size:9px!important;
+}
+.quick-btn span{
+  font-size:18px!important;
+}
+.main-feature{
+  padding:10px!important;
+  border-radius:20px!important;
+}
+.main-feature .crest,
+.match-card .crest{
+  width:38px!important;
+  height:38px!important;
+}
+.crest,.crest-img{
+  box-shadow:none!important;
+  filter:drop-shadow(0 3px 3px rgba(0,0,0,.25))!important;
+  transform:none!important;
+}
+.match-card:hover .crest,.next-game:hover .crest,.item:hover .crest-img{
+  transform:scale(1.04)!important;
+  filter:none!important;
+}
+.score{
+  font-size:23px!important;
+}
+.score-team{
+  font-size:13px!important;
+}
+.metric{
+  padding:6px 3px!important;
+  border-radius:12px!important;
+}
+.metric small{font-size:9px!important}
+.metric b{font-size:15px!important}
+.mini-feature-row{
+  gap:8px!important;
+}
+.mini-feature{
+  padding:9px!important;
+  border-radius:17px!important;
+}
+.mini-feature .crest{
+  width:27px!important;
+  height:27px!important;
+}
+.match-card{
+  padding:11px!important;
+  border-radius:20px!important;
+}
+.metrics{
+  gap:6px!important;
+}
+#alertsPage .phone-notify,
+#alertsPage .notification-phone,
+#alertsPage .preview-notification{
+  display:none!important;
+}
+#alertsPage:after{
+  content:"Use a aba Configurações para escolher quais alertas deseja receber: gols, cartões, escanteios e escalações.";
+  display:block;
+  background:linear-gradient(145deg,#151923,#202633);
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:22px;
+  padding:18px;
+  color:#d9d9d9;
+  font-weight:850;
+  line-height:1.4;
+}
+#setupPage{
+  background:#050505!important;
+}
+.setup-title{
+  color:var(--gold)!important;
+}
+.setup-subtitle{
+  color:#bfc2ca!important;
+}
+.item{
+  background:#f4f4f4!important;
+  color:#111827!important;
+  border:0!important;
+  border-radius:22px!important;
+  min-height:78px!important;
+}
+.item small{
+  color:#6b7280!important;
+}
+.item .star{
+  color:#111827!important;
+  font-size:34px!important;
+}
+.item .crest-img{
+  width:58px!important;
+  height:58px!important;
+  background:#fff!important;
+  border-radius:0!important;
+  filter:none!important;
+}
+.search-box{
+  background:#f4f4f4!important;
+  color:#111827!important;
+  border-radius:22px!important;
+  min-height:64px!important;
+  font-size:18px!important;
+}
+.setup-actions{
+  background:#e8e8e8!important;
+}
+.setup-actions .primary{
+  background:#cfeec8!important;
+  color:#47743e!important;
+  box-shadow:none!important;
+}
+.setup-actions .secondary{
+  background:#fff!important;
+  color:#469246!important;
+}
+.setup-tabs{
+  display:flex;
+  gap:10px;
+  overflow:auto;
+  margin:8px 0 16px;
+  padding-bottom:6px;
+}
+.setup-tab{
+  background:rgba(255,255,255,.08);
+  color:#bfc2ca;
+  border:0;
+  border-radius:999px;
+  padding:10px 14px;
+  font-weight:950;
+}
+.setup-tab.active{
+  background:var(--gold);
+  color:#111;
+}
+.settings-card{
+  border-radius:20px!important;
+  padding:14px!important;
+}
+.setting-line{
+  padding:10px 0!important;
+  font-size:14px!important;
+}
+.request-btn{
+  padding:11px!important;
+}
+
 </style>
 </head>
 <body>
@@ -1110,8 +1328,8 @@ body{
   <div class="home-hero-3d">
     <div>
       <div class="hero-kicker">🏆 PRADO SPORTS ULTRA</div>
-      <h1>Prado Sports<br><span class="gold">placares e IA</span></h1>
-      <p>Ao vivo, escalações, competições, alertas e Escanteios IA.</p>
+      <h1>Prado Sports<br><span class="gold">ao vivo e IA</span></h1>
+      <p>Placares, escalações e Escanteios IA.</p>
       <div class="app-badge-row">
         <div class="app-badge">📱 iPhone</div>
         <div class="app-badge">🤖 Android</div>
@@ -1136,7 +1354,7 @@ body{
     <div class="quick-btn" onclick="appPage('livePage')"><span>🔴</span>Ao vivo</div>
     <div class="quick-btn" onclick="appPage('cornersPage')"><span>🚩</span>IA</div>
     <div class="quick-btn" onclick="appPage('compPage')"><span>🏆</span>Ligas</div>
-    <div class="quick-btn" onclick="appPage('alertsPage')"><span>🔔</span>Alertas</div>
+    <div class="quick-btn" onclick="appPage('settingsPage')"><span>🔔</span>Alertas</div>
   </div>
 
   <div class="section-title"><h2>⚽ Destaque</h2><span>Principal</span></div>
@@ -1164,7 +1382,7 @@ body{
     <div class="more-item" onclick="appPage('cornersPage')"><span>🚩</span>Escanteios IA<small>Top jogos e tendências</small></div>
     <div class="more-item" onclick="appPage('tablePage')"><span>🏆</span>Tabelas<small>Classificações</small></div>
     <div class="more-item" onclick="appPage('topScorersPage')"><span>🎯</span>Artilheiros<small>Gols e assistências</small></div>
-    <div class="more-item" onclick="appPage('alertsPage')"><span>🔔</span>Notificações<small>Prévia de alertas</small></div>
+    <div class="more-item" onclick="appPage('alertsPage')"><span>🔔</span>Notificações<small>Gol, cartão e escanteio</small></div>
     <div class="more-item" onclick="appPage('rankCornersPage')"><span>📈</span>Ranking cantos<small>Times com mais escanteios</small></div>
     <div class="more-item" onclick="appPage('settingsPage')"><span>⚙️</span>Configurações<small>Tema e notificações</small></div>
   </div>
@@ -1277,7 +1495,7 @@ alertsBox.innerHTML=`
   <div class="notification-switch"><span>⏱️ Início, intervalo e fim</span><div class="toggle"></div></div>
 </div>`;
 rankBox.innerHTML=['Palmeiras|7.8','Flamengo|7.5','Arsenal|7.4','São Paulo|6.9','Vasco|6.7'].map(x=>{let p=x.split('|');return `<div class="comp-card"><div class="pred"><span>${p[0]}</span><b>${p[1]} cantos</b></div></div>`}).join('');
-settingsBox.innerHTML=['Tema escuro premium','Notificações','Idioma Português','Versão Prado Sports Mobile V12'].map(x=>`<div class="comp-card"><div class="pred"><span>${x}</span><b>✓</b></div></div>`).join('');
+settingsBox.innerHTML=['Tema escuro premium','Notificações','Idioma Português','Versão Prado Sports Mobile V13'].map(x=>`<div class="comp-card"><div class="pred"><span>${x}</span><b>✓</b></div></div>`).join('');
 }
 function appPage(id,btn){document.querySelectorAll('.app-page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');if(btn){document.querySelectorAll('.bn').forEach(b=>b.classList.remove('active'));btn.classList.add('active')}scrollTo(0,0)}
 function openMatch(id){
