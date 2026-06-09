@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Prado Sports V23</title>
+<title>Prado Sports V30</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&display=swap');
 :root{--gold:#f4bd3b;--gold2:#ffd86f;--muted:#aab0bb;--line:rgba(255,255,255,.09);--card:#151a23;--card2:#202633;--green:#52e78a}
@@ -23,7 +23,7 @@ button{font-family:inherit}
 .splash h1{font-size:36px;line-height:.92;margin:0;font-weight:950}.splash span{color:var(--gold)}.splash p{color:#ddd;font-weight:800}
 @keyframes hide{to{opacity:0;visibility:hidden;pointer-events:none}}
 .header{position:sticky;top:0;z-index:50;padding:calc(8px + env(safe-area-inset-top)) 14px 11px;margin:0 -14px;background:#000;border-bottom:1px solid rgba(255,255,255,.06)}
-.topRow{display:flex;align-items:center;justify-content:space-between}.brand{font-weight:950;font-size:18px;letter-spacing:-.4px}.brand b{color:var(--gold)}.searchIcon{display:none}
+.topRow{display:flex;align-items:center;justify-content:space-between}.brand{font-size:17px!important;letter-spacing:-0.5px!important;font-weight:950;font-size:18px;letter-spacing:-.4px}.brand b{color:var(--gold)}.searchIcon{display:none}
 .searchBar{height:48px;border-radius:18px;background:linear-gradient(145deg,#11151d,#171b24);border:1px solid rgba(255,255,255,.11);margin-top:12px;display:flex;align-items:center;padding:0 15px;color:#c6cbd5;font-size:14px;font-weight:850;box-shadow:0 10px 24px rgba(0,0,0,.24)}
 .setup{min-height:100dvh;background:#000;padding:calc(22px + env(safe-area-inset-top)) 22px calc(96px + env(safe-area-inset-bottom))}
 .setup h1{font-size:30px;margin:0 0 8px;letter-spacing:-.9px}.setup h1 span{color:var(--gold)}.setup p{margin:0 0 18px;color:#b9bec8;font-weight:800;line-height:1.35}
@@ -77,7 +77,7 @@ body.lightMode .bottom{background:#fff}
 body,button,input{
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,Arial,sans-serif!important;
 }
-.brand{
+.brand{font-size:17px!important;letter-spacing:-0.5px!important;
   font-weight:900!important;
   letter-spacing:-.8px!important;
 }
@@ -330,7 +330,7 @@ body,button,input{
 
 
 /* ===== V29 FOCO ESCANTEIOS IA + FAVORITOS SALVOS ===== */
-.brand{
+.brand{font-size:17px!important;letter-spacing:-0.5px!important;
   font-size:17px!important;
   font-weight:850!important;
 }
@@ -380,7 +380,7 @@ body,button,input{
 
 <div id="app" class="app" style="display:none">
 <div class="screen">
-<header class="header"><div class="topRow"><div class="brand">ESCANTEIOS <b>IA</b></div></div></header>
+<header class="header"><div class="topRow"><div class="brand">PRADO <b>SPORTS</b></div></div></header>
 <section id="home" class="page active"><div class="searchBar homeSearch">🔍 Buscar jogos, times e ligas</div><div class="dates" id="dates"></div><div class="section"><h2>⚽ Jogos de hoje</h2><small>Principal</small></div><div id="todayList"></div><div class="section"><h2>🚩 Escanteios IA</h2><small>Top do dia</small></div><div id="aiList"></div></section>
 <section id="live" class="page"><div class="section"><h2>🔴 Ao vivo</h2><small>Tempo real</small></div><div id="liveList"></div></section>
 <section id="fav" class="page">
@@ -456,7 +456,7 @@ body,button,input{
 
 <section id="detail" class="page"><button class="back" id="backBtn">← Voltar</button><div id="detailScore"></div><div class="tabs"><button class="on" data-tab="stats">Stats</button><button data-tab="lineup">Escalações</button><button data-tab="h2h">H2H</button><button data-tab="table">Classificação</button><button data-tab="ia">IA</button></div><div id="detailContent"></div></section>
 </div>
-<nav class="bottom"><div class="nav"><button class="on" data-page="home"><span>🏠</span>Hoje</button><button data-page="live"><span>🔴</span>Ao vivo</button><button data-page="fav"><span>⭐</span>Favoritos</button><button data-page="comp"><span>🏆</span>Ligas</button><button data-page="more"><span>☰</span>Mais</button></div></nav>
+<nav class="bottom"><div class="nav"><button class="on" data-page="home"><span>🏠</span>Hoje</button><button data-page="live"><span>🔴</span>Ao vivo</button><button data-page="fav"><span>⭐</span>Favoritos</button><button data-page="comp"><span>🏆</span>Ligas</button><button data-page="more"><span>🤖</span>IA</button></div></nav>
 </div>
 
 <script>
@@ -476,7 +476,7 @@ document.addEventListener("DOMContentLoaded", function(){
     {name:"Internacional",img:"https://media.api-sports.io/football/teams/119.png"}
   ];
   var setupComps = [
-    {name:"Copa do Mundo",icon:"🌎"},
+    {name:"Copa do Mundo",icon:"🌎"},{name:"Copa do Mundo de Clubes",icon:"🏆"},
     {name:"Libertadores",icon:"🏆"},
     {name:"Sul-Americana",icon:"🏆"},
     {name:"Brasileirão Série A",icon:"🇧🇷"},
