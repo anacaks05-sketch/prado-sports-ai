@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Prado Sports V30.11</title>
+<title>Prado Sports V30.12</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&display=swap');
 :root{--gold:#f4bd3b;--gold2:#ffd86f;--muted:#aab0bb;--line:rgba(255,255,255,.09);--card:#151a23;--card2:#202633;--green:#52e78a}
@@ -864,6 +864,42 @@ body,button,input{
 }
 .bottom, .tabbar, nav{z-index:70!important}
 
+
+/* ===== V30.12 ESTABILIDADE DE NAVEGAÇÃO ===== */
+.page{display:none!important}
+.page.active{display:block!important}
+#app{display:block}
+.configBack{cursor:pointer!important}
+.compBox,.favItem,.match{cursor:pointer!important}
+
+/* Tema claro funcional */
+body.lightMode{background:#f4f5f7!important;color:#111!important}
+body.lightMode #app,
+body.lightMode .app,
+body.lightMode .screen,
+body.lightMode header,
+body.lightMode .header{background:#f4f5f7!important;color:#111!important}
+body.lightMode .brand,
+body.lightMode h1,
+body.lightMode h2,
+body.lightMode b,
+body.lightMode .team,
+body.lightMode .favTab,
+body.lightMode .optionRow b{color:#10131a!important}
+body.lightMode .searchBar,
+body.lightMode .match,
+body.lightMode .box,
+body.lightMode .aiPick,
+body.lightMode .optionRow,
+body.lightMode .favItem{background:#fff!important;color:#111!important;border-color:#dde1e8!important}
+body.lightMode .bottom{background:rgba(255,255,255,.92)!important;border-color:#dde1e8!important}
+body.lightMode .nav button{color:#6b7280!important}
+body.lightMode .nav button.on{background:#e9edf3!important;color:#111!important}
+body.lightMode .mTop span,
+body.lightMode small,
+body.lightMode .configSub{color:#6b7280!important}
+body.lightMode .metric{background:#f1f3f6!important}
+
 </style>
 </head>
 <body>
@@ -1112,20 +1148,33 @@ document.addEventListener("DOMContentLoaded", function(){
     }).join("");
     qs("todayList").innerHTML = games.map(match).join("");
     qs("liveList").innerHTML = games.map(match).join("");
-    qs("aiList").innerHTML = games.slice(0,2).map(ai).join("");
+    if(qs("aiList")){ qs("aiList").innerHTML = games.slice(0,2).map(ai).join(""); }
     qs("compGrid").innerHTML = setupComps.map(function(c){
-      return '<div class="box"><span>'+c.icon+'</span><b>'+c.name+'</b><small>Jogos hoje</small></div>';
+      return '<div class="box compBox" data-comp="'+c.name+'"><span>'+c.icon+'</span><b>'+c.name+'</b><small>Jogos hoje</small></div>';
     }).join("");
     document.querySelectorAll(".match").forEach(function(el){
       el.addEventListener("click", function(){
         openDetail(Number(this.getAttribute("data-game")));
       });
     });
+    document.querySelectorAll(".compBox").forEach(function(el){
+      el.addEventListener("click", function(){
+        openCompetitionProfile(this.getAttribute("data-comp"));
+      });
+    });
   }
 
   function show(id){
-    document.querySelectorAll(".page").forEach(function(p){p.classList.remove("active")});
-    qs(id).classList.add("active");
+    document.querySelectorAll(".page").forEach(function(p){
+      p.classList.remove("active");
+      p.style.display = "none";
+    });
+    var el = qs(id);
+    if(el){
+      el.classList.add("active");
+      el.style.display = "block";
+    }
+    window.scrollTo(0,0);
   }
 
   document.querySelectorAll(".nav button").forEach(function(btn){
@@ -1310,7 +1359,7 @@ document.addEventListener("DOMContentLoaded", function(){
   renderSetup();
   renderApp();
   renderFavorites();
-  if("serviceWorker" in navigator){navigator.serviceWorker.register("service-worker.js?v=3011")}
+  if("serviceWorker" in navigator){navigator.serviceWorker.register("service-worker.js?v=3012")}
 });
 
 (function(){
@@ -1370,51 +1419,82 @@ document.addEventListener('click', function(e){
 </script>
 
 
+
+
+
 <script>
 function activatePage(id){
-  document.querySelectorAll('.page').forEach(function(p){
-    p.classList.remove('active');
-    p.style.display = 'none';
+  if(typeof show === "function"){ show(id); return; }
+  document.querySelectorAll(".page").forEach(function(p){
+    p.classList.remove("active");
+    p.style.display = "none";
   });
   var el = document.getElementById(id);
   if(el){
-    el.classList.add('active');
-    el.style.display = 'block';
+    el.classList.add("active");
+    el.style.display = "block";
   }
   window.scrollTo(0,0);
 }
-function goBackHome(){ activatePage('home'); }
+function goBackHome(){ activatePage("home"); }
 function openMenuPage(id){
-  var details = document.querySelector('.nativeMenu');
-  if(details){ details.removeAttribute('open'); }
+  var details = document.querySelector(".nativeMenu");
+  if(details){ details.removeAttribute("open"); }
   activatePage(id);
 }
-document.addEventListener('DOMContentLoaded', function(){
-  document.querySelectorAll('.toggleRow').forEach(function(row){
-    row.addEventListener('click', function(){
-      this.classList.toggle('on');
-      var sw = this.querySelector('.switch');
-      if(sw){ sw.classList.toggle('on'); }
-    });
+document.addEventListener("DOMContentLoaded", function(){
+  document.querySelectorAll(".toggleRow").forEach(function(row){
+    row.onclick = function(){
+      this.classList.toggle("on");
+      var sw = this.querySelector(".switch");
+      if(sw){ sw.classList.toggle("on"); }
+    };
   });
-  document.querySelectorAll('.choiceRow').forEach(function(row){
-    row.addEventListener('click', function(){
-      var group = this.getAttribute('data-group');
+
+  document.querySelectorAll(".choiceRow").forEach(function(row){
+    row.onclick = function(){
+      var group = this.getAttribute("data-group");
       document.querySelectorAll('.choiceRow[data-group="'+group+'"]').forEach(function(r){
-        r.classList.remove('selected');
-        var radio = r.querySelector('.radio');
-        if(radio){ radio.textContent = ''; }
+        r.classList.remove("selected");
+        var radio = r.querySelector(".radio");
+        if(radio){ radio.textContent = ""; }
       });
-      this.classList.add('selected');
-      var radio = this.querySelector('.radio');
-      if(radio){ radio.textContent = '✓'; }
-    });
+      this.classList.add("selected");
+      var radio = this.querySelector(".radio");
+      if(radio){ radio.textContent = "✓"; }
+
+      if(group === "theme"){
+        var txt = (this.textContent || "").toLowerCase();
+        if(txt.indexOf("claro") >= 0){
+          document.body.classList.add("lightMode");
+          localStorage.setItem("psTheme","light");
+        }else{
+          document.body.classList.remove("lightMode");
+          localStorage.setItem("psTheme","dark");
+        }
+      }
+    };
   });
-  document.querySelectorAll('[data-page]').forEach(function(btn){
-    btn.addEventListener('click', function(){
-      var id = this.getAttribute('data-page');
-      if(id){ activatePage(id); }
+
+  if(localStorage.getItem("psTheme") === "light"){
+    document.body.classList.add("lightMode");
+    document.querySelectorAll('.choiceRow[data-group="theme"]').forEach(function(r){
+      r.classList.remove("selected");
+      var radio = r.querySelector(".radio");
+      if(radio){ radio.textContent = ""; }
+      if((r.textContent || "").toLowerCase().indexOf("claro") >= 0){
+        r.classList.add("selected");
+        if(radio){ radio.textContent = "✓"; }
+      }
     });
+  }
+
+  document.querySelectorAll(".nav button").forEach(function(btn){
+    btn.onclick = function(){
+      document.querySelectorAll(".nav button").forEach(function(b){b.classList.remove("on")});
+      this.classList.add("on");
+      activatePage(this.getAttribute("data-page"));
+    };
   });
 });
 </script>
