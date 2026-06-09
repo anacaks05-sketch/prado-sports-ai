@@ -2,9 +2,9 @@
   "name": "Prado Sports",
   "short_name": "Prado Sports",
   "start_url": "./index.html",
-  "display": "standalone",
-  "background_color": "#050505",
-  "theme_color": "#050505",
+  "display": "fullscreen",
+  "background_color": "#000000",
+  "theme_color": "#000000",
   "orientation": "portrait",
   "icons": [
     {"src": "icon-192.png", "sizes": "192x192", "type": "image/png"},

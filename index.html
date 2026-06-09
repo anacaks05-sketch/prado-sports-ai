@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <meta name="theme-color" content="#050505">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="apple-mobile-web-app-title" content="Prado Sports">
 <link rel="manifest" href="manifest.json">
-<title>Prado Sports Mobile V10</title>
+<title>Prado Sports Mobile V11</title>
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{--bg:#050505;--card:#11141b;--card2:#202431;--gold:#f6b83f;--gold2:#ffd66f;--red:#ff3e52;--green:#38d87b;--muted:#a7aab3;--line:rgba(255,255,255,.09)}
@@ -771,6 +771,141 @@ html,body{
   .section-title h2{font-size:23px!important}
 }
 
+
+/* ===== V11: HOME LIMPA + FULL MOBILE ===== */
+body{
+  background:#000!important;
+}
+.app{
+  max-width:100%!important;
+  min-height:100dvh!important;
+}
+.screen{
+  padding-left:14px!important;
+  padding-right:14px!important;
+  padding-top:0!important;
+  padding-bottom:96px!important;
+}
+.header{
+  position:sticky!important;
+  top:0!important;
+  z-index:50!important;
+  background:linear-gradient(180deg,#050505 0%,rgba(5,5,5,.96) 72%,rgba(5,5,5,.86) 100%)!important;
+  padding:calc(10px + env(safe-area-inset-top)) 14px 12px!important;
+  margin-left:-14px!important;
+  margin-right:-14px!important;
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.brand{
+  font-size:20px!important;
+}
+.header:before{
+  content:"⚽ Futebol";
+  position:absolute;
+  left:14px;
+  bottom:-52px;
+  font-size:28px;
+  font-weight:950;
+  color:#fff;
+  letter-spacing:-1px;
+}
+.header:after{
+  content:"▾";
+  position:absolute;
+  left:154px;
+  bottom:-47px;
+  color:#fff;
+  font-size:22px;
+}
+.home-hero-3d{
+  margin-top:64px!important;
+  min-height:230px!important;
+  border-radius:28px!important;
+  padding:18px!important;
+}
+.home-hero-3d .hero-kicker{
+  display:none!important;
+}
+.home-hero-3d h1{
+  font-size:27px!important;
+  line-height:1.04!important;
+  margin-top:0!important;
+}
+.home-hero-3d p{
+  font-size:13px!important;
+  max-width:92%!important;
+}
+.app-badge-row{
+  display:none!important;
+}
+.hero-buttons{
+  grid-template-columns:1fr 1fr!important;
+  display:grid!important;
+  margin-top:14px!important;
+}
+.hero-btn{
+  font-size:14px!important;
+  padding:12px 8px!important;
+}
+.live-pill{
+  display:none!important;
+}
+.live-summary{
+  margin-top:12px!important;
+}
+.section-title h2{
+  font-size:23px!important;
+}
+.quick-grid{
+  grid-template-columns:repeat(4,1fr)!important;
+}
+.quick-btn{
+  padding:11px 4px!important;
+  font-size:10px!important;
+}
+.quick-btn span{
+  font-size:20px!important;
+}
+.compact-featured{
+  margin-bottom:4px;
+}
+.main-feature{
+  padding:13px!important;
+}
+.main-feature .crest{
+  width:50px!important;
+  height:50px!important;
+}
+.mini-feature-row{
+  grid-template-columns:1fr 1fr!important;
+}
+.mini-feature{
+  padding:10px!important;
+}
+.mini-feature .crest{
+  width:34px!important;
+  height:34px!important;
+}
+#homePage .hero-mini{
+  display:none!important;
+}
+#homePage .section-title:has(+ .hero-mini){
+  display:none!important;
+}
+.bottom-nav{
+  background:linear-gradient(180deg,rgba(0,0,0,.72),#050505 30%)!important;
+}
+.bottom-inner{
+  max-width:100%!important;
+}
+.bottom-inner button{
+  border-radius:18px!important;
+}
+@media(min-width:760px){
+  .app{max-width:920px!important}
+  .header{margin-left:0!important;margin-right:0!important}
+}
+
 </style>
 </head>
 <body>
@@ -786,8 +921,8 @@ html,body{
   <div class="home-hero-3d">
     <div>
       <div class="hero-kicker">🏆 PRADO SPORTS ULTRA</div>
-      <h1>Futebol ao vivo<br><span class="gold">simples e completo</span></h1>
-      <p>Placares, favoritos, escalações, estatísticas e Escanteios IA no celular.</p>
+      <h1>Prado Sports<br><span class="gold">placares e IA</span></h1>
+      <p>Ao vivo, escalações, competições, alertas e Escanteios IA.</p>
       <div class="app-badge-row">
         <div class="app-badge">📱 iPhone</div>
         <div class="app-badge">🤖 Android</div>
@@ -820,16 +955,6 @@ html,body{
 
   <div class="section-title"><h2>📺 Ao Vivo Agora</h2><span>Tempo real</span></div>
   <div id="homeMatches" class="grid2"></div>
-
-  <div class="section-title"><h2>⭐ Favoritos</h2><span>Próximo</span></div>
-  <div class="hero-mini">
-    <small>Próximo jogo favorito</small>
-    <div class="next-game" onclick="openMatch(4)">
-      <div class="mini-team"><img class="crest" src="https://media.api-sports.io/football/teams/133.png">Vasco</div>
-      <div class="game-time">Hoje <b>21:30</b></div>
-      <div class="mini-team"><img class="crest" src="https://media.api-sports.io/football/teams/127.png">Flamengo</div>
-    </div>
-  </div>
 
   <div class="section-title"><h2>🚩 Escanteios IA</h2><span>Top do dia</span></div>
   <div id="homeAI" class="grid2"></div>
@@ -963,7 +1088,7 @@ alertsBox.innerHTML=`
   <div class="notification-switch"><span>⏱️ Início, intervalo e fim</span><div class="toggle"></div></div>
 </div>`;
 rankBox.innerHTML=['Palmeiras|7.8','Flamengo|7.5','Arsenal|7.4','São Paulo|6.9','Vasco|6.7'].map(x=>{let p=x.split('|');return `<div class="comp-card"><div class="pred"><span>${p[0]}</span><b>${p[1]} cantos</b></div></div>`}).join('');
-settingsBox.innerHTML=['Tema escuro premium','Notificações','Idioma Português','Versão Prado Sports Mobile V10'].map(x=>`<div class="comp-card"><div class="pred"><span>${x}</span><b>✓</b></div></div>`).join('');
+settingsBox.innerHTML=['Tema escuro premium','Notificações','Idioma Português','Versão Prado Sports Mobile V11'].map(x=>`<div class="comp-card"><div class="pred"><span>${x}</span><b>✓</b></div></div>`).join('');
 }
 function appPage(id,btn){document.querySelectorAll('.app-page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');if(btn){document.querySelectorAll('.bn').forEach(b=>b.classList.remove('active'));btn.classList.add('active')}scrollTo(0,0)}
 function openMatch(id){
