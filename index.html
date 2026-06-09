@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Prado Sports V30.10</title>
+<title>Prado Sports V30.11</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&display=swap');
 :root{--gold:#f4bd3b;--gold2:#ffd86f;--muted:#aab0bb;--line:rgba(255,255,255,.09);--card:#151a23;--card2:#202633;--green:#52e78a}
@@ -822,6 +822,48 @@ body,button,input{
   border-radius:999px!important;background:#70f65f!important;color:#061006!important;font-size:17px!important;font-weight:850!important;
 }
 
+
+/* ===== V30.11 CONFIGURAÇÕES CORRIGIDAS ===== */
+.configPage{padding:18px 18px 120px!important}
+.configBack{
+  width:34px!important;height:34px!important;border:0!important;background:transparent!important;color:#fff!important;
+  font-size:38px!important;line-height:30px!important;margin:4px 0 22px!important
+}
+.configPage h1{
+  font-size:25px!important;line-height:1.05!important;margin:0 0 14px!important;font-weight:820!important;letter-spacing:-.7px!important;color:#fff!important
+}
+.configSub{font-size:13.5px!important;color:#9ca3af!important;font-weight:720!important;margin:-6px 0 16px!important}
+.optionList{display:grid!important;gap:10px!important}
+.optionRow{
+  width:100%!important;min-height:56px!important;border-radius:16px!important;background:#141923!important;
+  border:1px solid rgba(255,255,255,.09)!important;padding:0 14px!important;
+  display:flex!important;align-items:center!important;justify-content:space-between!important;
+  color:#fff!important;text-align:left!important
+}
+.optionRow b{font-size:15.5px!important;font-weight:760!important;color:#fff!important;line-height:1.15!important}
+.switch{
+  width:48px!important;height:28px!important;border-radius:999px!important;background:#262d3a!important;
+  display:block!important;position:relative!important;flex:0 0 auto!important
+}
+.switch:after{
+  content:""!important;position:absolute!important;width:22px!important;height:22px!important;border-radius:50%!important;
+  background:#fff!important;left:3px!important;top:3px!important;transition:.18s!important
+}
+.toggleRow.on .switch,.switch.on{background:#38d878!important}
+.toggleRow.on .switch:after,.switch.on:after{left:23px!important}
+.radio{
+  width:25px!important;height:25px!important;border:2.5px solid #6df27c!important;border-radius:50%!important;
+  display:grid!important;place-items:center!important;color:#061006!important;font-size:15px!important;font-weight:900!important;
+  flex:0 0 auto!important;background:transparent!important
+}
+.choiceRow.selected .radio{background:#6df27c!important}
+.saveBtn{
+  height:50px!important;width:calc(100% - 36px)!important;left:18px!important;right:18px!important;
+  position:fixed!important;bottom:calc(12px + env(safe-area-inset-bottom))!important;border:0!important;border-radius:999px!important;
+  background:#70f65f!important;color:#061006!important;font-size:17px!important;font-weight:850!important;z-index:80!important
+}
+.bottom, .tabbar, nav{z-index:70!important}
+
 </style>
 </head>
 <body>
@@ -912,45 +954,42 @@ body,button,input{
 </section>
 
 
+
 <section id="notifications" class="page configPage">
-  <button class="configBack" data-back="more">‹</button>
-  <div class="ghostLogo">PRADO SPORTS</div>
+  <button class="configBack" type="button" onclick="goBackHome()">‹</button>
   <h1>Notificações</h1>
   <p class="configSub">Personalize os alertas que deseja receber.</p>
   <div class="optionList">
-    <div class="optionRow"><b>Início de jogo</b><span class="switch"></span></div>
-    <div class="optionRow"><b>Lembrete início de jogo</b><span class="switch"></span></div>
-    <div class="optionRow"><b>1º / 2º Tempo</b><span class="switch"></span></div>
-    <div class="optionRow"><b>Fim de jogo</b><span class="switch"></span></div>
-    <div class="optionRow"><b>Pênalti</b><span class="switch"></span></div>
-    <div class="optionRow"><b>Gols</b><span class="switch on"></span></div>
-    <div class="optionRow"><b>Escanteios</b><span class="switch on"></span></div>
-    <div class="optionRow"><b>Cartão amarelo</b><span class="switch"></span></div>
-    <div class="optionRow"><b>Cartão vermelho</b><span class="switch"></span></div>
-    <div class="optionRow"><b>VAR</b><span class="switch"></span></div>
-    <div class="optionRow"><b>Melhores momentos</b><span class="switch"></span></div>
+    <button class="optionRow toggleRow" type="button"><b>Início de jogo</b><span class="switch"></span></button>
+    <button class="optionRow toggleRow" type="button"><b>Lembrete início de jogo</b><span class="switch"></span></button>
+    <button class="optionRow toggleRow" type="button"><b>1º / 2º Tempo</b><span class="switch"></span></button>
+    <button class="optionRow toggleRow" type="button"><b>Fim de jogo</b><span class="switch"></span></button>
+    <button class="optionRow toggleRow" type="button"><b>Pênalti</b><span class="switch"></span></button>
+    <button class="optionRow toggleRow" type="button"><b>Gols</b><span class="switch"></span></button>
+    <button class="optionRow toggleRow" type="button"><b>Escanteios</b><span class="switch"></span></button>
+    <button class="optionRow toggleRow" type="button"><b>Cartão amarelo</b><span class="switch"></span></button>
   </div>
-  <button class="saveBtn" data-back="more">Salvar</button>
+  <button class="saveBtn" type="button" onclick="goBackHome()">Salvar</button>
 </section>
+
 
 <section id="language" class="page configPage">
-  <button class="configBack" data-back="more">‹</button>
-  <div class="ghostLogo">PRADO SPORTS</div>
+  <button class="configBack" type="button" onclick="goBackHome()">‹</button>
   <h1>Idioma</h1>
   <div class="optionList">
-    <div class="optionRow radio selected"><b>Português</b><span>✓</span></div>
-    <div class="optionRow radio"><b>Espanhol</b><span></span></div>
-    <div class="optionRow radio"><b>Inglês</b><span></span></div>
+    <button class="optionRow choiceRow selected" type="button" data-group="lang"><b>Português</b><span class="radio">✓</span></button>
+    <button class="optionRow choiceRow" type="button" data-group="lang"><b>Espanhol</b><span class="radio"></span></button>
+    <button class="optionRow choiceRow" type="button" data-group="lang"><b>Inglês</b><span class="radio"></span></button>
   </div>
 </section>
 
+
 <section id="theme" class="page configPage">
-  <button class="configBack" data-back="more">‹</button>
-  <div class="ghostLogo">PRADO SPORTS</div>
+  <button class="configBack" type="button" onclick="goBackHome()">‹</button>
   <h1>Tema</h1>
   <div class="optionList">
-    <div class="optionRow radio"><b>Modo claro</b><span></span></div>
-    <div class="optionRow radio selected"><b>Modo escuro</b><span>✓</span></div>
+    <button class="optionRow choiceRow" type="button" data-group="theme"><b>Modo claro</b><span class="radio"></span></button>
+    <button class="optionRow choiceRow selected" type="button" data-group="theme"><b>Modo escuro</b><span class="radio">✓</span></button>
   </div>
 </section>
 
@@ -1271,7 +1310,7 @@ document.addEventListener("DOMContentLoaded", function(){
   renderSetup();
   renderApp();
   renderFavorites();
-  if("serviceWorker" in navigator){navigator.serviceWorker.register("service-worker.js?v=3010")}
+  if("serviceWorker" in navigator){navigator.serviceWorker.register("service-worker.js?v=3011")}
 });
 
 (function(){
@@ -1327,6 +1366,56 @@ document.addEventListener('click', function(e){
   if(txt.indexOf('Notificações') !== -1){ e.preventDefault(); openMenuPage('notifications'); }
   if(txt.indexOf('Idioma') !== -1){ e.preventDefault(); openMenuPage('language'); }
   if(txt.indexOf('Tema') !== -1){ e.preventDefault(); openMenuPage('theme'); }
+});
+</script>
+
+
+<script>
+function activatePage(id){
+  document.querySelectorAll('.page').forEach(function(p){
+    p.classList.remove('active');
+    p.style.display = 'none';
+  });
+  var el = document.getElementById(id);
+  if(el){
+    el.classList.add('active');
+    el.style.display = 'block';
+  }
+  window.scrollTo(0,0);
+}
+function goBackHome(){ activatePage('home'); }
+function openMenuPage(id){
+  var details = document.querySelector('.nativeMenu');
+  if(details){ details.removeAttribute('open'); }
+  activatePage(id);
+}
+document.addEventListener('DOMContentLoaded', function(){
+  document.querySelectorAll('.toggleRow').forEach(function(row){
+    row.addEventListener('click', function(){
+      this.classList.toggle('on');
+      var sw = this.querySelector('.switch');
+      if(sw){ sw.classList.toggle('on'); }
+    });
+  });
+  document.querySelectorAll('.choiceRow').forEach(function(row){
+    row.addEventListener('click', function(){
+      var group = this.getAttribute('data-group');
+      document.querySelectorAll('.choiceRow[data-group="'+group+'"]').forEach(function(r){
+        r.classList.remove('selected');
+        var radio = r.querySelector('.radio');
+        if(radio){ radio.textContent = ''; }
+      });
+      this.classList.add('selected');
+      var radio = this.querySelector('.radio');
+      if(radio){ radio.textContent = '✓'; }
+    });
+  });
+  document.querySelectorAll('[data-page]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var id = this.getAttribute('data-page');
+      if(id){ activatePage(id); }
+    });
+  });
 });
 </script>
 
