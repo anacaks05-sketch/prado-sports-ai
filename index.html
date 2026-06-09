@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="apple-mobile-web-app-title" content="Prado Sports">
 <link rel="manifest" href="manifest.json">
-<title>Prado Sports Mobile V13</title>
+<title>Prado Sports Premium V15</title>
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{--bg:#050505;--card:#11141b;--card2:#202431;--gold:#f6b83f;--gold2:#ffd66f;--red:#ff3e52;--green:#38d87b;--muted:#a7aab3;--line:rgba(255,255,255,.09)}
@@ -1313,9 +1313,75 @@ body{
   padding:11px!important;
 }
 
+
+/* ===== PRADO SPORTS V15 PREMIUM ===== */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&display=swap');
+:root{--gold:#f4bd3b!important;--gold2:#ffd86b!important;--bg:#000!important;--card:#151922!important;--card2:#202633!important;--muted:#aeb3bd!important}
+*{box-sizing:border-box}
+body{font-family:'Montserrat',Arial,sans-serif!important;background:#000!important;color:#fff!important}
+.app{max-width:100%!important;background:#000!important}
+
+/* splash premium */
+#premiumSplash{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 32%,rgba(244,189,59,.22),transparent 25%),linear-gradient(180deg,#020202,#000 70%);overflow:hidden;animation:splashOut .55s ease forwards;animation-delay:2.4s}
+#premiumSplash:before{content:"";position:absolute;inset:0;background:linear-gradient(rgba(0,0,0,.58),rgba(0,0,0,.86)),url('https://images.unsplash.com/photo-1517927033932-b3d18e61fb3a?auto=format&fit=crop&w=1300&q=80') center/cover;opacity:.42;transform:scale(1.06)}
+.splashBox{position:relative;width:100%;height:100%;padding:calc(35px + env(safe-area-inset-top)) 30px calc(34px + env(safe-area-inset-bottom));display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.splashLogo{width:128px;height:128px;border-radius:34px;display:grid;place-items:center;background:linear-gradient(145deg,#ffe07a,#d49313);color:#111;font-size:74px;font-weight:950;box-shadow:0 0 54px rgba(244,189,59,.45);margin-bottom:30px;animation:logoPulse 1.7s ease-in-out infinite}
+.splashBall{position:absolute;top:calc(24% - 20px);font-size:122px;opacity:.16;filter:blur(.2px)}
+.splashTitle{font-size:42px;line-height:.94;font-weight:950;letter-spacing:-1.4px}.splashTitle span{color:var(--gold)}
+.splashSub{max-width:320px;margin:18px auto 0;color:#ededed;font-size:16px;line-height:1.45;font-weight:700}
+.loader{margin-top:36px;width:145px;height:5px;border-radius:999px;background:rgba(255,255,255,.12);overflow:hidden}
+.loader:after{content:"";display:block;width:55%;height:100%;border-radius:999px;background:linear-gradient(90deg,#ff3b58,var(--gold),#34d984);animation:loadMove 1.35s infinite ease-in-out}
+@keyframes loadMove{0%{transform:translateX(-100%)}100%{transform:translateX(210%)}}
+@keyframes logoPulse{0%,100%{transform:scale(1);filter:brightness(1)}50%{transform:scale(1.035);filter:brightness(1.12)}}
+@keyframes splashOut{to{opacity:0;visibility:hidden;pointer-events:none}}
+
+/* header */
+.header{background:#000!important;padding:calc(8px + env(safe-area-inset-top)) 16px 12px!important;border-bottom:1px solid rgba(255,255,255,.07)!important}
+.brand{font-size:18px!important;letter-spacing:-.25px!important}.header-icons span{font-size:20px!important}
+
+/* home limpa */
+.home-hero-3d{margin-top:14px!important;min-height:188px!important;border-radius:25px!important;padding:17px!important;border:1px solid rgba(244,189,59,.18)!important;background:linear-gradient(120deg,rgba(0,0,0,.82),rgba(0,0,0,.30)),radial-gradient(circle at 78% 10%,rgba(244,189,59,.18),transparent 30%),url('https://images.unsplash.com/photo-1459865264687-595d652de67e?auto=format&fit=crop&w=1200&q=82') center/cover!important;box-shadow:none!important}
+.home-hero-3d h1{font-size:21px!important;line-height:1.05!important;margin:0 0 8px!important;letter-spacing:-.7px!important}
+.home-hero-3d p{font-size:12px!important;line-height:1.35!important;max-width:75%!important;color:#f4f4f4!important}
+.hero-buttons{display:grid!important;grid-template-columns:1fr 1fr!important;gap:9px!important;margin-top:14px!important}.hero-btn{padding:10px 8px!important;font-size:12px!important;border-radius:15px!important}
+.live-summary,#homePage .live-summary{display:none!important}
+#homeMatches,#homeAI{display:none!important}
+.section-title{margin:17px 0 9px!important}.section-title h2{font-size:20px!important;letter-spacing:-.45px!important}.section-title span{font-size:12px!important}
+.quick-grid{grid-template-columns:repeat(4,1fr)!important;gap:8px!important}.quick-btn{padding:10px 4px!important;border-radius:16px!important;font-size:10px!important}.quick-btn span{font-size:18px!important}
+.main-feature{padding:12px!important;border-radius:21px!important;background:linear-gradient(145deg,#171c26,#212736)!important;border:1px solid rgba(255,255,255,.09)!important}
+.main-feature .crest,.match-card .crest{width:40px!important;height:40px!important}.mini-feature .crest{width:30px!important;height:30px!important}
+.crest,.crest-img{box-shadow:none!important;filter:none!important;border-radius:10px!important}
+.score{font-size:24px!important}.score-team{font-size:13px!important}.metric{padding:7px 4px!important;border-radius:13px!important}.metric small{font-size:9px!important}.metric b{font-size:15px!important}
+.mini-feature-row{gap:8px!important}.mini-feature{padding:9px!important;border-radius:17px!important}
+.match-card{padding:12px!important;border-radius:22px!important;background:linear-gradient(145deg,#171c26,#222936)!important;box-shadow:none!important}.metrics{gap:6px!important}
+
+/* favoritos / competicoes padrão */
+#setupPage{background:#000!important}.setup-title{color:var(--gold)!important;font-size:32px!important;line-height:1.04!important;letter-spacing:-1px!important;margin-bottom:8px!important}.setup-subtitle{font-size:15px!important;color:#b7bac2!important;margin-bottom:16px!important}
+.setup-tabs{display:flex!important;gap:8px!important;overflow:auto!important;margin:8px 0 12px!important;padding-bottom:4px!important}.setup-tab{border:0!important;border-radius:999px!important;padding:8px 12px!important;background:rgba(255,255,255,.08)!important;color:#c7c9d1!important;font-size:11px!important;font-weight:900!important}.setup-tab.active{background:var(--gold)!important;color:#121212!important}
+.search-box{min-height:54px!important;height:54px!important;border-radius:18px!important;padding:0 18px!important;font-size:15px!important;background:#f4f4f4!important;color:#101827!important}
+.item{min-height:88px!important;height:88px!important;border-radius:19px!important;padding:12px 16px!important;background:#f4f4f4!important;color:#111827!important;border:0!important}.item b{font-size:20px!important;letter-spacing:-.3px!important}.item small{font-size:13px!important;color:#6c7280!important}.item .crest-img{width:48px!important;height:48px!important;object-fit:contain!important;background:#fff!important;border-radius:8px!important}.item .star{font-size:30px!important;color:#111827!important}
+.setup-actions{padding:14px 18px calc(18px + env(safe-area-inset-bottom))!important;background:#e8e8e8!important;gap:10px!important}.setup-actions .primary,.setup-actions .secondary{min-height:54px!important;height:54px!important;border-radius:999px!important;font-size:17px!important}.setup-actions .primary{background:#cfeec8!important;color:#47743e!important;box-shadow:none!important}.setup-actions .secondary{background:#fff!important;color:#469246!important}
+
+/* mais/config */
+#morePage .more-item{min-height:105px!important;padding:15px!important;border-radius:21px!important}#morePage .more-item span{font-size:26px!important}
+.settings-card{padding:14px!important;border-radius:20px!important}.setting-line{padding:10px 0!important;font-size:14px!important}
+#alertsPage .preview-notification,#alertsPage .phone-notify,#alertsPage .notification-phone{display:none!important}
+#alertsPage:after{content:"As notificações ficam na aba Mais > Configurações. Ative alertas de gol, cartão, escanteio, escalação e fim de jogo.";display:block;background:linear-gradient(145deg,#151923,#202633);border:1px solid rgba(255,255,255,.10);border-radius:22px;padding:18px;color:#d9d9d9;font-weight:800;line-height:1.45}
+
 </style>
 </head>
 <body>
+
+<div id="premiumSplash">
+  <div class="splashBox">
+    <div class="splashBall">⚽</div>
+    <div class="splashLogo">P</div>
+    <div class="splashTitle">PRADO<br><span>SPORTS</span></div>
+    <div class="splashSub">Futebol inteligente em tempo real.</div>
+    <div class="loader"></div>
+  </div>
+</div>
+
 <div class="app">
 <section id="welcome" class="screen active"><div class="welcome"><div class="logo-mark">P</div><h1>PRADO <span class="gold">SPORTS</span></h1><p>Placar ao vivo, escalações, estatísticas, favoritos e Escanteios IA para iPhone e Android.</p><button class="primary" onclick="goSetup('teams')">Começar</button></div></section>
 <section id="teams" class="screen"><h1 class="title">Times favoritos</h1><div class="subtitle">Quais times você mais acompanha?</div><div class="search-wrap"><input class="search" placeholder="Buscar time" oninput="filterItems(this,'teamList')"><span class="search-icon">⌕</span></div><div class="divider"></div><div id="teamList" class="list"></div><div class="bottom-actions"><div class="bottom-actions-inner"><button id="nextTeam" class="next" onclick="goSetup('competitions')">Próximo</button><button class="skip" onclick="goSetup('competitions')">Lembrar depois</button></div></div></section>
@@ -1328,16 +1394,16 @@ body{
   <div class="home-hero-3d">
     <div>
       <div class="hero-kicker">🏆 PRADO SPORTS ULTRA</div>
-      <h1>Prado Sports<br><span class="gold">ao vivo e IA</span></h1>
-      <p>Placares, escalações e Escanteios IA.</p>
+      <h1>Prado Sports<br><span class="gold">Premium</span></h1>
+      <p>Sua central de futebol inteligente.</p>
       <div class="app-badge-row">
         <div class="app-badge">📱 iPhone</div>
         <div class="app-badge">🤖 Android</div>
         <div class="app-badge">⚡ Leve</div>
       </div>
       <div class="hero-buttons">
-        <button class="hero-btn" onclick="appPage('livePage')">🔴 Ao vivo</button>
-        <button class="hero-btn dark" onclick="appPage('cornersPage')">🚩 Escanteios IA</button>
+        <button class="hero-btn" onclick="appPage('livePage')">⚽ Ao Vivo</button>
+        <button class="hero-btn dark" onclick="appPage('cornersPage')">🚩 IA Cantos</button>
       </div>
     </div>
     <div class="live-pill">AO VIVO AGORA</div>
@@ -1363,7 +1429,7 @@ body{
   <div class="section-title"><h2>📺 Ao Vivo Agora</h2><span>Tempo real</span></div>
   <div id="homeMatches" class="grid2"></div>
 
-  <div class="section-title"><h2>🚩 Escanteios IA</h2><span>Top do dia</span></div>
+  <div class="section-title"><h2>🚩 IA Cantos</h2><span>Top do dia</span></div>
   <div id="homeAI" class="grid2"></div>
 
   <div class="section-title"><h2>📰 Notícias</h2><span>Resumo</span></div>
@@ -1374,7 +1440,7 @@ body{
 <div id="livePage" class="app-page"><div class="section-title"><h2>🔴 Ao Vivo</h2><span>Tempo real</span></div><div id="liveMatches" class="grid2"></div></div>
 <div id="favPage" class="app-page"><div class="section-title"><h2>⭐ Favoritos</h2><span>Seu app</span></div><div id="favContent"></div></div>
 <div id="compPage" class="app-page"><div class="section-title"><h2>🏆 Competições</h2><span>Mundo</span></div><div class="chips"><button class="chip active">Todos</button><button class="chip">Brasil</button><button class="chip">Europa</button><button class="chip">América</button></div><div id="compCards" class="grid2"></div></div>
-<div id="cornersPage" class="app-page"><div class="section-title"><h2>🚩 Escanteios IA</h2><span>Top jogos</span></div><div id="cornerCards"></div></div>
+<div id="cornersPage" class="app-page"><div class="section-title"><h2>🚩 IA Cantos</h2><span>Top jogos</span></div><div id="cornerCards"></div></div>
 <div id="statsPage" class="app-page"><div class="section-title"><h2>📊 Estatísticas gerais</h2><span>Hoje</span></div><div id="statsCards" class="grid2"></div></div>
 <div id="morePage" class="app-page">
   <div class="section-title"><h2>☰ Mais</h2><span>Organizado</span></div>
@@ -1489,13 +1555,13 @@ alertsBox.innerHTML=`
 <br>
 <div class="notification-switch-list">
   <div class="notification-switch"><span>⚽ Gol dos favoritos</span><div class="toggle"></div></div>
-  <div class="notification-switch"><span>🚩 Escanteios IA forte</span><div class="toggle"></div></div>
+  <div class="notification-switch"><span>🚩 IA Cantos forte</span><div class="toggle"></div></div>
   <div class="notification-switch"><span>📋 Escalação confirmada</span><div class="toggle"></div></div>
   <div class="notification-switch"><span>🟨 Cartão vermelho/amarelo</span><div class="toggle"></div></div>
   <div class="notification-switch"><span>⏱️ Início, intervalo e fim</span><div class="toggle"></div></div>
 </div>`;
 rankBox.innerHTML=['Palmeiras|7.8','Flamengo|7.5','Arsenal|7.4','São Paulo|6.9','Vasco|6.7'].map(x=>{let p=x.split('|');return `<div class="comp-card"><div class="pred"><span>${p[0]}</span><b>${p[1]} cantos</b></div></div>`}).join('');
-settingsBox.innerHTML=['Tema escuro premium','Notificações','Idioma Português','Versão Prado Sports Mobile V13'].map(x=>`<div class="comp-card"><div class="pred"><span>${x}</span><b>✓</b></div></div>`).join('');
+settingsBox.innerHTML=['Tema escuro premium','Notificações','Idioma Português','Versão Prado Sports Premium V15'].map(x=>`<div class="comp-card"><div class="pred"><span>${x}</span><b>✓</b></div></div>`).join('');
 }
 function appPage(id,btn){document.querySelectorAll('.app-page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');if(btn){document.querySelectorAll('.bn').forEach(b=>b.classList.remove('active'));btn.classList.add('active')}scrollTo(0,0)}
 function openMatch(id){
