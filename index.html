@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Prado Sports V30.7</title>
+<title>Prado Sports V30.8</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&display=swap');
 :root{--gold:#f4bd3b;--gold2:#ffd86f;--muted:#aab0bb;--line:rgba(255,255,255,.09);--card:#151a23;--card2:#202633;--green:#52e78a}
@@ -695,6 +695,32 @@ body,button,input{
   font-weight:760;
 }
 
+
+/* ===== V30.8 HOME LIMPA + BUSCA MODERNA ===== */
+.searchBar.homeSearch,
+.searchBar{
+  height:48px!important;
+  min-height:48px!important;
+  border-radius:17px!important;
+  padding:0 16px!important;
+  margin:12px auto 10px!important;
+  max-width:calc(100% - 14px)!important;
+  font-size:14.5px!important;
+  font-weight:720!important;
+  color:#c4c9d2!important;
+  background:linear-gradient(145deg,#121720,#191f2b)!important;
+  border:1px solid rgba(255,255,255,.10)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.04)!important;
+}
+.topRow{display:flex!important;align-items:center!important;justify-content:space-between!important}
+.topMenuBtn{
+  width:34px!important;height:34px!important;border:0!important;border-radius:13px!important;
+  background:#11141b!important;color:#f7c34b!important;font-size:18px!important;font-weight:900!important;
+  display:grid!important;place-items:center!important;line-height:1!important;
+}
+.section h2{font-size:18px!important;letter-spacing:-.55px!important}
+.match{margin-bottom:10px!important}
+
 </style>
 </head>
 <body>
@@ -711,15 +737,11 @@ body,button,input{
 
 <div id="app" class="app" style="display:none">
 <div class="screen">
-<header class="header"><div class="topRow"><div class="brand">PRADO <b>SPORTS</b></div><button id="topMenuBtn" class="topMenuBtn" type="button" onclick="toggleQuickMenu()">☰</button></div></header>
+<header class="header"><div class="topRow"><div class="brand">PRADO <b>SPORTS</b></div><button id="topMenuBtn" class="topMenuBtn" type="button" aria-label="Menu">☰</button></div></header>
 
-<div id="quickMenuInline" class="quickMenuInline">
-  <button type="button" onclick="openConfigPage('notifications')">🔔 <span>Notificações</span></button>
-  <button type="button" onclick="openConfigPage('language')">🌐 <span>Idioma</span></button>
-  <button type="button" onclick="openConfigPage('theme')">🌙 <span>Tema</span></button>
-</div>
 
-<section id="home" class="page active"><div class="searchBar homeSearch">🔍 Buscar jogos, times e ligas</div><div class="dates" id="dates"></div><div class="section"><h2>⚽ Jogos de hoje</h2><small>Principal</small></div><div id="todayList"></div><div class="section"><h2>🚩 Escanteios IA</h2><small>Top do dia</small></div><div id="aiList"></div></section>
+
+<section id="home" class="page active"><div class="searchBar homeSearch">🔍 Buscar jogos, times e ligas</div><div class="dates" id="dates"></div><div class="section"><h2>⚽ Jogos de hoje</h2><small>Principal</small></div><div id="todayList"></div></section>
 <section id="live" class="page"><div class="section"><h2>🔴 Ao vivo</h2><small>Tempo real</small></div><div id="liveList"></div></section>
 <section id="fav" class="page">
   <div class="favTabs">
@@ -1139,7 +1161,7 @@ document.addEventListener("DOMContentLoaded", function(){
   renderSetup();
   renderApp();
   renderFavorites();
-  if("serviceWorker" in navigator){navigator.serviceWorker.register("service-worker.js?v=307")}
+  if("serviceWorker" in navigator){navigator.serviceWorker.register("service-worker.js?v=308")}
 });
 
 (function(){
@@ -1158,26 +1180,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
 </script>
 
-<script>
-function toggleQuickMenu(){
-  var m = document.getElementById("quickMenuInline");
-  if(!m) return;
-  if(m.style.display === "grid"){ m.style.display = "none"; }
-  else { m.style.display = "grid"; }
-}
-function openConfigPage(id){
-  var m = document.getElementById("quickMenuInline");
-  if(m) m.style.display = "none";
-  if(typeof show === "function"){
-    show(id);
-  }else{
-    document.querySelectorAll(".page").forEach(function(p){p.classList.remove("active");});
-    var el = document.getElementById(id);
-    if(el) el.classList.add("active");
-  }
-  window.scrollTo(0,0);
-}
-</script>
+
 
 </body>
 </html>
