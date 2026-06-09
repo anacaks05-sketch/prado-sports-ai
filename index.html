@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Prado Sports V30.4</title>
+<title>Prado Sports V30.5</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&display=swap');
 :root{--gold:#f4bd3b;--gold2:#ffd86f;--muted:#aab0bb;--line:rgba(255,255,255,.09);--card:#151a23;--card2:#202633;--green:#52e78a}
@@ -653,6 +653,18 @@ body,button,input{
   font-size:22px;
 }
 
+
+/* ===== V30.5 MENU FUNCIONANDO ===== */
+.topRow{display:flex!important;align-items:center!important;justify-content:space-between!important}
+.topMenuBtn{width:36px!important;height:36px!important;border:0!important;border-radius:14px!important;background:#11141b!important;color:#f7c34b!important;font-size:20px!important;font-weight:900!important;display:grid!important;place-items:center!important;line-height:1!important}
+.menuPanel{padding:18px 14px 110px!important}
+.menuBack{width:34px!important;height:34px!important;border:0!important;background:transparent!important;color:#fff!important;font-size:38px!important;line-height:30px!important;margin:4px 0 14px!important}
+.menuPanel h1{font-size:24px!important;margin:0 0 16px!important;font-weight:820!important}
+.menuList{display:grid!important;gap:10px!important}
+.menuOption{min-height:58px!important;border-radius:16px!important;background:#141923!important;border:1px solid rgba(255,255,255,.09)!important;padding:0 15px!important;display:flex!important;align-items:center!important;gap:12px!important;font-size:18px!important}
+.menuOption b{font-size:15.5px!important;font-weight:760!important;flex:1!important}
+.menuOption span{color:#f7c34b!important;font-size:22px!important}
+
 </style>
 </head>
 <body>
@@ -669,7 +681,7 @@ body,button,input{
 
 <div id="app" class="app" style="display:none">
 <div class="screen">
-<header class="header"><div class="topRow"><div class="brand">PRADO <b>SPORTS</b></div><button id="topMenuBtn" class="topMenuBtn" type="button">☰</button></div></header>
+<header class="header"><div class="topRow"><div class="brand">PRADO <b>SPORTS</b></div><button id="topMenuBtn" class="topMenuBtn" type="button" onclick="openTopMenu()">☰</button></div></header>
 <section id="home" class="page active"><div class="searchBar homeSearch">🔍 Buscar jogos, times e ligas</div><div class="dates" id="dates"></div><div class="section"><h2>⚽ Jogos de hoje</h2><small>Principal</small></div><div id="todayList"></div><div class="section"><h2>🚩 Escanteios IA</h2><small>Top do dia</small></div><div id="aiList"></div></section>
 <section id="live" class="page"><div class="section"><h2>🔴 Ao vivo</h2><small>Tempo real</small></div><div id="liveList"></div></section>
 <section id="fav" class="page">
@@ -731,7 +743,7 @@ body,button,input{
 </section>
 
 <section id="menuPanel" class="page menuPanel">
-  <button class="menuBack" type="button">‹</button>
+  <button class="menuBack" type="button" onclick="closeTopMenu()">‹</button>
   <h1>Menu</h1>
   <div class="menuList">
     <div class="menuOption" data-open="notifications">🔔 <b>Notificações</b><span>›</span></div>
@@ -1116,5 +1128,27 @@ document.addEventListener("DOMContentLoaded", function(){
 })();
 
 </script>
+
+<script>
+function psShowPage(id){
+  document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+  var el = document.getElementById(id);
+  if(el){
+    el.classList.add('active');
+    window.scrollTo(0,0);
+  }
+}
+function openTopMenu(){ psShowPage('menuPanel'); }
+function closeTopMenu(){ psShowPage('home'); }
+document.addEventListener('DOMContentLoaded', function(){
+  var topBtn = document.getElementById('topMenuBtn');
+  if(topBtn){ topBtn.onclick = openTopMenu; }
+  document.querySelectorAll('.menuBack').forEach(function(btn){ btn.onclick = closeTopMenu; });
+  document.querySelectorAll('.menuOption[data-open]').forEach(function(opt){
+    opt.onclick = function(){ psShowPage(this.getAttribute('data-open')); };
+  });
+});
+</script>
+
 </body>
 </html>
