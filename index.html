@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="apple-mobile-web-app-title" content="Prado Sports">
 <link rel="manifest" href="manifest.json">
-<title>Prado Sports Mobile V11</title>
+<title>Prado Sports Mobile V12</title>
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{--bg:#050505;--card:#11141b;--card2:#202431;--gold:#f6b83f;--gold2:#ffd66f;--red:#ff3e52;--green:#38d87b;--muted:#a7aab3;--line:rgba(255,255,255,.09)}
@@ -906,6 +906,195 @@ body{
   .header{margin-left:0!important;margin-right:0!important}
 }
 
+
+/* ===== V12: AJUSTES FINOS MOBILE + CONFIGURAÇÕES ===== */
+.header:before,
+.header:after{
+  display:none!important;
+  content:none!important;
+}
+.home-hero-3d{
+  margin-top:18px!important;
+  min-height:205px!important;
+  padding:16px!important;
+}
+.home-hero-3d h1{
+  font-size:23px!important;
+  line-height:1.04!important;
+  letter-spacing:-.6px!important;
+}
+.home-hero-3d p{
+  font-size:12px!important;
+  line-height:1.32!important;
+  max-width:90%!important;
+}
+.hero-buttons{
+  margin-top:10px!important;
+}
+.hero-btn{
+  padding:10px 8px!important;
+  font-size:13px!important;
+}
+.live-summary-card{
+  padding:8px 5px!important;
+}
+.live-summary-card b{
+  font-size:16px!important;
+}
+.live-summary-card small{
+  font-size:10px!important;
+}
+.section-title h2{
+  font-size:21px!important;
+}
+.section-title span{
+  font-size:13px!important;
+}
+.main-feature .crest,
+.match-card .crest{
+  width:44px!important;
+  height:44px!important;
+}
+.mini-feature .crest{
+  width:30px!important;
+  height:30px!important;
+}
+.main-feature{
+  padding:12px!important;
+}
+.score{
+  font-size:26px!important;
+}
+.score-team{
+  font-size:15px!important;
+}
+.match-card{
+  padding:12px!important;
+  border-radius:22px!important;
+}
+.metric{
+  padding:8px 3px!important;
+}
+.metric b{
+  font-size:17px!important;
+}
+.feature-top,
+.match-head{
+  font-size:11px!important;
+}
+.quick-btn{
+  border-radius:16px!important;
+}
+.page-heading{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin:18px 0 12px;
+}
+.page-heading h2{
+  margin:0;
+  font-size:28px;
+  letter-spacing:-.8px;
+}
+.page-heading small{
+  color:var(--gold);
+  font-weight:950;
+}
+.settings-panel{
+  display:grid;
+  gap:12px;
+}
+.settings-card{
+  background:linear-gradient(145deg,#151923,#202633);
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:22px;
+  padding:16px;
+}
+.settings-card h3{
+  margin:0 0 10px;
+  font-size:20px;
+}
+.settings-card p{
+  color:var(--muted);
+  margin:0 0 12px;
+  font-size:13px;
+  font-weight:800;
+}
+.setting-line{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:12px 0;
+  border-top:1px solid rgba(255,255,255,.07);
+  font-weight:950;
+}
+.setting-line:first-of-type{
+  border-top:0;
+}
+.setting-line span{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.request-btn{
+  width:100%;
+  border:0;
+  border-radius:17px;
+  padding:13px;
+  font-weight:950;
+  background:linear-gradient(90deg,var(--gold2),var(--gold));
+  color:#111;
+  margin-top:8px;
+}
+.preview-notification{
+  background:#1379e8;
+  border-radius:24px;
+  padding:16px;
+  color:#fff;
+}
+.preview-pill{
+  background:#101010;
+  border-radius:18px;
+  padding:12px;
+  margin-bottom:10px;
+}
+.preview-msg{
+  background:rgba(5,61,128,.72);
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:17px;
+  padding:12px;
+  display:grid;
+  grid-template-columns:42px 1fr auto;
+  align-items:center;
+  gap:10px;
+}
+.ps-logo-mini{
+  width:42px;
+  height:42px;
+  border-radius:12px;
+  background:#ff6400;
+  color:#111;
+  display:grid;
+  place-items:center;
+  font-weight:950;
+}
+#morePage .more-item{
+  min-height:112px!important;
+  padding:18px!important;
+}
+#morePage .more-item span{
+  font-size:28px!important;
+}
+#morePage .more-item{
+  cursor:pointer;
+}
+@media(max-width:430px){
+  .brand{font-size:19px!important}
+  .home-hero-3d h1{font-size:22px!important}
+  .page-heading h2{font-size:26px}
+}
+
 </style>
 </head>
 <body>
@@ -975,7 +1164,7 @@ body{
     <div class="more-item" onclick="appPage('cornersPage')"><span>🚩</span>Escanteios IA<small>Top jogos e tendências</small></div>
     <div class="more-item" onclick="appPage('tablePage')"><span>🏆</span>Tabelas<small>Classificações</small></div>
     <div class="more-item" onclick="appPage('topScorersPage')"><span>🎯</span>Artilheiros<small>Gols e assistências</small></div>
-    <div class="more-item" onclick="appPage('alertsPage')"><span>🔔</span>Notificações<small>Gol, intervalo e escalação</small></div>
+    <div class="more-item" onclick="appPage('alertsPage')"><span>🔔</span>Notificações<small>Prévia de alertas</small></div>
     <div class="more-item" onclick="appPage('rankCornersPage')"><span>📈</span>Ranking cantos<small>Times com mais escanteios</small></div>
     <div class="more-item" onclick="appPage('settingsPage')"><span>⚙️</span>Configurações<small>Tema e notificações</small></div>
   </div>
@@ -1088,7 +1277,7 @@ alertsBox.innerHTML=`
   <div class="notification-switch"><span>⏱️ Início, intervalo e fim</span><div class="toggle"></div></div>
 </div>`;
 rankBox.innerHTML=['Palmeiras|7.8','Flamengo|7.5','Arsenal|7.4','São Paulo|6.9','Vasco|6.7'].map(x=>{let p=x.split('|');return `<div class="comp-card"><div class="pred"><span>${p[0]}</span><b>${p[1]} cantos</b></div></div>`}).join('');
-settingsBox.innerHTML=['Tema escuro premium','Notificações','Idioma Português','Versão Prado Sports Mobile V11'].map(x=>`<div class="comp-card"><div class="pred"><span>${x}</span><b>✓</b></div></div>`).join('');
+settingsBox.innerHTML=['Tema escuro premium','Notificações','Idioma Português','Versão Prado Sports Mobile V12'].map(x=>`<div class="comp-card"><div class="pred"><span>${x}</span><b>✓</b></div></div>`).join('');
 }
 function appPage(id,btn){document.querySelectorAll('.app-page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');if(btn){document.querySelectorAll('.bn').forEach(b=>b.classList.remove('active'));btn.classList.add('active')}scrollTo(0,0)}
 function openMatch(id){
@@ -1156,6 +1345,23 @@ appPage('detailPage')
 function player(n,name){return `<div class="player-dot"><div class="player-number">${n}</div><span>${name}</span></div>`}
 function playerA(n,name){return `<div class="player-dot away"><div class="player-number">${n}</div><span>${name}</span></div>`}
 function tab(id,btn){document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));btn.classList.add('active')}
+
+function requestNotify(){
+  const el=document.getElementById('notifyStatus');
+  if(!('Notification' in window)){
+    if(el) el.textContent='Status: este navegador não suporta notificações.';
+    return;
+  }
+  Notification.requestPermission().then(p=>{
+    if(el) el.textContent='Status: '+(p==='granted'?'notificações permitidas ✅':'permissão não ativada');
+    if(p==='granted'){
+      try{
+        new Notification('Prado Sports', {body:'Notificações ativadas para gols, cartões e escanteios.', icon:'icon-192.png'});
+      }catch(e){}
+    }
+  });
+}
+
 renderSetup();
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('./service-worker.js').catch(()=>{}));

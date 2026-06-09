@@ -2,7 +2,7 @@
   "name": "Prado Sports",
   "short_name": "Prado Sports",
   "start_url": "./index.html",
-  "display": "fullscreen",
+  "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#000000",
   "orientation": "portrait",
