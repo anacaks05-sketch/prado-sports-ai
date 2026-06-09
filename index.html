@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Prado Sports V30.8</title>
+<title>Prado Sports V30.9</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&display=swap');
 :root{--gold:#f4bd3b;--gold2:#ffd86f;--muted:#aab0bb;--line:rgba(255,255,255,.09);--card:#151a23;--card2:#202633;--green:#52e78a}
@@ -721,6 +721,67 @@ body,button,input{
 .section h2{font-size:18px!important;letter-spacing:-.55px!important}
 .match{margin-bottom:10px!important}
 
+
+/* ===== V30.9 MENU NATIVO FUNCIONANDO SEM JS ===== */
+.topRow{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  position:relative!important;
+}
+.nativeMenu{
+  position:relative!important;
+  z-index:99999!important;
+}
+.nativeMenu summary{
+  list-style:none!important;
+  width:34px!important;
+  height:34px!important;
+  border-radius:13px!important;
+  background:#11141b!important;
+  color:#f7c34b!important;
+  font-size:18px!important;
+  font-weight:900!important;
+  display:grid!important;
+  place-items:center!important;
+  cursor:pointer!important;
+  user-select:none!important;
+}
+.nativeMenu summary::-webkit-details-marker{display:none!important}
+.nativeMenuCard{
+  position:absolute!important;
+  top:43px!important;
+  right:0!important;
+  width:210px!important;
+  padding:8px!important;
+  border-radius:18px!important;
+  background:#111722!important;
+  border:1px solid rgba(255,255,255,.13)!important;
+  box-shadow:0 20px 55px rgba(0,0,0,.60)!important;
+  display:grid!important;
+  gap:6px!important;
+}
+.nativeMenuCard button{
+  height:46px!important;
+  width:100%!important;
+  border:0!important;
+  border-radius:13px!important;
+  background:transparent!important;
+  color:#fff!important;
+  display:flex!important;
+  align-items:center!important;
+  gap:10px!important;
+  padding:0 10px!important;
+  font-size:17px!important;
+  font-weight:800!important;
+  text-align:left!important;
+}
+.nativeMenuCard button:active{background:#1c2330!important}
+.nativeMenuCard span{
+  font-size:14.5px!important;
+  font-weight:760!important;
+}
+
 </style>
 </head>
 <body>
@@ -737,7 +798,16 @@ body,button,input{
 
 <div id="app" class="app" style="display:none">
 <div class="screen">
-<header class="header"><div class="topRow"><div class="brand">PRADO <b>SPORTS</b></div><button id="topMenuBtn" class="topMenuBtn" type="button" aria-label="Menu">☰</button></div></header>
+<header class="header"><div class="topRow"><div class="brand">PRADO <b>SPORTS</b></div>
+<details class="nativeMenu">
+  <summary>☰</summary>
+  <div class="nativeMenuCard">
+    <button type="button" onclick="show('notifications')">🔔 <span>Notificações</span></button>
+    <button type="button" onclick="show('language')">🌐 <span>Idioma</span></button>
+    <button type="button" onclick="show('theme')">🌙 <span>Tema</span></button>
+  </div>
+</details>
+</div></header>
 
 
 
@@ -1161,7 +1231,7 @@ document.addEventListener("DOMContentLoaded", function(){
   renderSetup();
   renderApp();
   renderFavorites();
-  if("serviceWorker" in navigator){navigator.serviceWorker.register("service-worker.js?v=308")}
+  if("serviceWorker" in navigator){navigator.serviceWorker.register("service-worker.js?v=309")}
 });
 
 (function(){
