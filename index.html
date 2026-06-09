@@ -9,369 +9,150 @@
 <meta name="apple-mobile-web-app-title" content="Prado Sports">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Prado Sports V17</title>
+<title>Prado Sports V18</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&display=swap');
-:root{
-  --bg:#000;
-  --card:#151922;
-  --card2:#202633;
-  --line:rgba(255,255,255,.09);
-  --gold:#f4bd3b;
-  --gold2:#ffd76a;
-  --muted:#aeb3bd;
-  --red:#ff385c;
-  --green:#55e889;
-}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&display=swap');
+:root{--bg:#000;--gold:#f4bd3b;--gold2:#ffd56a;--card:#151922;--card2:#202633;--line:rgba(255,255,255,.08);--muted:#aeb3bd;--red:#ff3558;--green:#49e583}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;background:#000;color:#fff;font-family:Montserrat,Arial,sans-serif}
-body{min-height:100dvh;overflow-x:hidden}
-button{font-family:inherit}
-.app{max-width:520px;margin:0 auto;min-height:100dvh;background:#000;position:relative}
-.screen{padding:0 16px calc(92px + env(safe-area-inset-bottom))}
-.header{
-  position:sticky;top:0;z-index:50;
-  padding:calc(8px + env(safe-area-inset-top)) 16px 12px;
-  margin:0 -16px;
-  display:flex;align-items:center;justify-content:space-between;
-  background:linear-gradient(180deg,#000,#000 80%,rgba(0,0,0,.82));
-  border-bottom:1px solid rgba(255,255,255,.06);
-}
-.brand{display:flex;align-items:center;gap:10px;font-weight:950;font-size:18px;letter-spacing:-.35px}
-.logoMark{
-  width:34px;height:34px;border-radius:12px;
-  display:grid;place-items:center;
-  background:linear-gradient(145deg,#ffdf78,#d69313);
-  color:#111;font-weight:950;font-size:22px;
-  box-shadow:0 0 20px rgba(244,189,59,.22)
-}
-.brand span:last-child b{color:var(--gold)}
-.header-icons{display:flex;align-items:center;gap:16px;color:var(--gold);font-size:21px}
+html,body{margin:0;background:#000;color:#fff;font-family:Inter,Arial,sans-serif;overflow-x:hidden}
+.app{max-width:520px;margin:0 auto;background:#000;min-height:100dvh}
+button,input{font-family:inherit}
+.page{display:none;animation:fade .22s ease}.page.active{display:block}@keyframes fade{from{opacity:.4;transform:translateY(4px)}to{opacity:1;transform:none}}
 
-.page{display:none;animation:fade .25s ease}
-.page.active{display:block}
-@keyframes fade{from{opacity:.45;transform:translateY(5px)}to{opacity:1;transform:none}}
+/* Splash */
+.splash{position:fixed;inset:0;z-index:99999;background:radial-gradient(circle at 50% 35%,rgba(244,189,59,.22),transparent 28%),#000;display:flex;align-items:center;justify-content:center;animation:splashOut .45s ease forwards;animation-delay:1.9s}
+.splashBox{text-align:center}.sLogo{width:116px;height:116px;border-radius:32px;margin:auto;display:grid;place-items:center;background:linear-gradient(145deg,#ffe37c,#d69212);color:#111;font-size:68px;font-weight:950;box-shadow:0 0 55px rgba(244,189,59,.35)}
+.splash h1{font-size:38px;line-height:.95;letter-spacing:-1.4px;margin:26px 0 12px;font-weight:950}.splash h1 span{color:var(--gold)}
+.splash p{font-size:14px;color:#ddd;font-weight:800}.load{width:130px;height:5px;border-radius:99px;background:#202020;margin:30px auto;overflow:hidden}.load:after{content:"";display:block;width:60%;height:100%;background:linear-gradient(90deg,#ff3358,#ffd15a,#42e580);animation:load 1.1s infinite}
+@keyframes load{from{transform:translateX(-110%)}to{transform:translateX(200%)}}@keyframes splashOut{to{opacity:0;visibility:hidden;pointer-events:none}}
 
-.splash{
-  position:fixed;inset:0;z-index:99999;background:
-  radial-gradient(circle at 50% 35%,rgba(244,189,59,.22),transparent 28%),
-  linear-gradient(180deg,#050505,#000);
-  display:flex;align-items:center;justify-content:center;
-  animation:hideSplash .55s ease forwards;animation-delay:2.35s;
-}
-.splash:before{
-  content:"";position:absolute;inset:0;
-  background:linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.9)),url('https://images.unsplash.com/photo-1517927033932-b3d18e61fb3a?auto=format&fit=crop&w=1300&q=80') center/cover;
-  opacity:.38;transform:scale(1.05)
-}
-.splashBox{position:relative;text-align:center;padding:26px}
-.splashLogo{
-  width:122px;height:122px;border-radius:34px;margin:0 auto 28px;
-  display:grid;place-items:center;
-  background:linear-gradient(145deg,#ffe483,#d39410);
-  color:#111;font-size:70px;font-weight:950;
-  box-shadow:0 0 58px rgba(244,189,59,.42);
-  animation:pulse 1.7s infinite ease-in-out;
-}
-.splashTitle{font-size:40px;line-height:.94;font-weight:950;letter-spacing:-1.4px}
-.splashTitle span{color:var(--gold)}
-.splashSub{margin:18px auto 0;max-width:310px;font-size:15px;line-height:1.45;color:#eee;font-weight:700}
-.loader{width:140px;height:5px;border-radius:999px;margin:32px auto 0;background:rgba(255,255,255,.14);overflow:hidden}
-.loader:after{content:"";display:block;width:60%;height:100%;border-radius:999px;background:linear-gradient(90deg,#ff3b58,var(--gold),#34d984);animation:load 1.25s infinite}
-@keyframes load{0%{transform:translateX(-120%)}100%{transform:translateX(210%)}}
-@keyframes pulse{50%{transform:scale(1.035);filter:brightness(1.12)}}
-@keyframes hideSplash{to{opacity:0;visibility:hidden;pointer-events:none}}
+/* Setup */
+.setup{min-height:100dvh;background:#000;padding:calc(18px + env(safe-area-inset-top)) 22px calc(116px + env(safe-area-inset-bottom))}
+.setup h1{font-size:32px;line-height:1.04;margin:0 0 8px;font-weight:950;letter-spacing:-1.1px}
+.setup h1 span{color:var(--gold)}.setup p{margin:0 0 20px;color:#b8bbc3;font-weight:800;font-size:16px;line-height:1.35}
+.setup .search{height:50px;border-radius:13px;background:#141414;border:1px solid rgba(255,255,255,.10);display:flex;align-items:center;gap:10px;padding:0 14px;color:#aaa;font-size:15px;font-weight:800;margin-bottom:24px}
+.label{font-weight:950;margin:0 0 10px;font-size:15px;color:#fff}
+.pickList{border-radius:16px;overflow:hidden;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.08)}
+.pick{height:58px;display:grid;grid-template-columns:48px 1fr 34px;align-items:center;gap:10px;padding:0 12px;border-bottom:1px solid rgba(255,255,255,.07)}
+.pick:last-child{border-bottom:0}.pick img{width:34px;height:34px;object-fit:contain}.pick b{font-size:16px;font-weight:850}.check{width:26px;height:26px;border-radius:50%;border:3px solid #303030;display:grid;place-items:center;color:#111;font-weight:950}.pick.selected .check{background:var(--gold);border-color:var(--gold)}
+.setupActions{position:fixed;bottom:0;left:0;right:0;z-index:50;background:#000;padding:14px 22px calc(18px + env(safe-area-inset-bottom));display:grid;gap:10px}.setupActions button{height:52px;border:0;border-radius:14px;font-size:17px;font-weight:950}.primary{background:linear-gradient(90deg,#ffd96c,#e2a51b);color:#111}.skip{background:transparent;color:var(--gold)}
 
-.hero{
-  margin-top:14px;border-radius:26px;padding:18px;min-height:188px;
-  background:
-  linear-gradient(120deg,rgba(0,0,0,.84),rgba(0,0,0,.32)),
-  radial-gradient(circle at 80% 10%,rgba(244,189,59,.18),transparent 32%),
-  url('https://images.unsplash.com/photo-1459865264687-595d652de67e?auto=format&fit=crop&w=1200&q=80') center/cover;
-  border:1px solid rgba(244,189,59,.16);
-}
-.heroTop{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(244,189,59,.35);border-radius:999px;padding:7px 10px;color:var(--gold);font-size:11px;font-weight:950;background:rgba(0,0,0,.25)}
-.hero h1{font-size:22px;line-height:1.05;letter-spacing:-.7px;margin:14px 0 8px}
-.hero h1 span{color:var(--gold)}
-.hero p{font-size:12px;line-height:1.38;color:#f0f0f0;max-width:78%;margin:0}
-.heroBtns{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:15px}
-.heroBtn{border:0;border-radius:16px;padding:11px 8px;font-size:12px;font-weight:950}
-.heroBtn.primary{background:linear-gradient(90deg,var(--gold2),var(--gold));color:#111}
-.heroBtn.secondary{background:rgba(255,255,255,.10);color:#fff;border:1px solid rgba(255,255,255,.16)}
+/* App */
+.screen{padding:0 16px calc(90px + env(safe-area-inset-bottom))}
+.top{position:sticky;top:0;z-index:40;background:#000;padding:calc(8px + env(safe-area-inset-top)) 0 10px;border-bottom:1px solid rgba(255,255,255,.06)}
+.brandRow{display:flex;align-items:center;justify-content:space-between}.brand{font-size:18px;font-weight:950;letter-spacing:-.35px}.brand span{color:var(--gold)}
+.searchBtn{border:0;background:transparent;color:var(--gold);font-size:25px}
+.searchPanel{display:none;margin-top:10px;background:#101010;border:1px solid rgba(255,255,255,.09);border-radius:14px;padding:10px}.searchPanel.active{display:block}
+.searchPanel input{width:100%;height:42px;border:0;border-radius:10px;background:#1c1c1c;color:#fff;padding:0 12px;font-weight:800}
+.searchResults{margin-top:8px;display:grid;gap:7px}.result{padding:9px 10px;background:#171717;border-radius:10px;font-size:13px;font-weight:800;color:#ddd}
 
-.sectionTitle{display:flex;align-items:center;justify-content:space-between;margin:18px 0 9px}
-.sectionTitle h2{margin:0;font-size:21px;letter-spacing:-.55px}
-.sectionTitle small{color:var(--gold);font-weight:950}
+.dates{display:grid;grid-template-columns:repeat(7,1fr);gap:0;margin:12px -16px 10px;padding:0 12px;border-bottom:1px solid rgba(255,255,255,.08);background:#000;overflow:hidden}
+.date{height:56px;text-align:center;color:#8b8f96;font-weight:900;font-size:12px;position:relative;padding-top:8px}.date b{display:block;font-size:16px;margin-top:4px}.date.active{color:var(--gold)}.date.active:after{content:"";position:absolute;left:20%;right:20%;bottom:0;height:4px;border-radius:4px;background:var(--gold)}
 
-.quickGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-.quick{background:linear-gradient(145deg,#151922,#202633);border:1px solid var(--line);border-radius:16px;padding:11px 4px;text-align:center;font-size:10px;font-weight:900;color:#fff}
-.quick b{display:block;font-size:20px;margin-bottom:5px}
+.heroMini{border-radius:21px;padding:15px;margin:12px 0;background:linear-gradient(120deg,rgba(0,0,0,.82),rgba(0,0,0,.32)),url('https://images.unsplash.com/photo-1459865264687-595d652de67e?auto=format&fit=crop&w=1200&q=78') center/cover;border:1px solid rgba(244,189,59,.12)}
+.heroMini h2{font-size:22px;line-height:1.08;margin:0 0 7px;font-weight:950;letter-spacing:-.6px}.heroMini h2 span{color:var(--gold)}.heroMini p{margin:0;color:#eee;font-size:12px;font-weight:750;line-height:1.35}.heroBtns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.heroBtns button{height:41px;border-radius:13px;border:0;font-weight:950}.heroBtns .live{background:var(--gold);color:#111}.heroBtns .ia{background:rgba(255,255,255,.09);color:#fff;border:1px solid rgba(255,255,255,.13)}
 
-.card{background:linear-gradient(145deg,#171c26,#222936);border:1px solid var(--line);border-radius:22px;padding:13px}
-.matchTop{display:flex;justify-content:space-between;color:var(--muted);font-size:11px;font-weight:950}
-.liveTag{color:#ff6b83}
-.teams{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px;margin:12px 0;text-align:center}
-.crest{width:44px;height:44px;object-fit:contain;border-radius:9px;background:transparent}
-.teamName{font-size:13px;font-weight:950;margin-top:4px}
-.score{font-size:25px;font-weight:950}
-.metrics{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px}
-.metric{background:#070707;border-radius:14px;padding:8px 4px;text-align:center}
-.metric small{display:block;color:var(--muted);font-size:9px;font-weight:800}
-.metric b{display:block;color:var(--gold);font-size:16px;margin-top:3px}
+.title{display:flex;align-items:center;justify-content:space-between;margin:17px 0 9px}.title h2{margin:0;font-size:22px;letter-spacing:-.6px}.title small{color:var(--gold);font-weight:950}
+.match{background:linear-gradient(145deg,#151922,#202633);border:1px solid var(--line);border-radius:20px;padding:13px;margin-bottom:10px}
+.mt{display:flex;justify-content:space-between;font-size:12px;font-weight:900;color:#b5b8c0}.liveText{color:var(--green)}
+.teams{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;text-align:center;gap:7px;margin:12px 0}.crest{width:46px;height:46px;object-fit:contain;background:transparent!important;border:0!important;box-shadow:none!important;filter:none!important}.name{font-size:13px;font-weight:950;margin-top:5px}.score{font-size:27px;font-weight:950}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.metric{background:#070707;border-radius:13px;padding:8px 4px;text-align:center}.metric small{display:block;color:#aeb3bd;font-size:9px;font-weight:800}.metric b{color:var(--gold);font-size:16px}
+.aiBar{height:10px;border-radius:99px;background:#070707;overflow:hidden;margin:10px 0}.aiBar div{height:100%;background:linear-gradient(90deg,#ff385c,#ffe061,#45df7d)}
+.aiLine{display:flex;justify-content:space-between;border-top:1px solid rgba(255,255,255,.08);padding:10px 0 0;font-weight:850}.aiLine b{color:var(--gold)}
 
-.miniRow{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.miniMatch{background:linear-gradient(145deg,#161b24,#202633);border:1px solid var(--line);border-radius:18px;padding:10px}
-.miniMatch .crest{width:30px;height:30px}
-.miniTeams{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:5px;margin-top:8px;text-align:center;font-size:10px;font-weight:900}
-.news{display:grid;gap:9px}
-.newsItem{background:linear-gradient(145deg,#151922,#202633);border:1px solid var(--line);border-radius:18px;padding:13px;font-size:13px;line-height:1.35}
-.newsItem small{display:block;margin-top:5px;color:var(--muted)}
+.moreGrid,.compGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.tile{background:linear-gradient(145deg,#151922,#202633);border:1px solid var(--line);border-radius:19px;padding:15px;min-height:104px}.tile span{font-size:25px}.tile b{display:block;margin-top:12px;font-size:17px}.tile small{color:#b6bac2;font-weight:800}
 
-.aiCard{display:grid;gap:10px}
-.aiBar{height:10px;background:#090909;border-radius:999px;overflow:hidden}
-.aiBar div{height:100%;width:86%;background:linear-gradient(90deg,#ff3b58,#ffe066,#49dd7b)}
-.aiLine{display:flex;justify-content:space-between;border-top:1px solid rgba(255,255,255,.08);padding-top:9px;font-size:14px;font-weight:900}
-.aiLine b{color:var(--gold)}
+.newsItem{background:linear-gradient(145deg,#151922,#202633);border:1px solid var(--line);border-radius:16px;padding:13px;margin-bottom:9px}.newsItem b{font-size:14px}.newsItem small{display:block;margin-top:5px;color:#aaa;font-weight:750}
 
-.compTabs{display:flex;gap:8px;overflow:auto;margin-bottom:12px}
-.tab{border:0;border-radius:999px;padding:9px 13px;font-weight:950;background:#151922;color:#fff}
-.tab.active{background:var(--gold);color:#111}
-.compGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.comp{background:linear-gradient(145deg,#171c26,#222936);border:1px solid var(--line);border-radius:18px;padding:13px;min-height:92px}
-.comp b{display:block;margin-top:12px}
-.comp small{color:var(--muted);font-weight:900}
-
-.moreGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.more{background:linear-gradient(145deg,#171c26,#222936);border:1px solid var(--line);border-radius:20px;padding:17px;min-height:112px}
-.more span{font-size:26px}.more b{display:block;margin-top:14px;font-size:17px}.more small{color:var(--muted);font-weight:800}
-
-.settingsCard{background:linear-gradient(145deg,#171c26,#222936);border:1px solid var(--line);border-radius:20px;padding:15px;margin-bottom:12px}
-.settingLine{display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(255,255,255,.08);padding:11px 0;font-weight:900}
-.settingLine:first-of-type{border-top:0}
-.toggle{width:46px;height:26px;border-radius:999px;background:linear-gradient(90deg,var(--gold2),var(--gold));position:relative}
-.toggle:after{content:"";position:absolute;width:20px;height:20px;border-radius:50%;background:#111;right:3px;top:3px}
-.request{width:100%;border:0;border-radius:16px;padding:12px;background:linear-gradient(90deg,var(--gold2),var(--gold));color:#111;font-weight:950}
-
-.setup{padding:calc(18px + env(safe-area-inset-top)) 18px calc(126px + env(safe-area-inset-bottom));background:#000;min-height:100dvh}
-.setup h1{font-size:32px;line-height:1.05;color:var(--gold);letter-spacing:-1px;margin:0 0 8px}
-.setup p{color:#b7bac2;font-size:15px;font-weight:800;margin:0 0 15px}
-.setupTabs{display:flex;gap:8px;overflow:auto;margin-bottom:12px}
-.setupTabs button{border:0;border-radius:999px;padding:8px 12px;background:rgba(255,255,255,.08);color:#c7c9d1;font-size:11px;font-weight:900}
-.setupTabs .active{background:var(--gold);color:#111}
-.searchBox{height:54px;border-radius:18px;background:#f4f4f4;color:#111827;display:flex;align-items:center;justify-content:space-between;padding:0 18px;font-size:15px;font-weight:900;margin-bottom:14px}
-.setupList{display:grid;gap:11px}
-.pickItem{height:88px;border-radius:19px;background:#f4f4f4;color:#111827;display:grid;grid-template-columns:54px 1fr auto;align-items:center;gap:13px;padding:12px 16px}
-.pickItem img{width:48px;height:48px;object-fit:contain;border-radius:8px}
-.pickItem b{font-size:20px}.pickItem small{color:#6c7280;font-weight:850}
-.star{font-size:30px}
-.setupActions{position:fixed;left:0;right:0;bottom:0;z-index:60;background:#e8e8e8;padding:14px 18px calc(18px + env(safe-area-inset-bottom));display:grid;gap:10px}
-.setupActions button{height:54px;border:0;border-radius:999px;font-size:17px;font-weight:950}
-.setupActions .primary{background:#cfeec8;color:#47743e}.setupActions .secondary{background:#fff;color:#469246}
-
-.bottomNav{position:fixed;left:0;right:0;bottom:0;z-index:55;background:linear-gradient(180deg,rgba(0,0,0,.75),#050505 35%);border-top:1px solid rgba(255,255,255,.08);padding:8px 10px calc(8px + env(safe-area-inset-bottom))}
-.navInner{max-width:520px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
-.navBtn{border:0;background:transparent;color:#a8a8a8;border-radius:18px;padding:8px 2px;font-weight:900;font-size:10px}
-.navBtn span{display:block;font-size:22px;margin-bottom:3px}.navBtn.active{background:rgba(255,255,255,.12);color:var(--gold)}
+.bottom{position:fixed;bottom:0;left:0;right:0;z-index:44;background:linear-gradient(180deg,rgba(0,0,0,.72),#050505 35%);border-top:1px solid rgba(255,255,255,.08);padding:8px 10px calc(8px + env(safe-area-inset-bottom))}
+.nav{max-width:520px;margin:auto;display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.nav button{border:0;background:transparent;color:#9b9b9b;border-radius:17px;padding:8px 2px;font-weight:900;font-size:10px}.nav span{display:block;font-size:21px;margin-bottom:3px}.nav .active{background:rgba(255,255,255,.12);color:var(--gold)}
 </style>
 </head>
 <body>
-<div class="splash">
-  <div class="splashBox">
-    <div class="splashLogo">P</div>
-    <div class="splashTitle">PRADO<br><span>SPORTS</span></div>
-    <div class="splashSub">Futebol inteligente em tempo real.</div>
-    <div class="loader"></div>
-  </div>
-</div>
+<div class="splash"><div class="splashBox"><div class="sLogo">P</div><h1>PRADO<br><span>SPORTS</span></h1><p>Futebol inteligente em tempo real.</p><div class="load"></div></div></div>
 
-<div id="setupPage" class="setup">
-  <h1 id="setupTitle">Times favoritos</h1>
-  <p id="setupSub">Quais times você mais acompanha?</p>
-  <div class="setupTabs"><button class="active">JOGOS</button><button>EQUIPES</button><button>JOGADORES</button><button>NOTÍCIAS</button></div>
-  <div class="searchBox"><span id="setupSearch">Buscar time</span><span>🔎</span></div>
-  <div id="setupList" class="setupList"></div>
-  <div class="setupActions">
-    <button class="primary" onclick="nextSetup()" id="setupNext">Próximo</button>
-    <button class="secondary" onclick="enterApp()">Lembrar depois</button>
-  </div>
+<div id="setup" class="setup">
+  <h1 id="setTitle">Times <span>favoritos</span></h1>
+  <p id="setSub">Escolha seus times para personalizar sua experiência</p>
+  <div class="search">⌕ <span id="setSearch">Buscar time</span></div>
+  <div class="label">Populares</div>
+  <div id="pickList" class="pickList"></div>
+  <div class="setupActions"><button class="primary" onclick="nextSetup()">Próximo</button><button class="skip" onclick="enterApp()">Pular</button></div>
 </div>
 
 <div id="app" class="app" style="display:none">
   <div class="screen">
-    <header class="header">
-      <div class="brand"><div class="logoMark">P</div><span>PRADO <b>SPORTS</b></span></div>
-      <div class="header-icons"><span>⌕</span><span>🔔</span></div>
-    </header>
+    <div class="top">
+      <div class="brandRow"><div class="brand">PRADO <span>SPORTS</span></div><button class="searchBtn" onclick="toggleSearch()">⌕</button></div>
+      <div id="searchPanel" class="searchPanel"><input id="q" placeholder="Buscar times, ligas e jogos..." oninput="doSearch()"><div id="searchResults" class="searchResults"></div></div>
+    </div>
 
     <section id="home" class="page active">
-      <div class="hero">
-        <div class="heroTop">🏆 PRADO SPORTS</div>
-        <h1>Sua central de futebol <span>inteligente</span></h1>
-        <p>Placares, escalações, estatísticas e Escanteios IA.</p>
-        <div class="heroBtns">
-          <button class="heroBtn primary" onclick="showPage('live')">⚽ Ao Vivo</button>
-          <button class="heroBtn secondary" onclick="showPage('ai')">🚩 IA Cantos</button>
-        </div>
-      </div>
-
-      <div class="sectionTitle"><h2>⚡ Acesso rápido</h2><small>Hoje</small></div>
-      <div class="quickGrid">
-        <div class="quick" onclick="showPage('live')"><b>🔴</b>Ao vivo</div>
-        <div class="quick" onclick="showPage('ai')"><b>🚩</b>IA</div>
-        <div class="quick" onclick="showPage('comp')"><b>🏆</b>Ligas</div>
-        <div class="quick" onclick="showPage('settings')"><b>🔔</b>Alertas</div>
-      </div>
-
-      <div class="sectionTitle"><h2>⚽ Destaque</h2><small>Principal</small></div>
-      <div id="featured"></div>
-
-      <div class="sectionTitle"><h2>📅 Próximos jogos</h2><small>Favoritos</small></div>
-      <div id="upcoming" class="news"></div>
-
-      <div class="sectionTitle"><h2>📰 Notícias</h2><small>Resumo</small></div>
-      <div class="news">
-        <div class="newsItem"><b>Escalações confirmadas em breve</b><small>Receba alerta antes do jogo começar.</small></div>
-        <div class="newsItem"><b>Escanteios IA em alta</b><small>Palmeiras x São Paulo aparece como jogo forte.</small></div>
-      </div>
+      <div class="dates" id="dates"></div>
+      <div class="heroMini"><h2>Prado Sports <span>placares e IA</span></h2><p>Ao vivo, escalações, competições e Escanteios IA.</p><div class="heroBtns"><button class="live" onclick="go('live')">🔴 Ao vivo</button><button class="ia" onclick="go('ai')">🚩 Escanteios IA</button></div></div>
+      <div class="title"><h2>⚽ Jogos de hoje</h2><small>Principal</small></div>
+      <div id="todayGames"></div>
+      <div class="title"><h2>⭐ Favoritos</h2><small>Seu app</small></div>
+      <div class="newsItem"><b>Vasco x Flamengo</b><small>Hoje • 21:30 • Brasileirão Série A</small></div>
+      <div class="title"><h2>🚩 Escanteios IA</h2><small>Top</small></div>
+      <div id="homeAI"></div>
     </section>
 
-    <section id="live" class="page">
-      <div class="sectionTitle"><h2>🔴 Ao Vivo</h2><small>Tempo real</small></div>
-      <div id="liveList"></div>
-    </section>
-
-    <section id="fav" class="page">
-      <div class="sectionTitle"><h2>⭐ Favoritos</h2><small>Seu app</small></div>
-      <div class="news">
-        <div class="newsItem"><b>Vasco x Flamengo</b><small>Hoje • 21:30 • Brasileirão Série A</small></div>
-        <div class="newsItem"><b>Brasil x Argentina</b><small>Próximo jogo favorito • Amistoso</small></div>
-      </div>
-    </section>
-
-    <section id="comp" class="page">
-      <div class="sectionTitle"><h2>🏆 Competições</h2><small>Mundo</small></div>
-      <div class="compTabs"><button class="tab active">Todos</button><button class="tab">Brasil</button><button class="tab">Europa</button><button class="tab">América</button></div>
-      <div class="compGrid" id="compGrid"></div>
-    </section>
-
-    <section id="ai" class="page">
-      <div class="sectionTitle"><h2>🚩 Escanteios IA</h2><small>Top do dia</small></div>
-      <div id="aiList"></div>
-    </section>
-
-    <section id="more" class="page">
-      <div class="sectionTitle"><h2>☰ Mais</h2><small>Organizado</small></div>
-      <div class="moreGrid">
-        <div class="more" onclick="showPage('ai')"><span>🚩</span><b>Escanteios IA</b><small>Top jogos e tendências</small></div>
-        <div class="more"><span>🏆</span><b>Tabelas</b><small>Classificações</small></div>
-        <div class="more"><span>🎯</span><b>Artilheiros</b><small>Gols e assistências</small></div>
-        <div class="more" onclick="showPage('settings')"><span>🔔</span><b>Notificações</b><small>Gol, cartão e escanteio</small></div>
-        <div class="more"><span>📈</span><b>Ranking cantos</b><small>Times com mais escanteios</small></div>
-        <div class="more" onclick="showPage('settings')"><span>⚙️</span><b>Configurações</b><small>Alertas e preferências</small></div>
-      </div>
-    </section>
-
-    <section id="settings" class="page">
-      <div class="sectionTitle"><h2>⚙️ Configurações</h2><small>Alertas</small></div>
-      <div class="settingsCard">
-        <h3>🔔 Notificações</h3>
-        <p style="color:var(--muted);font-weight:800;font-size:13px">Escolha os alertas que quer receber no Prado Sports.</p>
-        <button class="request" onclick="requestNotify()">Permitir notificações</button>
-        <p id="notifyStatus" style="color:var(--muted);font-size:12px">Status: aguardando permissão</p>
-      </div>
-      <div class="settingsCard">
-        <div class="settingLine"><span>⚽ Gol</span><div class="toggle"></div></div>
-        <div class="settingLine"><span>🚩 Escanteio</span><div class="toggle"></div></div>
-        <div class="settingLine"><span>🟨 Cartão</span><div class="toggle"></div></div>
-        <div class="settingLine"><span>📋 Escalação</span><div class="toggle"></div></div>
-        <div class="settingLine"><span>⏱️ Início / intervalo / fim</span><div class="toggle"></div></div>
-      </div>
-    </section>
+    <section id="live" class="page"><div class="title"><h2>🔴 Ao Vivo</h2><small>Tempo real</small></div><div id="liveList"></div></section>
+    <section id="fav" class="page"><div class="title"><h2>⭐ Favoritos</h2><small>Personalizado</small></div><div class="newsItem"><b>Vasco x Flamengo</b><small>Hoje • 21:30</small></div><div class="newsItem"><b>Brasil x Argentina</b><small>Próximo favorito</small></div></section>
+    <section id="comp" class="page"><div class="title"><h2>🏆 Competições</h2><small>Mundo</small></div><div id="compGrid" class="compGrid"></div></section>
+    <section id="ai" class="page"><div class="title"><h2>🚩 Escanteios IA</h2><small>Top do dia</small></div><div id="aiList"></div></section>
+    <section id="more" class="page"><div class="title"><h2>☰ Mais</h2><small>Organizado</small></div><div class="moreGrid"><div class="tile" onclick="go('ai')"><span>🚩</span><b>Escanteios IA</b><small>Top jogos</small></div><div class="tile"><span>🏆</span><b>Tabelas</b><small>Classificações</small></div><div class="tile"><span>🎯</span><b>Artilheiros</b><small>Gols</small></div><div class="tile"><span>⚙️</span><b>Configurações</b><small>Alertas</small></div></div></section>
   </div>
 
-  <nav class="bottomNav">
-    <div class="navInner">
-      <button class="navBtn active" onclick="showPage('home',this)"><span>🏠</span>Início</button>
-      <button class="navBtn" onclick="showPage('live',this)"><span>🔴</span>Ao vivo</button>
-      <button class="navBtn" onclick="showPage('fav',this)"><span>⭐</span>Favoritos</button>
-      <button class="navBtn" onclick="showPage('comp',this)"><span>🏆</span>Competições</button>
-      <button class="navBtn" onclick="showPage('more',this)"><span>☰</span>Mais</button>
-    </div>
-  </nav>
+  <div class="bottom"><div class="nav"><button class="active" onclick="go('home',this)"><span>🏠</span>Início</button><button onclick="go('live',this)"><span>🔴</span>Ao vivo</button><button onclick="go('fav',this)"><span>⭐</span>Favoritos</button><button onclick="go('comp',this)"><span>🏆</span>Competições</button><button onclick="go('more',this)"><span>☰</span>Mais</button></div></div>
 </div>
 
 <script>
-const teams={
-  vasco:{name:'Vasco', crest:'https://media.api-sports.io/football/teams/133.png'},
-  fla:{name:'Flamengo', crest:'https://media.api-sports.io/football/teams/127.png'},
-  pal:{name:'Palmeiras', crest:'https://media.api-sports.io/football/teams/121.png'},
-  sp:{name:'São Paulo', crest:'https://media.api-sports.io/football/teams/126.png'},
-  flu:{name:'Fluminense', crest:'https://media.api-sports.io/football/teams/124.png'},
-  boca:{name:'Boca Juniors', crest:'https://media.api-sports.io/football/teams/451.png'}
+const logos={
+ vasco:'https://media.api-sports.io/football/teams/133.png', fla:'https://media.api-sports.io/football/teams/127.png',
+ cor:'https://media.api-sports.io/football/teams/131.png', pal:'https://media.api-sports.io/football/teams/121.png',
+ san:'https://media.api-sports.io/football/teams/128.png', sp:'https://media.api-sports.io/football/teams/126.png',
+ inter:'https://media.api-sports.io/football/teams/119.png', flu:'https://media.api-sports.io/football/teams/124.png',
+ boca:'https://media.api-sports.io/football/teams/451.png'
 };
+const teams=[['Vasco',logos.vasco],['Flamengo',logos.fla],['Corinthians',logos.cor],['Palmeiras',logos.pal],['Santos',logos.san],['São Paulo',logos.sp],['Internacional',logos.inter]];
+const comps=[['Copa do Mundo','🌎'],['Libertadores','🏆'],['Sul-Americana','🏆'],['Brasileirão Série A','🏆'],['Premier League','🏴'],['La Liga','🇪🇸'],['Champions League','⭐'],['Serie A','🇮🇹']];
 const matches=[
-  {league:'Brasileirão Série A',home:teams.vasco,away:teams.fla,score:'2 - 1',time:'2º Tempo • 67:15',corners:8,pressure:84},
-  {league:'Brasileirão Série A',home:teams.pal,away:teams.sp,score:'2 - 1',time:'2º Tempo • 67\\'',corners:10,pressure:88},
-  {league:'Libertadores',home:teams.flu,away:teams.boca,score:'1 - 0',time:'2º Tempo • 52\\'',corners:6,pressure:73}
+ {l:'Brasileirão Série A',h:['Vasco',logos.vasco],a:['Flamengo',logos.fla],s:'2 - 1',t:'2º Tempo • 67:15',c:8,p:84},
+ {l:'Brasileirão Série A',h:['Palmeiras',logos.pal],a:['São Paulo',logos.sp],s:'2 - 1',t:'2º Tempo • 67\\'',c:10,p:88},
+ {l:'Libertadores',h:['Fluminense',logos.flu],a:['Boca Juniors',logos.boca],s:'1 - 0',t:'2º Tempo • 52\\'',c:6,p:73}
 ];
-const setupTeams=[
-  ['Brasil','🌎 Futebol','https://flagcdn.com/w80/br.png'],
-  ['Vasco','🌎 Futebol','https://media.api-sports.io/football/teams/133.png'],
-  ['Argentina','🌎 Futebol','https://flagcdn.com/w80/ar.png'],
-  ['Corinthians','🌎 Futebol','https://media.api-sports.io/football/teams/131.png'],
-  ['Flamengo','🌎 Futebol','https://media.api-sports.io/football/teams/127.png'],
-  ['Palmeiras','🌎 Futebol','https://media.api-sports.io/football/teams/121.png'],
-  ['São Paulo','🌎 Futebol','https://media.api-sports.io/football/teams/126.png']
-];
-const setupComps=[
-  ['Copa do Mundo','🌎 Mundo','https://cdn-icons-png.flaticon.com/512/197/197386.png'],
-  ['Brasileirão Série A','🌎 Brasil','https://cdn-icons-png.flaticon.com/512/2583/2583344.png'],
-  ['Brasileirão Série B','🌎 Brasil','https://cdn-icons-png.flaticon.com/512/2583/2583344.png'],
-  ['Libertadores','🌎 América','https://cdn-icons-png.flaticon.com/512/2583/2583344.png'],
-  ['Champions League','🌎 Europa','https://cdn-icons-png.flaticon.com/512/2583/2583344.png']
-];
-let setupStep=0;
+let step=0;
 function renderSetup(){
-  const data=setupStep===0?setupTeams:setupComps;
-  setupTitle.textContent=setupStep===0?'Times favoritos':'Competições favoritas';
-  setupSub.textContent=setupStep===0?'Quais times você mais acompanha?':'Quais competições você deseja acompanhar?';
-  setupSearch.textContent=setupStep===0?'Buscar time':'Buscar competição';
-  setupNext.textContent=setupStep===0?'Próximo':'Entrar no app';
-  setupList.innerHTML=data.map(i=>`<div class="pickItem"><img src="${i[2]}"><div><b>${i[0]}</b><br><small>${i[1]}</small></div><div class="star">☆</div></div>`).join('');
+ const data=step?comps.map(x=>[x[0],null,x[1]]):teams.map(x=>[x[0],x[1],null]);
+ setTitle.innerHTML=step?'Competições <span>favoritas</span>':'Times <span>favoritos</span>';
+ setSub.textContent=step?'Escolha as competições que você deseja acompanhar':'Escolha seus times para personalizar sua experiência';
+ setSearch.textContent=step?'Buscar competição':'Buscar time';
+ pickList.innerHTML=data.map((x,i)=>`<div class="pick ${i<3?'selected':''}">${x[1]?`<img src="${x[1]}">`:`<div style="font-size:25px">${x[2]}</div>`}<b>${x[0]}</b><div class="check">${i<3?'✓':''}</div></div>`).join('');
 }
-function nextSetup(){ if(setupStep===0){setupStep=1;renderSetup();}else enterApp(); }
-function enterApp(){setupPage.style.display='none';app.style.display='block';}
-function teamBlock(t){return `<img class="crest" src="${t.crest}"><div class="teamName">${t.name}</div>`}
-function matchCard(m){
- return `<div class="card" onclick="showPage('settings')">
- <div class="matchTop"><span>${m.league}</span><span class="liveTag">● ${m.time}</span></div>
- <div class="teams"><div>${teamBlock(m.home)}</div><div class="score">${m.score}</div><div>${teamBlock(m.away)}</div></div>
- <div class="metrics"><div class="metric"><small>Escanteios</small><b>${m.corners}</b></div><div class="metric"><small>Pressão IA</small><b>${m.pressure}%</b></div><div class="metric"><small>Status</small><b>Ao vivo</b></div></div>
- </div>`;
+function nextSetup(){ if(step===0){step=1;renderSetup()}else enterApp() }
+function enterApp(){setup.style.display='none';app.style.display='block'}
+function dateBar(){
+ const dias=['SA','DO','SE','HOJE','QU','QT','SX'], nums=['06','07','08','09','10','11','12'];
+ dates.innerHTML=dias.map((d,i)=>`<div class="date ${i==3?'active':''}">${d}<b>${nums[i]}.06.</b></div>`).join('');
 }
-function aiCard(m){
- return `<div class="card aiCard"><div class="matchTop"><span>${m.home.name} x ${m.away.name}</span><span>${m.league}</span></div><div class="aiBar"><div style="width:${Math.min(92,m.pressure)}%"></div></div><div class="aiLine"><span>Over 8.5 escanteios</span><b>${m.pressure>80?'Forte':'Moderado'}</b></div><div class="aiLine"><span>Média projetada</span><b>${(m.corners+2.4).toFixed(1)}</b></div></div>`;
+function crest(t){return `<img class="crest" src="${t[1]}"><div class="name">${t[0]}</div>`}
+function match(m){
+ return `<div class="match"><div class="mt"><span>${m.l}</span><span class="liveText">● ${m.t}</span></div><div class="teams"><div>${crest(m.h)}</div><div class="score">${m.s}</div><div>${crest(m.a)}</div></div><div class="metrics"><div class="metric"><small>Escanteios</small><b>${m.c}</b></div><div class="metric"><small>Pressão IA</small><b>${m.p}%</b></div><div class="metric"><small>Status</small><b>Ao vivo</b></div></div></div>`
+}
+function ai(m){
+ return `<div class="match"><div class="mt"><span>${m.h[0]} x ${m.a[0]}</span><span>${m.l}</span></div><div class="aiBar"><div style="width:${m.p}%"></div></div><div class="aiLine"><span>Over 8.5 escanteios</span><b>${m.p>80?'Forte':'Moderado'}</b></div><div class="aiLine"><span>Média projetada</span><b>${(m.c+2.4).toFixed(1)}</b></div></div>`
 }
 function render(){
- featured.innerHTML=matchCard(matches[0]);
- liveList.innerHTML=matches.map(matchCard).join('<br>');
- aiList.innerHTML=matches.map(aiCard).join('<br>');
- upcoming.innerHTML=`<div class="newsItem"><b>Vasco x Flamengo</b><small>Hoje • 21:30 • Brasileirão Série A</small></div><div class="newsItem"><b>Brasil x Argentina</b><small>Próximo jogo favorito • Amistoso</small></div>`;
- compGrid.innerHTML=['🌎 Copa do Mundo|Mundo','🏆 Brasileirão Série A|Brasil','🏆 Brasileirão Série B|Brasil','🏆 Copa do Brasil|Brasil','🏆 Libertadores|América','🏆 Champions League|Europa','🏆 Premier League|Inglaterra','🏆 LaLiga|Espanha'].map(x=>{let [a,b]=x.split('|');return `<div class="comp"><span>${a}</span><b>Jogos hoje</b><small>${b}</small></div>`}).join('');
+ dateBar(); todayGames.innerHTML=matches.map(match).join(''); liveList.innerHTML=matches.map(match).join(''); aiList.innerHTML=matches.map(ai).join(''); homeAI.innerHTML=ai(matches[1]);
+ compGrid.innerHTML=comps.map(x=>`<div class="tile"><span>${x[1]}</span><b>${x[0]}</b><small>Jogos hoje</small></div>`).join('');
 }
-function showPage(id,btn){
- document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
- document.getElementById(id).classList.add('active');
- document.querySelectorAll('.navBtn').forEach(b=>b.classList.remove('active'));
- if(btn)btn.classList.add('active');
-}
-function requestNotify(){
- const el=document.getElementById('notifyStatus');
- if(!('Notification' in window)){el.textContent='Status: navegador sem suporte.';return;}
- Notification.requestPermission().then(p=>{el.textContent='Status: '+(p==='granted'?'notificações permitidas ✅':'permissão não ativada');if(p==='granted'){try{new Notification('Prado Sports',{body:'Alertas ativados.',icon:'icon-192.png'});}catch(e){}}});
-}
+function go(id,btn){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active')); if(btn)btn.classList.add('active')}
+function toggleSearch(){searchPanel.classList.toggle('active');q?.focus()}
+function doSearch(){let v=q.value.toLowerCase();let all=['Vasco','Flamengo','Palmeiras','São Paulo','Brasileirão Série A','Libertadores','Escanteios IA'];searchResults.innerHTML=all.filter(x=>x.toLowerCase().includes(v)).map(x=>`<div class="result">⌕ ${x}</div>`).join('')}
 renderSetup();render();
-if('serviceWorker' in navigator){navigator.serviceWorker.register('service-worker.js?v=17');}
+if('serviceWorker' in navigator){navigator.serviceWorker.register('service-worker.js?v=18')}
 </script>
 </body>
 </html>
