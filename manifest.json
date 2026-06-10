@@ -1,0 +1,43 @@
+{
+  "name": "Prado IA",
+  "short_name": "Prado IA",
+  "description": "Scanner de apostas esportivas com Inteligência Artificial",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#080808",
+  "theme_color": "#080808",
+  "orientation": "portrait-primary",
+  "lang": "pt-BR",
+  "categories": ["sports", "entertainment"],
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Scanner",
+      "short_name": "Scanner",
+      "description": "Abrir scanner de alto valor",
+      "url": "./index.html#scanner",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Bilhete do Dia",
+      "short_name": "Bilhete",
+      "description": "Ver bilhete gerado por IA",
+      "url": "./index.html#bilhete",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}

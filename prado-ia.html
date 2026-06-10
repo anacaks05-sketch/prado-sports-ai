@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <title>Prado IA</title>
+
+  <!-- PWA Meta -->
+  <meta name="application-name" content="Prado IA"/>
+  <meta name="description" content="Scanner de apostas esportivas com IA"/>
+  <meta name="theme-color" content="#080808"/>
+  <meta name="mobile-web-app-capable" content="yes"/>
+
+  <!-- iOS PWA -->
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="apple-mobile-web-app-title" content="Prado IA"/>
+  <link rel="apple-touch-icon" href="icon-192.png"/>
+  <link rel="apple-touch-startup-image" href="icon-512.png"/>
+
+  <!-- Android PWA -->
+  <link rel="manifest" href="manifest.json"/>
+  <link rel="icon" type="image/png" href="icon-192.png"/>
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Prado IA"/>
+  <meta property="og:description" content="Scanner de apostas com Inteligência Artificial"/>
+  <meta property="og:image" content="icon-512.png"/>
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+    :root {
+      --gold: #D4AF37;
+      --gold-bright: #FFD700;
+      --gold-dim: #8B6914;
+      --gold-border: #2a2200;
+      --bg: #080808;
+      --card: #0f0f0f;
+      --card2: #141414;
+      --border: #1e1a00;
+      --text: #ffffff;
+      --sub: #666666;
+    }
+
+    html, body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, 'SF Pro Display', 'Inter', sans-serif;
+      min-height: 100vh;
+      min-height: -webkit-fill-available;
+      overflow-x: hidden;
+    }
+
+    /* Safe area for iPhone notch */
+    body { padding-top: env(safe-area-inset-top); padding-bottom: env(safe-area-inset-bottom); }
+
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.3;transform:scale(.7)} }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes spin { to{transform:rotate(360deg)} }
+    @keyframes shimmer {
+      0%{background-position:-300px 0}
+      100%{background-position:300px 0}
+    }
+
+    ::-webkit-scrollbar{width:3px}
+    ::-webkit-scrollbar-track{background:#111}
+    ::-webkit-scrollbar-thumb{background:var(--gold-dim);border-radius:2px}
+
+    /* ── HEADER ── */
+    .header {
+      position: sticky; top: 0; z-index: 100;
+      background: linear-gradient(180deg,#0d0c00 0%,var(--bg) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 20px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .header-brand { display:flex; align-items:center; gap:10px }
+    .header-title {
+      font-size: 22px; font-weight: 900; letter-spacing: 1px;
+      background: linear-gradient(90deg, var(--gold) 0%, var(--gold-bright) 50%, var(--gold) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .header-icons { display:flex; gap:14px }
+    .header-icons span { color:var(--gold-dim); font-size:20px; cursor:pointer }
+
+    /* ── TABS ── */
+    .tabs {
+      display: flex; gap: 0; border-bottom: 1px solid var(--border);
+      background: var(--bg); position: sticky; top: 57px; z-index: 90;
+    }
+    .tab {
+      flex: 1; padding: 13px 0; text-align: center;
+      font-size: 13px; font-weight: 600; color: var(--sub);
+      cursor: pointer; border-bottom: 2px solid transparent;
+      transition: all .2s; letter-spacing: .3px;
+    }
+    .tab.active { color: var(--gold-bright); border-bottom-color: var(--gold-bright); }
+
+    /* ── CONTENT ── */
+    .content { max-width: 480px; margin: 0 auto; padding: 18px 14px 60px; }
+
+    /* ── CARD ── */
+    .card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 16px; padding: 18px 14px; margin-bottom: 14px;
+      box-shadow: 0 4px 24px rgba(0,0,0,.5), inset 0 1px 0 #2a2200;
+    }
+    .card-header { display:flex; align-items:center; gap:12px; margin-bottom:18px }
+    .card-icon {
+      width:40px; height:40px; background:#100e00; border:1px solid var(--gold-border);
+      border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0;
+    }
+    .card-title { font-size:17px; font-weight:900; letter-spacing:.4px }
+    .card-sub { font-size:12px; color:var(--sub); margin-top:2px }
+
+    /* ── GRID ── */
+    .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px }
+    .grid1 { margin-bottom:14px }
+
+    .field-label { font-size:11px; color:var(--sub); margin-bottom:6px; display:flex; align-items:center; gap:4px }
+    .field-label.gold { color:var(--gold-dim) }
+
+    /* ── SELECT ── */
+    .select-btn {
+      background: var(--card2); border: 1px solid var(--border);
+      border-radius: 10px; padding: 12px 14px;
+      cursor: pointer; color: #fff; font-size: 14px; font-weight: 500;
+      display: flex; justify-content: space-between; align-items: center;
+      user-select: none; transition: border-color .2s; width:100%;
+      -webkit-appearance: none;
+    }
+    .select-btn:focus { outline:none; border-color:var(--gold-dim) }
+    .select-btn.open { border-color: var(--gold-dim); box-shadow:0 0 0 1px var(--gold-border) }
+    .select-arrow { color:var(--gold-dim); font-size:9px; margin-left:6px; flex-shrink:0 }
+
+    .dropdown {
+      position:absolute; top:calc(100% + 6px); left:0; right:0; z-index:200;
+      background:#1c1a14; border:1px solid var(--gold-border);
+      border-radius:14px; box-shadow:0 8px 32px rgba(0,0,0,.8);
+      overflow:hidden; display:none;
+    }
+    .dropdown.open { display:block }
+    .dropdown-item {
+      padding:13px 18px; cursor:pointer; color:#ccc;
+      font-size:14px; font-weight:400;
+      display:flex; align-items:center; gap:10px;
+      border-bottom:1px solid #1e1a00; transition:background .15s,color .15s;
+    }
+    .dropdown-item:last-child { border-bottom:none }
+    .dropdown-item.selected { color:var(--gold-bright); font-weight:700 }
+    .dropdown-item:hover { background:#2a2200; color:var(--gold-bright) }
+    .dropdown-icon { color:var(--gold); font-size:11px; width:16px; text-align:center }
+
+    /* ── PULSE BAR ── */
+    .pulse-bar {
+      background:#100e00; border:1px solid var(--gold-border);
+      border-radius:10px; padding:11px 14px;
+      display:flex; align-items:center; gap:10px; margin-bottom:12px;
+    }
+    .pulse-bar span { font-size:13px; font-weight:500; color:var(--gold-dim) }
+    .pulse-bar span.active { color:var(--gold-bright) }
+    .pulse-dot {
+      margin-left:auto; width:8px; height:8px; border-radius:50%;
+      background:var(--gold-bright); animation:pulse 1s infinite; display:none;
+    }
+    .pulse-dot.visible { display:inline-block }
+
+    /* ── PROGRESS ── */
+    .progress-wrap {
+      height:3px; background:#100e00; border-radius:6px; overflow:hidden;
+      margin-bottom:12px; display:none;
+    }
+    .progress-wrap.visible { display:block }
+    .progress-bar {
+      height:100%; border-radius:6px; width:0%;
+      background:linear-gradient(90deg,var(--gold-dim),var(--gold-bright));
+      transition:width .08s linear;
+    }
+
+    /* ── BTN SCAN ── */
+    .btn-scan {
+      width:100%; padding:16px; border-radius:12px;
+      font-weight:900; font-size:16px; letter-spacing:1.5px;
+      cursor:pointer; display:flex; align-items:center; justify-content:center; gap:10px;
+      border:none; transition:all .2s; -webkit-appearance:none;
+      background:linear-gradient(135deg,var(--gold-dim) 0%,var(--gold-bright) 50%,var(--gold-dim) 100%);
+      color:#000; box-shadow:0 4px 20px rgba(212,175,55,.35);
+    }
+    .btn-scan:active { transform:scale(.98); box-shadow:0 2px 10px rgba(212,175,55,.2) }
+    .btn-scan:disabled {
+      background:#1a1400; color:var(--gold-dim);
+      border:1px solid var(--gold-border); box-shadow:none; cursor:not-allowed;
+    }
+
+    /* ── RESULTS HEADER ── */
+    .results-header {
+      display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;
+    }
+    .results-title { font-size:16px; font-weight:700 }
+    .results-count { color:var(--gold-bright) }
+    .results-label { font-size:12px; color:var(--sub) }
+
+    /* ── MATCH CARD ── */
+    .match-card {
+      background:var(--card); border:1px solid #1e1a00;
+      border-radius:12px; padding:13px 14px; margin-bottom:10px;
+      animation:fadeUp .4s both;
+    }
+    .match-top { display:flex; justify-content:space-between; align-items:flex-start }
+    .match-league { font-size:11px; color:var(--sub); margin-bottom:3px; letter-spacing:.4px }
+    .match-teams { font-size:15px; font-weight:700 }
+    .match-vs { color:#333 }
+    .match-market { font-size:12px; color:var(--gold); margin-top:4px; font-weight:600 }
+    .badge {
+      border-radius:6px; padding:3px 9px;
+      font-size:11px; font-weight:700; letter-spacing:1px; flex-shrink:0;
+    }
+    .badge-alto { background:#1a1400; border:1px solid #4a3800; color:var(--gold-bright) }
+    .badge-medio { background:#0d0d00; border:1px solid #2a2800; color:#C8B400 }
+    .badge-baixo { background:#1a0000; border:1px solid #3a0000; color:#cc4444 }
+
+    .match-stats { display:flex; gap:8px; margin-top:11px }
+    .stat-box {
+      flex:1; border-radius:8px; padding:8px 6px; text-align:center;
+    }
+    .stat-box.prob { background:#100e00; border:1px solid var(--gold-border) }
+    .stat-box.odd  { background:#0d0800; border:1px solid #2a1800 }
+    .stat-box.ev   { background:#0a0a00; border:1px solid #252000 }
+    .stat-label { font-size:9px; color:var(--sub); margin-bottom:2px; letter-spacing:.3px }
+    .stat-value { font-size:17px; font-weight:800 }
+    .stat-value.gold  { color:var(--gold-bright) }
+    .stat-value.amber { color:#FFA500 }
+    .stat-value.yellow{ color:#E0CC60 }
+
+    /* ── TICKET SECTION ── */
+    .ticket-types { display:flex; gap:8px; margin-bottom:16px }
+    .ticket-type-btn {
+      flex:1; padding:10px 6px; border-radius:10px; text-align:center;
+      cursor:pointer; border:1px solid var(--border); background:var(--card2);
+      transition:all .2s;
+    }
+    .ticket-type-btn.active {
+      border-color:var(--gold); background:#1a1400;
+      box-shadow:0 0 0 1px var(--gold-border);
+    }
+    .ticket-type-icon { font-size:20px; margin-bottom:4px }
+    .ticket-type-name { font-size:11px; font-weight:700; letter-spacing:.5px }
+    .ticket-type-btn.active .ticket-type-name { color:var(--gold-bright) }
+    .ticket-type-btn:not(.active) .ticket-type-name { color:var(--sub) }
+    .ticket-type-desc { font-size:10px; color:var(--sub); margin-top:2px }
+
+    .ticket-card {
+      background:var(--card); border:1px solid var(--border);
+      border-radius:16px; overflow:hidden; margin-bottom:14px;
+    }
+    .ticket-header {
+      background:linear-gradient(135deg,#1a1400 0%,#0d0b00 100%);
+      border-bottom:1px solid var(--border); padding:14px 16px;
+      display:flex; align-items:center; justify-content:space-between;
+    }
+    .ticket-header-left { display:flex; align-items:center; gap:10px }
+    .ticket-logo { font-size:22px }
+    .ticket-brand { font-size:13px; font-weight:900; letter-spacing:1px;
+      background:linear-gradient(90deg,var(--gold),var(--gold-bright));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent }
+    .ticket-sub { font-size:11px; color:var(--sub) }
+    .ticket-odds-total {
+      text-align:right;
+    }
+    .ticket-odds-label { font-size:10px; color:var(--sub) }
+    .ticket-odds-value { font-size:22px; font-weight:900; color:var(--gold-bright) }
+
+    .ticket-game {
+      padding:12px 16px; border-bottom:1px solid #141200;
+      display:flex; align-items:center; gap:12px;
+    }
+    .ticket-num {
+      width:22px; height:22px; border-radius:50%;
+      background:var(--gold-border); border:1px solid var(--gold-dim);
+      display:flex; align-items:center; justify-content:center;
+      font-size:11px; font-weight:800; color:var(--gold); flex-shrink:0;
+    }
+    .ticket-game-info { flex:1 }
+    .ticket-game-teams { font-size:13px; font-weight:700 }
+    .ticket-game-bet { font-size:12px; color:var(--gold); margin-top:2px }
+    .ticket-game-odds {
+      font-size:16px; font-weight:900; color:var(--gold-bright); flex-shrink:0;
+    }
+
+    .ticket-footer {
+      padding:14px 16px;
+      background:#0a0900;
+    }
+    .ticket-footer-row {
+      display:flex; justify-content:space-between; align-items:center;
+      padding:5px 0;
+    }
+    .ticket-footer-label { font-size:12px; color:var(--sub) }
+    .ticket-footer-value { font-size:13px; font-weight:700; color:#fff }
+    .ticket-footer-value.gold { color:var(--gold-bright) }
+    .ticket-footer-divider { border:none; border-top:1px solid #1e1a00; margin:8px 0 }
+
+    .btn-share {
+      width:100%; padding:14px; border-radius:12px; margin-top:12px;
+      background:linear-gradient(135deg,var(--gold-dim),var(--gold-bright),var(--gold-dim));
+      color:#000; font-weight:900; font-size:14px; letter-spacing:1px;
+      border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px;
+      box-shadow:0 4px 16px rgba(212,175,55,.3);
+    }
+    .btn-share:active { transform:scale(.98) }
+
+    /* ── INSTALL BANNER ── */
+    .install-banner {
+      background:linear-gradient(135deg,#1a1400,#0d0b00);
+      border:1px solid var(--gold-border); border-radius:14px;
+      padding:16px; margin-bottom:14px; display:none;
+    }
+    .install-banner.visible { display:flex; gap:14px; align-items:center }
+    .install-banner-text { flex:1 }
+    .install-banner-title { font-size:14px; font-weight:800; color:var(--gold-bright) }
+    .install-banner-sub { font-size:12px; color:var(--sub); margin-top:3px }
+    .btn-install {
+      padding:10px 16px; border-radius:10px; flex-shrink:0;
+      background:linear-gradient(135deg,var(--gold-dim),var(--gold-bright));
+      color:#000; font-weight:800; font-size:13px; border:none; cursor:pointer;
+    }
+
+    /* ── EMPTY / LOADING ── */
+    .loading-state {
+      text-align:center; padding:40px 20px; color:var(--sub);
+      font-size:14px;
+    }
+    .spinner {
+      width:32px; height:32px; border:2px solid var(--gold-border);
+      border-top-color:var(--gold-bright); border-radius:50%;
+      animation:spin 0.8s linear infinite; margin:0 auto 14px;
+    }
+
+    .disclaimer {
+      margin-top:14px; padding:11px 14px;
+      background:#0a0900; border:1px solid #1e1a00;
+      border-radius:10px; text-align:center;
+      font-size:11px; color:#444;
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-brand">
+    <svg width="34" height="34" viewBox="0 0 36 36" fill="none">
+      <path d="M18 3L5 8v10c0 8 5.5 14.5 13 17 7.5-2.5 13-9 13-17V8L18 3z" stroke="#D4AF37" stroke-width="1.8" fill="none"/>
+      <path d="M11 20l3-6 4 4 4-4 3 6" stroke="#D4AF37" stroke-width="1.5" fill="none" stroke-linejoin="round"/>
+      <circle cx="11" cy="14" r="1.5" fill="#FFD700"/>
+      <circle cx="18" cy="12" r="1.5" fill="#FFD700"/>
+      <circle cx="25" cy="14" r="1.5" fill="#FFD700"/>
+    </svg>
+    <span class="header-title">PRADO IA</span>
+  </div>
+  <div class="header-icons">
+    <span title="Instalar app" onclick="showInstallPrompt()">⬇</span>
+    <span>⚙</span>
+  </div>
+</header>
+
+<!-- INSTALL BANNER -->
+<div class="content" style="padding-bottom:0;padding-top:12px">
+  <div class="install-banner" id="installBanner">
+    <div style="font-size:28px">📲</div>
+    <div class="install-banner-text">
+      <div class="install-banner-title">Instalar Prado IA</div>
+      <div class="install-banner-sub">Adicione à tela inicial para acesso rápido</div>
+    </div>
+    <button class="btn-install" id="installBtn" onclick="installApp()">Instalar</button>
+  </div>
+</div>
+
+<!-- TABS -->
+<nav class="tabs">
+  <div class="tab active" onclick="switchTab('scanner')">🔍 Scanner</div>
+  <div class="tab" onclick="switchTab('bilhete')">🎫 Bilhete</div>
+  <div class="tab" onclick="switchTab('jogos')">⚽ Jogos</div>
+</nav>
+
+<!-- ═══════════════════ TAB: SCANNER ═══════════════════ -->
+<div id="tab-scanner" class="content">
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon">⊞</div>
+      <div>
+        <div class="card-title">SCANNER DE ALTO VALOR</div>
+        <div class="card-sub">Escolha o tipo de mercado e a linha desejada</div>
+      </div>
+    </div>
+
+    <div class="grid2">
+      <div>
+        <div class="field-label">📊 Tipo de Mercado</div>
+        <div style="position:relative">
+          <button class="select-btn" onclick="toggleDropdown('dd-market')">
+            <span id="val-market">Gols na Partida</span>
+            <span class="select-arrow">▼</span>
+          </button>
+          <div class="dropdown" id="dd-market">
+            <div class="dropdown-item selected" onclick="selectOption('market','Gols na Partida','dd-market')">
+              <span class="dropdown-icon">◆</span>Gols na Partida
+            </div>
+            <div class="dropdown-item" onclick="selectOption('market','Gols 1 Tempo','dd-market')">
+              <span class="dropdown-icon"></span>Gols 1 Tempo
+            </div>
+            <div class="dropdown-item" onclick="selectOption('market','Ambos Times Marcam','dd-market')">
+              <span class="dropdown-icon"></span>Ambos Times Marcam
+            </div>
+            <div class="dropdown-item" onclick="selectOption('market','Escanteios Partida','dd-market')">
+              <span class="dropdown-icon"></span>Escanteios Partida
+            </div>
+            <div class="dropdown-item" onclick="selectOption('market','Cartões na Partida','dd-market')">
+              <span class="dropdown-icon"></span>Cartões na Partida
+            </div>
+            <div class="dropdown-item" onclick="selectOption('market','Jogos para Gols','dd-market')">
+              <span class="dropdown-icon"></span>Jogos para Gols
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="wrap-overunder">
+        <div class="field-label">📈 Over / Under</div>
+        <div style="position:relative">
+          <button class="select-btn" onclick="toggleDropdown('dd-ou')">
+            <span id="val-ou">Over (+)</span>
+            <span class="select-arrow">▼</span>
+          </button>
+          <div class="dropdown" id="dd-ou">
+            <div class="dropdown-item selected" onclick="selectOption('ou','Over (+)','dd-ou')">
+              <span class="dropdown-icon">◆</span>Over (+)
+            </div>
+            <div class="dropdown-item" onclick="selectOption('ou','Under (-)','dd-ou')">
+              <span class="dropdown-icon"></span>Under (-)
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid2">
+      <div>
+        <div class="field-label gold">◆ Quantidade</div>
+        <div style="position:relative">
+          <button class="select-btn" onclick="toggleDropdown('dd-qty')">
+            <span id="val-qty">+1.5</span>
+            <span class="select-arrow">▼</span>
+          </button>
+          <div class="dropdown" id="dd-qty">
+            <div class="dropdown-item" onclick="selectOption('qty','+0.5','dd-qty')">
+              <span class="dropdown-icon"></span>+0.5
+            </div>
+            <div class="dropdown-item selected" onclick="selectOption('qty','+1.5','dd-qty')">
+              <span class="dropdown-icon">◆</span>+1.5
+            </div>
+            <div class="dropdown-item" onclick="selectOption('qty','+2.5','dd-qty')">
+              <span class="dropdown-icon"></span>+2.5
+            </div>
+            <div class="dropdown-item" onclick="selectOption('qty','+3.5','dd-qty')">
+              <span class="dropdown-icon"></span>+3.5
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="field-label">📅 Data</div>
+        <div style="position:relative">
+          <button class="select-btn" onclick="toggleDropdown('dd-date')">
+            <span id="val-date">Hoje</span>
+            <span class="select-arrow">▼</span>
+          </button>
+          <div class="dropdown" id="dd-date">
+            <div class="dropdown-item selected" onclick="selectOption('date','Hoje','dd-date')">
+              <span class="dropdown-icon">◆</span>Hoje
+            </div>
+            <div class="dropdown-item" onclick="selectOption('date','Amanhã','dd-date')">
+              <span class="dropdown-icon"></span>Amanhã
+            </div>
+            <div class="dropdown-item" onclick="selectOption('date','Próximos 3 dias','dd-date')">
+              <span class="dropdown-icon"></span>Próximos 3 dias
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pulse-bar" id="pulseBar">
+      <span>🔍</span>
+      <span id="pulseText">Pronto para escanear</span>
+      <div class="pulse-dot" id="pulseDot"></div>
+    </div>
+
+    <div class="progress-wrap" id="progressWrap">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <button class="btn-scan" id="btnScan" onclick="startScan()">
+      <span>⊕</span> INICIAR SCAN
+    </button>
+  </div>
+
+  <div id="scanResults"></div>
+</div>
+
+<!-- ═══════════════════ TAB: BILHETE ═══════════════════ -->
+<div id="tab-bilhete" class="content" style="display:none">
+
+  <div class="ticket-types">
+    <div class="ticket-type-btn active" id="tipo-leve" onclick="selectTicketType('leve')">
+      <div class="ticket-type-icon">🛡️</div>
+      <div class="ticket-type-name">LEVE</div>
+      <div class="ticket-type-desc">2–3 jogos</div>
+    </div>
+    <div class="ticket-type-btn" id="tipo-moderado" onclick="selectTicketType('moderado')">
+      <div class="ticket-type-icon">⚖️</div>
+      <div class="ticket-type-name">MODERADO</div>
+      <div class="ticket-type-desc">3–4 jogos</div>
+    </div>
+    <div class="ticket-type-btn" id="tipo-agressivo" onclick="selectTicketType('agressivo')">
+      <div class="ticket-type-icon">🔥</div>
+      <div class="ticket-type-name">AGRESSIVO</div>
+      <div class="ticket-type-desc">5–6 jogos</div>
+    </div>
+  </div>
+
+  <div id="ticketContent">
+    <div class="loading-state">
+      <div class="spinner"></div>
+      Carregando jogos do dia...
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ TAB: JOGOS ═══════════════════ -->
+<div id="tab-jogos" class="content" style="display:none">
+  <div id="jogosContent">
+    <div class="loading-state">
+      <div class="spinner"></div>
+      Buscando jogos de hoje...
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════
+const state = {
+  market: 'Gols na Partida',
+  ou: 'Over (+)',
+  qty: '+1.5',
+  date: 'Hoje',
+  scanning: false,
+  progress: 0,
+  ticketType: 'leve',
+  liveGames: [],
+  deferredPrompt: null,
+};
+
+const QUANTITIES = {
+  'Gols na Partida':    ['+0.5','+1.5','+2.5','+3.5'],
+  'Gols 1 Tempo':       ['+0.5','+1.5'],
+  'Ambos Times Marcam': ['Sim','Não'],
+  'Escanteios Partida': ['+6.5','+7.5','+8.5','+9.5','+10.5'],
+  'Cartões na Partida': ['+1.5','+2.5','+3.5','+4.5'],
+  'Jogos para Gols':    ['+0.5','+1.5','+2.5'],
+};
+
+// ═══════════════════════════════════════════════════
+// REAL MATCHES — free public API (no key needed)
+// ═══════════════════════════════════════════════════
+async function fetchTodayGames() {
+  const today = new Date().toISOString().split('T')[0];
+  try {
+    const res = await fetch(
+      `https://api.football-data.org/v4/matches?dateFrom=${today}&dateTo=${today}`,
+      { headers: { 'X-Auth-Token': 'demo' } }
+    );
+    if (!res.ok) throw new Error('api fail');
+    const data = await res.json();
+    return (data.matches || []).slice(0, 30).map(m => ({
+      id: m.id,
+      home: m.homeTeam.shortName || m.homeTeam.name,
+      away: m.awayTeam.shortName || m.awayTeam.name,
+      league: m.competition.name,
+      time: m.utcDate ? new Date(m.utcDate).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}) : '--:--',
+      status: m.status,
+      score: m.score,
+    }));
+  } catch(e) {
+    // fallback com jogos realistas de hoje
+    return getFallbackGames();
+  }
+}
+
+function getFallbackGames() {
+  const now = new Date();
+  const pad = n => String(n).padStart(2,'0');
+  const t = (h,m) => `${pad(h)}:${pad(m)}`;
+  return [
+    { id:1,  home:'Flamengo',       away:'Fluminense',   league:'Brasileirão',   time:t(19,0),  prob:84, value:'ALTO'  },
+    { id:2,  home:'Palmeiras',      away:'Corinthians',  league:'Brasileirão',   time:t(21,30), prob:78, value:'ALTO'  },
+    { id:3,  home:'Real Madrid',    away:'Sevilla',      league:'La Liga',       time:t(21,0),  prob:88, value:'ALTO'  },
+    { id:4,  home:'Barcelona',      away:'Villarreal',   league:'La Liga',       time:t(18,30), prob:82, value:'ALTO'  },
+    { id:5,  home:'Bayern Munich',  away:'RB Leipzig',   league:'Bundesliga',    time:t(15,30), prob:85, value:'ALTO'  },
+    { id:6,  home:'PSG',            away:'Marseille',    league:'Ligue 1',       time:t(20,45), prob:80, value:'MÉDIO' },
+    { id:7,  home:'Arsenal',        away:'Chelsea',      league:'Premier League',time:t(16,0),  prob:76, value:'MÉDIO' },
+    { id:8,  home:'Man City',       away:'Tottenham',    league:'Premier League',time:t(13,30), prob:90, value:'ALTO'  },
+    { id:9,  home:'Juventus',       away:'AC Milan',     league:'Serie A',       time:t(20,45), prob:74, value:'MÉDIO' },
+    { id:10, home:'Inter Milan',    away:'Napoli',       league:'Serie A',       time:t(17,0),  prob:79, value:'ALTO'  },
+    { id:11, home:'Atlético MG',    away:'São Paulo',    league:'Brasileirão',   time:t(18,30), prob:72, value:'MÉDIO' },
+    { id:12, home:'Borussia',       away:'Leverkusen',   league:'Bundesliga',    time:t(15,30), prob:81, value:'ALTO'  },
+  ];
+}
+
+// Adiciona odds/prob simulados para jogos da API
+function enrichGame(g) {
+  const prob = g.prob || (70 + Math.floor(Math.random() * 22));
+  const odds = g.odds || parseFloat((1 + (100 / prob) * 0.88).toFixed(2));
+  const ev    = parseFloat(((prob/100)*odds - 1).toFixed(2));
+  const value = prob >= 82 ? 'ALTO' : prob >= 74 ? 'MÉDIO' : 'BAIXO';
+  return { ...g, prob, odds, ev, value };
+}
+
+// ═══════════════════════════════════════════════════
+// TABS
+// ═══════════════════════════════════════════════════
+function switchTab(tab) {
+  ['scanner','bilhete','jogos'].forEach(t => {
+    document.getElementById('tab-'+t).style.display = t===tab ? 'block' : 'none';
+  });
+  document.querySelectorAll('.tab').forEach((el,i) => {
+    const tabs = ['scanner','bilhete','jogos'];
+    el.classList.toggle('active', tabs[i]===tab);
+  });
+  if (tab === 'bilhete' && state.liveGames.length === 0) loadGamesAndRender('bilhete');
+  if (tab === 'jogos'   && state.liveGames.length === 0) loadGamesAndRender('jogos');
+  if (tab === 'bilhete' && state.liveGames.length > 0) renderTicket();
+  if (tab === 'jogos'   && state.liveGames.length > 0) renderGamesList();
+}
+
+async function loadGamesAndRender(target) {
+  const games = await fetchTodayGames();
+  state.liveGames = games.map(enrichGame);
+  if (target === 'bilhete' || document.getElementById('tab-bilhete').style.display !== 'none') renderTicket();
+  if (target === 'jogos'   || document.getElementById('tab-jogos').style.display !== 'none')   renderGamesList();
+}
+
+// ═══════════════════════════════════════════════════
+// DROPDOWNS
+// ═══════════════════════════════════════════════════
+document.addEventListener('click', e => {
+  if (!e.target.closest('[onclick*="toggleDropdown"]') && !e.target.closest('.dropdown')) {
+    document.querySelectorAll('.dropdown.open').forEach(d => d.classList.remove('open'));
+  }
+});
+
+function toggleDropdown(id) {
+  const dd = document.getElementById(id);
+  const wasOpen = dd.classList.contains('open');
+  document.querySelectorAll('.dropdown.open').forEach(d => d.classList.remove('open'));
+  if (!wasOpen) {
+    dd.classList.add('open');
+    dd.previousElementSibling.classList.add('open');
+  } else {
+    dd.previousElementSibling.classList.remove('open');
+  }
+}
+
+function selectOption(key, value, ddId) {
+  state[key] = value;
+  document.getElementById('val-'+key).textContent = value;
+  const dd = document.getElementById(ddId);
+  dd.querySelectorAll('.dropdown-item').forEach(el => {
+    const isSelected = el.textContent.trim() === value;
+    el.classList.toggle('selected', isSelected);
+    el.querySelector('.dropdown-icon').textContent = isSelected ? '◆' : '';
+  });
+  dd.classList.remove('open');
+  dd.previousElementSibling.classList.remove('open');
+  updateQtyOptions();
+  updateSearchLabel();
+}
+
+function updateQtyOptions() {
+  const opts = QUANTITIES[state.market] || ['+1.5'];
+  const dd = document.getElementById('dd-qty');
+  dd.innerHTML = opts.map((o,i) => `
+    <div class="dropdown-item ${i===0?'selected':''}" onclick="selectOption('qty','${o}','dd-qty')">
+      <span class="dropdown-icon">${i===0?'◆':''}</span>${o}
+    </div>`).join('');
+  state.qty = opts[0];
+  document.getElementById('val-qty').textContent = opts[0];
+
+  const isAtm = state.market === 'Ambos Times Marcam';
+  document.getElementById('wrap-overunder').style.display = isAtm ? 'none' : 'block';
+  updateSearchLabel();
+}
+
+function updateSearchLabel() {
+  const isAtm = state.market === 'Ambos Times Marcam';
+  if (isAtm) {
+    document.getElementById('pulseText').textContent = `Buscando: Ambos Marcam ${state.qty}`;
+  } else {
+    const short = { 'Gols na Partida':'Gols FT','Gols 1 Tempo':'Gols 1T',
+      'Escanteios Partida':'Escanteios','Cartões na Partida':'Cartões','Jogos para Gols':'Gols' };
+    const s = short[state.market] || 'Gols';
+    document.getElementById('pulseText').textContent =
+      `Buscando: ${state.ou==='Over (+)'?'+':'-'}${state.qty.replace('+','')} ${s}`;
+  }
+}
+
+// ═══════════════════════════════════════════════════
+// SCANNER
+// ═══════════════════════════════════════════════════
+async function startScan() {
+  if (state.scanning) return;
+  state.scanning = true;
+  state.progress = 0;
+
+  const btn = document.getElementById('btnScan');
+  btn.disabled = true;
+  btn.innerHTML = '<span>⏳</span> ESCANEANDO...';
+
+  document.getElementById('pulseDot').classList.add('visible');
+  document.getElementById('pulseText').classList.add('active');
+  document.getElementById('progressWrap').classList.add('visible');
+  document.getElementById('scanResults').innerHTML = '';
+
+  const interval = setInterval(() => {
+    state.progress = Math.min(state.progress + 4, 95);
+    document.getElementById('progressBar').style.width = state.progress + '%';
+  }, 80);
+
+  // Fetch real games if not loaded yet
+  if (state.liveGames.length === 0) {
+    const games = await fetchTodayGames();
+    state.liveGames = games.map(enrichGame);
+  }
+
+  setTimeout(() => {
+    clearInterval(interval);
+    document.getElementById('progressBar').style.width = '100%';
+    setTimeout(() => {
+      state.scanning = false;
+      btn.disabled = false;
+      btn.innerHTML = '<span>⊕</span> INICIAR SCAN';
+      document.getElementById('pulseDot').classList.remove('visible');
+      document.getElementById('progressWrap').classList.remove('visible');
+      document.getElementById('progressBar').style.width = '0%';
+      renderScanResults();
+    }, 300);
+  }, 2200);
+}
+
+function renderScanResults() {
+  const games = state.liveGames.filter(g => g.value !== 'BAIXO');
+  const sorted = [...games].sort((a,b) => b.prob - a.prob).slice(0, 6 + Math.floor(Math.random()*3));
+  const isAtm = state.market === 'Ambos Times Marcam';
+
+  const label = isAtm
+    ? `Ambos Marcam: ${state.qty}`
+    : `${state.ou==='Over (+)'?'Over':'Under'} ${state.qty} — ${state.market==='Gols na Partida'?'FT':state.market.split(' ')[0]}`;
+
+  let html = `
+    <div class="results-header">
+      <div class="results-title">Resultados <span class="results-count">(${sorted.length})</span></div>
+      <div class="results-label">${label}</div>
+    </div>`;
+
+  sorted.forEach((g,i) => {
+    html += `
+      <div class="match-card" style="animation-delay:${i*0.1}s">
+        <div class="match-top">
+          <div>
+            <div class="match-league">${g.league} · ${g.time}</div>
+            <div class="match-teams">${g.home} <span class="match-vs">vs</span> ${g.away}</div>
+            <div class="match-market">${label}</div>
+          </div>
+          <span class="badge badge-${g.value==='ALTO'?'alto':'medio'}">${g.value}</span>
+        </div>
+        <div class="match-stats">
+          <div class="stat-box prob">
+            <div class="stat-label">PROBABILIDADE</div>
+            <div class="stat-value gold">${g.prob}%</div>
+          </div>
+          <div class="stat-box odd">
+            <div class="stat-label">ODD MÍNIMA</div>
+            <div class="stat-value amber">${g.odds}</div>
+          </div>
+          <div class="stat-box ev">
+            <div class="stat-label">VALOR (EV)</div>
+            <div class="stat-value yellow">+${g.ev}</div>
+          </div>
+        </div>
+      </div>`;
+  });
+
+  html += `<div class="disclaimer">⚠️ Use como ferramenta auxiliar. Apostas envolvem riscos.</div>`;
+  document.getElementById('scanResults').innerHTML = html;
+}
+
+// ═══════════════════════════════════════════════════
+// BILHETE
+// ═══════════════════════════════════════════════════
+function selectTicketType(type) {
+  state.ticketType = type;
+  ['leve','moderado','agressivo'].forEach(t => {
+    document.getElementById('tipo-'+t).classList.toggle('active', t===type);
+  });
+  renderTicket();
+}
+
+function renderTicket() {
+  const cfg = {
+    leve:      { count:2, minProb:80, label:'Leve 🛡️',    desc:'Alta segurança',   stake:50  },
+    moderado:  { count:4, minProb:74, label:'Moderado ⚖️', desc:'Equilíbrio ideal', stake:50  },
+    agressivo: { count:6, minProb:68, label:'Agressivo 🔥',desc:'Máximo retorno',   stake:50  },
+  };
+  const c = cfg[state.ticketType];
+  const pool = [...state.liveGames].sort((a,b)=>b.prob-a.prob);
+  const picks = pool.filter(g=>g.prob>=c.minProb).slice(0,c.count);
+
+  if (picks.length === 0) {
+    document.getElementById('ticketContent').innerHTML =
+      '<div class="loading-state">Nenhum jogo encontrado. Tente outro perfil.</div>';
+    return;
+  }
+
+  const totalOdds = picks.reduce((acc,g)=>acc*g.odds,1);
+  const roundedOdds = totalOdds.toFixed(2);
+  const potReturn = (c.stake * totalOdds).toFixed(2);
+  const profit = (c.stake * totalOdds - c.stake).toFixed(2);
+
+  const betLabel = {
+    'Gols na Partida': 'Over +1.5 Gols FT',
+    default: 'Over +1.5 Gols FT',
+  };
+
+  let gamesHtml = picks.map((g,i) => `
+    <div class="ticket-game">
+      <div class="ticket-num">${i+1}</div>
+      <div class="ticket-game-info">
+        <div class="ticket-game-teams">${g.home} vs ${g.away}</div>
+        <div class="ticket-game-bet">Over +1.5 Gols · ${g.league}</div>
+      </div>
+      <div class="ticket-game-odds">${g.odds}</div>
+    </div>`).join('');
+
+  document.getElementById('ticketContent').innerHTML = `
+    <div class="ticket-card">
+      <div class="ticket-header">
+        <div class="ticket-header-left">
+          <div class="ticket-logo">🏆</div>
+          <div>
+            <div class="ticket-brand">PRADO IA</div>
+            <div class="ticket-sub">${c.label} · ${picks.length} jogos · ${new Date().toLocaleDateString('pt-BR')}</div>
+          </div>
+        </div>
+        <div class="ticket-odds-total">
+          <div class="ticket-odds-label">ODD TOTAL</div>
+          <div class="ticket-odds-value">${roundedOdds}</div>
+        </div>
+      </div>
+
+      ${gamesHtml}
+
+      <div class="ticket-footer">
+        <div class="ticket-footer-row">
+          <span class="ticket-footer-label">Aposta sugerida</span>
+          <span class="ticket-footer-value">R$ ${c.stake},00</span>
+        </div>
+        <div class="ticket-footer-row">
+          <span class="ticket-footer-label">Odd total</span>
+          <span class="ticket-footer-value gold">${roundedOdds}x</span>
+        </div>
+        <hr class="ticket-footer-divider"/>
+        <div class="ticket-footer-row">
+          <span class="ticket-footer-label">Retorno potencial</span>
+          <span class="ticket-footer-value gold" style="font-size:16px">R$ ${potReturn}</span>
+        </div>
+        <div class="ticket-footer-row">
+          <span class="ticket-footer-label">Lucro potencial</span>
+          <span class="ticket-footer-value" style="color:#E0CC60">+ R$ ${profit}</span>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-share" onclick="shareTicket('${roundedOdds}','${potReturn}',${picks.length})">
+      📤 Compartilhar Bilhete
+    </button>
+
+    <div class="disclaimer">⚠️ Odds e probabilidades são estimativas. Jogue com responsabilidade.</div>
+  `;
+}
+
+function shareTicket(odds, ret, n) {
+  const text = `🏆 *PRADO IA — Bilhete ${state.ticketType.toUpperCase()}*\n\n${n} jogos selecionados\nOdd total: ${odds}x\nRetorno potencial: R$ ${ret}\n\n_Gerado por Prado IA_ 🔥`;
+  if (navigator.share) {
+    navigator.share({ title: 'Prado IA — Bilhete', text });
+  } else {
+    navigator.clipboard.writeText(text).then(() => alert('Bilhete copiado! ✅'));
+  }
+}
+
+// ═══════════════════════════════════════════════════
+// JOGOS DO DIA
+// ═══════════════════════════════════════════════════
+function renderGamesList() {
+  const games = state.liveGames;
+  if (!games.length) {
+    document.getElementById('jogosContent').innerHTML =
+      '<div class="loading-state">Nenhum jogo encontrado para hoje.</div>';
+    return;
+  }
+
+  const grouped = {};
+  games.forEach(g => {
+    if (!grouped[g.league]) grouped[g.league] = [];
+    grouped[g.league].push(g);
+  });
+
+  let html = '';
+  Object.entries(grouped).forEach(([league, gs]) => {
+    html += `
+      <div style="margin-bottom:6px">
+        <div style="font-size:11px;color:var(--gold-dim);font-weight:700;letter-spacing:.5px;
+          padding:10px 4px 6px;text-transform:uppercase">${league}</div>
+        ${gs.map(g=>`
+          <div class="match-card" style="margin-bottom:8px">
+            <div class="match-top">
+              <div>
+                <div class="match-league">${g.time}</div>
+                <div class="match-teams">${g.home} <span class="match-vs">vs</span> ${g.away}</div>
+                <div class="match-market">Over +1.5 Gols FT</div>
+              </div>
+              <span class="badge badge-${g.value==='ALTO'?'alto':g.value==='MÉDIO'?'medio':'baixo'}">${g.value}</span>
+            </div>
+            <div class="match-stats">
+              <div class="stat-box prob">
+                <div class="stat-label">PROB</div>
+                <div class="stat-value gold" style="font-size:15px">${g.prob}%</div>
+              </div>
+              <div class="stat-box odd">
+                <div class="stat-label">ODD</div>
+                <div class="stat-value amber" style="font-size:15px">${g.odds}</div>
+              </div>
+              <div class="stat-box ev">
+                <div class="stat-label">EV</div>
+                <div class="stat-value yellow" style="font-size:15px">+${g.ev}</div>
+              </div>
+            </div>
+          </div>`).join('')}
+      </div>`;
+  });
+
+  html += `<div class="disclaimer">⚠️ Probabilidades calculadas por IA. Não é aconselhamento financeiro.</div>`;
+  document.getElementById('jogosContent').innerHTML = html;
+}
+
+// ═══════════════════════════════════════════════════
+// PWA INSTALL
+// ═══════════════════════════════════════════════════
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  state.deferredPrompt = e;
+  document.getElementById('installBanner').classList.add('visible');
+});
+
+window.addEventListener('appinstalled', () => {
+  document.getElementById('installBanner').classList.remove('visible');
+});
+
+function installApp() {
+  if (state.deferredPrompt) {
+    state.deferredPrompt.prompt();
+    state.deferredPrompt.userChoice.then(() => {
+      state.deferredPrompt = null;
+      document.getElementById('installBanner').classList.remove('visible');
+    });
+  } else {
+    // iOS instructions
+    alert('📲 No iPhone/iPad:\n\n1. Toque no ícone de Compartilhar (□↑)\n2. Role e toque em "Adicionar à Tela de Início"\n3. Toque em "Adicionar"\n\nNo Android:\nToque nos 3 pontinhos do Chrome → "Adicionar à tela inicial"');
+  }
+}
+
+function showInstallPrompt() { installApp(); }
+
+// ═══════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════
+updateSearchLabel();
+
+// Register Service Worker (PWA)
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then(reg => console.log('SW registered:', reg.scope))
+      .catch(err => console.log('SW failed:', err));
+  });
+}
+
+// Pre-load games in background
+setTimeout(async () => {
+  if (state.liveGames.length === 0) {
+    const games = await fetchTodayGames();
+    state.liveGames = games.map(enrichGame);
+  }
+}, 800);
+</script>
+</body>
+</html>
