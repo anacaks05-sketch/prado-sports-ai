@@ -15,75 +15,78 @@
   <title>Prado IA</title>
 </head>
 <body>
-  <div class="bg-glow one"></div>
-  <div class="bg-glow two"></div>
-
   <main class="app-shell">
-    <header class="hero glass">
-      <div class="hero-top">
-        <div>
-          <p class="eyebrow">PRADO IA</p>
-          <h1>Scanner premium de bilhetes</h1>
-        </div>
-        <div class="score-ring">
-          <span>IA</span>
-          <b>92</b>
-        </div>
+    <header class="top-brand">
+      <div class="logo-box">⌖</div>
+      <div>
+        <h1>Prado Signal IA</h1>
+        <p>Powered by Artificial Intelligence</p>
       </div>
-      <p class="hero-copy">Jogos reais de hoje, leitura automática de valor e 3 perfis de risco para montar bilhetes em segundos.</p>
-      <div class="hero-actions">
-        <button id="quickTicket" class="primary">Gerar bilhete agora</button>
-        <button id="installBtn" class="ghost hidden">Instalar app</button>
-      </div>
-      <div class="mini-stats">
-        <div><span>Mercados</span><b>4</b></div>
-        <div><span>Perfis</span><b>3</b></div>
-        <div><span>Modo</span><b>Hoje</b></div>
-      </div>
+      <button id="installBtn" class="install hidden">Instalar</button>
     </header>
 
-    <nav class="tabs glass">
-      <button class="tab active" data-tab="scanner"><span>🔍</span> Scanner</button>
-      <button class="tab" data-tab="bilhete"><span>🎫</span> Bilhete</button>
-      <button class="tab" data-tab="jogos"><span>⚽</span> Jogos</button>
+    <nav class="tabs">
+      <button class="tab active" data-tab="scanner">Scanner</button>
+      <button class="tab" data-tab="bilhete">Bilhete</button>
+      <button class="tab" data-tab="jogos">Jogos</button>
     </nav>
 
     <section id="scanner" class="panel active">
-      <div class="filters glass">
-        <label>Mercado
-          <select id="market">
-            <option value="over15">Over 1.5 gols</option>
-            <option value="over25">Over 2.5 gols</option>
-            <option value="home">Vitória mandante</option>
-            <option value="both">Ambas marcam</option>
-          </select>
-        </label>
-        <label>Data
-          <input id="date" type="date" />
-        </label>
-        <label>Qtd. jogos
-          <input id="limit" type="number" min="2" max="20" value="8" />
-        </label>
-        <button id="scanBtn" class="primary">Buscar jogos</button>
+      <div class="scanner-card">
+        <div class="card-title">
+          <div class="icon-tile">☷</div>
+          <div>
+            <h2>Scanner de alto valor</h2>
+            <p>Escolha o mercado, a linha e a data desejada</p>
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <label><span>▥ Tipo de mercado</span>
+            <select id="market">
+              <option value="over15">Gols na partida</option>
+              <option value="over25">Gols na partida</option>
+              <option value="home">Resultado final</option>
+              <option value="both">Ambas marcam</option>
+            </select>
+          </label>
+          <label><span>↗ Linha</span>
+            <select id="line">
+              <option value="over15">Over +1.5</option>
+              <option value="over25">Over +2.5</option>
+              <option value="home">Vitória mandante</option>
+              <option value="both">Sim</option>
+            </select>
+          </label>
+          <label><span class="green">◎ Quantidade</span>
+            <input id="limit" type="number" min="1" max="20" value="8" />
+          </label>
+          <label><span>▣ Data</span>
+            <input id="date" type="date" />
+          </label>
+        </div>
+
+        <div id="searchPreview" class="search-preview">⌕ Buscando: +1.5 Gols FT</div>
+        <button id="scanBtn" class="scan-button">⌖ Iniciar scan</button>
       </div>
+
       <div id="status" class="status">Carregando jogos de hoje...</div>
-      <div id="scanResults" class="grid"></div>
+      <div id="scanResults" class="results-list"></div>
     </section>
 
     <section id="bilhete" class="panel">
       <div class="risk-row">
-        <button class="risk active" data-risk="leve">🛡️ Leve</button>
-        <button class="risk" data-risk="moderado">⚖️ Moderado</button>
-        <button class="risk" data-risk="agressivo">🔥 Agressivo</button>
+        <button class="risk active" data-risk="leve">Leve</button>
+        <button class="risk" data-risk="moderado">Moderado</button>
+        <button class="risk" data-risk="agressivo">Agressivo</button>
       </div>
-      <div id="ticket" class="ticket glass"></div>
+      <div id="ticket" class="ticket"></div>
     </section>
 
     <section id="jogos" class="panel">
       <div id="gamesList" class="league-list"></div>
     </section>
   </main>
-
   <script src="app.js"></script>
 </body>
 </html>

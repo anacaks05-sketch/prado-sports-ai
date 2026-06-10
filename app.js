@@ -49,8 +49,11 @@ function renderGames(){
 function renderAll(){renderScanner();renderTicket();renderGames();}
 document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab,.panel').forEach(x=>x.classList.remove('active'));b.classList.add('active');$('#'+b.dataset.tab).classList.add('active');});
 document.querySelectorAll('.risk').forEach(b=>b.onclick=()=>{document.querySelectorAll('.risk').forEach(x=>x.classList.remove('active'));b.classList.add('active');state.risk=b.dataset.risk;renderTicket();});
-$('#market').onchange=e=>{state.market=e.target.value;state.games=state.games.map(g=>enrich(g,e.target.value));renderAll();};
-$('#scanBtn').onclick=loadGames; $('#quickTicket').onclick=()=>{document.querySelector('[data-tab=\"bilhete\"]').click();renderTicket();}; $('#date').value=todayISO();
+function marketLabel(){const v=$('#line')?.value || $('#market').value; return v==='over15'?'+1.5 Gols FT':v==='over25'?'+2.5 Gols FT':v==='home'?'Vitória Mandante':'Ambas Marcam';}
+function updatePreview(){ const v=$('#line')?.value || $('#market').value; $('#market').value=v; state.market=v; $('#searchPreview').textContent='⌕ Buscando: '+marketLabel(); if(state.games.length){state.games=state.games.map(g=>enrich(g,v));renderAll();}}
+$('#market').onchange=e=>{ if($('#line')) $('#line').value=e.target.value; updatePreview();};
+if($('#line')) $('#line').onchange=e=>{ $('#market').value=e.target.value; updatePreview();};
+$('#scanBtn').onclick=loadGames; $('#quickTicket').onclick=()=>{document.querySelector('[data-tab=\"bilhete\"]').click();renderTicket();}; $('#date').value=todayISO(); updatePreview();
 let deferredPrompt; window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;$('#installBtn').classList.remove('hidden');});
 $('#installBtn').onclick=async()=>{if(deferredPrompt){deferredPrompt.prompt();deferredPrompt=null;$('#installBtn').classList.add('hidden');}};
 if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js'));}
