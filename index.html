@@ -16,11 +16,11 @@
 </head>
 <body>
   <main class="app-shell">
-    <header class="top-brand">
-      <div class="logo-box">⌖</div>
-      <div>
-        <h1>Prado Signal IA</h1>
-        <p>Powered by Artificial Intelligence</p>
+    <header class="brand-hero">
+      <div class="pai-logo"><span>PAI</span><i></i></div>
+      <div class="brand-copy">
+        <h1>PRADO <em>IA</em></h1>
+        <p>POWERED BY ARTIFICIAL INTELLIGENCE</p>
       </div>
       <button id="installBtn" class="install hidden">Instalar</button>
     </header>
@@ -33,59 +33,44 @@
 
     <section id="scanner" class="panel active">
       <div class="scanner-card">
-        <div class="card-title">
-          <div class="icon-tile">☷</div>
+        <div class="section-head">
+          <div class="icon-tile">☰</div>
           <div>
             <h2>Scanner de alto valor</h2>
-            <p>Escolha o mercado, a linha e a data desejada</p>
+            <p>Escolha o mercado e encontre as melhores oportunidades do dia</p>
           </div>
         </div>
-
         <div class="form-grid">
-          <label><span>▥ Tipo de mercado</span>
-            <select id="market">
-              <option value="over15">Gols na partida</option>
-              <option value="over25">Gols na partida</option>
-              <option value="home">Resultado final</option>
-              <option value="both">Ambas marcam</option>
-            </select>
+          <label><span>Tipo de mercado</span>
+            <select id="market"><option value="over15">Gols na partida</option><option value="over25">Gols na partida</option><option value="home">Resultado final</option><option value="both">Ambas marcam</option></select>
           </label>
-          <label><span>↗ Linha</span>
-            <select id="line">
-              <option value="over15">Over +1.5</option>
-              <option value="over25">Over +2.5</option>
-              <option value="home">Vitória mandante</option>
-              <option value="both">Sim</option>
-            </select>
+          <label><span>Linha</span>
+            <select id="line"><option value="over15">Over +1.5</option><option value="over25">Over +2.5</option><option value="home">Vitória mandante</option><option value="both">Sim</option></select>
           </label>
-          <label><span class="green">◎ Quantidade</span>
-            <input id="limit" type="number" min="1" max="20" value="8" />
-          </label>
-          <label><span>▣ Data</span>
-            <input id="date" type="date" />
-          </label>
+          <label><span>Quantidade</span><input id="limit" type="number" min="1" max="20" value="8" /></label>
+          <label><span>Data</span><input id="date" type="date" /></label>
         </div>
-
-        <div id="searchPreview" class="search-preview">⌕ Buscando: +1.5 Gols FT</div>
-        <button id="scanBtn" class="scan-button">⌖ Iniciar scan</button>
+        <div id="searchPreview" class="search-preview">Buscando: +1.5 Gols FT</div>
+        <button id="scanBtn" class="scan-button">Iniciar scan</button>
       </div>
-
       <div id="status" class="status">Carregando jogos de hoje...</div>
       <div id="scanResults" class="results-list"></div>
     </section>
 
     <section id="bilhete" class="panel">
-      <div class="risk-row">
-        <button class="risk active" data-risk="leve">Leve</button>
-        <button class="risk" data-risk="moderado">Moderado</button>
-        <button class="risk" data-risk="agressivo">Agressivo</button>
+      <div class="ticket-builder">
+        <h3>1. Escolha o perfil do bilhete</h3>
+        <div class="risk-cards">
+          <button class="risk-card active leve" data-risk="leve"><b>🛡️ LEVE</b><small>Odds de 2.00 a 5.00</small><small>Maior taxa de acerto</small><small>2 a 4 seleções</small><span></span></button>
+          <button class="risk-card moderado" data-risk="moderado"><b>🛡️ MODERADA</b><small>Odds de 5.00 a 20.00</small><small>Equilíbrio risco/retorno</small><small>3 a 8 seleções</small><span></span></button>
+          <button class="risk-card agressivo" data-risk="agressivo"><b>🛡️ AGRESSIVA</b><small>Odds de 20.00 a 100.00</small><small>Alto retorno</small><small>5 a 15 seleções</small><span></span></button>
+        </div>
+        <button id="generateTicket" class="scan-button gold-btn">Gerar bilhete</button>
       </div>
-      <div id="ticket" class="ticket"></div>
+      <div id="ticket" class="ticket-slip"></div>
     </section>
 
-    <section id="jogos" class="panel">
-      <div id="gamesList" class="league-list"></div>
-    </section>
+    <section id="jogos" class="panel"><div id="gamesList" class="league-list"></div></section>
   </main>
   <script src="app.js"></script>
 </body>
