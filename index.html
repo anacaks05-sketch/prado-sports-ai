@@ -42,19 +42,19 @@
         </div>
         <div class="form-grid">
           <label><span>Tipo de mercado</span>
-            <select id="market"><option value="over15">Gols na partida</option><option value="over25">Gols na partida</option><option value="home">Resultado final</option><option value="both">Ambas marcam</option></select>
+            <select id="market"><option value="goals">Gols na partida</option><option value="home">Resultado final</option><option value="both">Ambas marcam</option></select>
           </label>
-          <label><span>Linha</span>
-            <select id="line"><option value="over15">Over +1.5</option><option value="over25">Over +2.5</option><option value="home">Vitória mandante</option><option value="both">Sim</option></select>
+          <label><span>Over / Under</span>
+            <select id="ou"><option value="over">Over (+)</option><option value="under">Under (-)</option></select>
           </label>
-          <label><span>Quantidade</span><input id="limit" type="number" min="1" max="20" value="8" /></label>
+          <label><span>Quantidade</span>
+            <select id="line"><option value="05">+0.5</option><option value="15" selected>+1.5</option><option value="25">+2.5</option><option value="35">+3.5</option></select>
+          </label>
           <label><span>Data</span><input id="date" type="date" /></label>
         </div>
         <div id="searchPreview" class="search-preview">Buscando: +1.5 Gols FT</div>
         <button id="scanBtn" class="scan-button">Iniciar scan</button>
       </div>
-      <div id="status" class="status">Carregando jogos de hoje...</div>
-      <div id="scanResults" class="results-list"></div>
     </section>
 
     <section id="bilhete" class="panel">
