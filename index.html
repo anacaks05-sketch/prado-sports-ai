@@ -16,61 +16,89 @@
 </head>
 <body>
   <main class="app-shell">
-    <header class="brand-hero">
-      <div class="pai-logo"><span>PAI</span><i></i></div>
-      <div class="brand-copy">
+    <header class="top-brand">
+      <div class="pai-logo"><span>PAI</span></div>
+      <div>
         <h1>PRADO <em>IA</em></h1>
-        <p>POWERED BY ARTIFICIAL INTELLIGENCE</p>
+        <p>Inteligência para apostas esportivas</p>
       </div>
       <button id="installBtn" class="install hidden">Instalar</button>
     </header>
 
     <nav class="tabs">
       <button class="tab active" data-tab="scanner">Scanner</button>
-      <button class="tab" data-tab="bilhete">Bilhete</button>
       <button class="tab" data-tab="jogos">Jogos</button>
+      <button class="tab" data-tab="bilhete">Bilhete</button>
     </nav>
 
     <section id="scanner" class="panel active">
-      <div class="scanner-card">
+      <div class="scanner-card compact-card">
         <div class="section-head">
-          <div class="icon-tile">☰</div>
+          <div class="icon-tile">☷</div>
           <div>
             <h2>Scanner de alto valor</h2>
-            <p>Escolha o mercado e encontre as melhores oportunidades do dia</p>
+            <p>Escolha o tipo de mercado e a linha desejada</p>
           </div>
         </div>
+
         <div class="form-grid">
-          <label><span>Tipo de mercado</span>
-            <select id="market"><option value="goals">Gols na partida</option><option value="home">Resultado final</option><option value="both">Ambas marcam</option></select>
+          <label><span>Tipo de Mercado</span>
+            <select id="marketType">
+              <option value="match_goals">Gols na Partida</option>
+              <option value="first_half_goals">Gols 1º Tempo</option>
+              <option value="btts">Ambos Times Marcam</option>
+              <option value="corners">Escanteios Partida</option>
+              <option value="cards">Cartões na Partida</option>
+              <option value="games_goals">Jogos para Gols</option>
+            </select>
           </label>
-          <label><span>Over / Under</span>
-            <select id="ou"><option value="over">Over (+)</option><option value="under">Under (-)</option></select>
+
+          <label><span>Linha</span>
+            <select id="lineSelect"></select>
           </label>
+
           <label><span>Quantidade</span>
-            <select id="line"><option value="05">+0.5</option><option value="15" selected>+1.5</option><option value="25">+2.5</option><option value="35">+3.5</option></select>
+            <select id="qtySelect">
+              <option value="2">2 jogos</option>
+              <option value="3" selected>3 jogos</option>
+              <option value="4">4 jogos</option>
+              <option value="5">5 jogos</option>
+              <option value="6">6 jogos</option>
+              <option value="7">7 jogos</option>
+              <option value="8">8 jogos</option>
+            </select>
           </label>
+
           <label><span>Data</span><input id="date" type="date" /></label>
         </div>
-        <div id="searchPreview" class="search-preview">Buscando: +1.5 Gols FT</div>
+
+        <div id="searchPreview" class="search-preview">Buscando: Over +1.5 Gols FT</div>
         <button id="scanBtn" class="scan-button">Iniciar scan</button>
       </div>
     </section>
 
-    <section id="bilhete" class="panel">
-      <div class="ticket-builder">
-        <h3>1. Escolha o perfil do bilhete</h3>
-        <div class="risk-cards">
-          <button class="risk-card active leve" data-risk="leve"><b>🛡️ LEVE</b><small>Odds de 2.00 a 5.00</small><small>Maior taxa de acerto</small><small>2 a 4 seleções</small><span></span></button>
-          <button class="risk-card moderado" data-risk="moderado"><b>🛡️ MODERADA</b><small>Odds de 5.00 a 20.00</small><small>Equilíbrio risco/retorno</small><small>3 a 8 seleções</small><span></span></button>
-          <button class="risk-card agressivo" data-risk="agressivo"><b>🛡️ AGRESSIVA</b><small>Odds de 20.00 a 100.00</small><small>Alto retorno</small><small>5 a 15 seleções</small><span></span></button>
-        </div>
-        <button id="generateTicket" class="scan-button gold-btn">Gerar bilhete</button>
-      </div>
-      <div id="ticket" class="ticket-slip"></div>
+    <section id="jogos" class="panel">
+      <div id="gamesList" class="league-list"></div>
+      <button id="generateFromGames" class="scan-button sticky-generate">Gerar bilhete IA</button>
     </section>
 
-    <section id="jogos" class="panel"><div id="gamesList" class="league-list"></div></section>
+    <section id="bilhete" class="panel">
+      <div class="ticket-builder compact-card">
+        <h3>Escolha o perfil do bilhete</h3>
+        <div class="risk-cards">
+          <button class="risk-card leve" data-risk="leve"><b>🛡️ LEVE</b><small>Odds de 2.00 a 5.00</small><small>Maior taxa de acerto</small><small>2 a 4 seleções</small><span></span></button>
+          <button class="risk-card active moderado" data-risk="moderado"><b>🛡️ MODERADA</b><small>Odds de 5.00 a 20.00</small><small>Equilíbrio risco/retorno</small><small>3 a 8 seleções</small><span></span></button>
+          <button class="risk-card agressivo" data-risk="agressivo"><b>🛡️ AGRESSIVA</b><small>Odds de 20.00 a 100.00</small><small>Alto retorno</small><small>5 a 15 seleções</small><span></span></button>
+        </div>
+        <button id="generateTicket" class="scan-button gold-btn">Gerar bilhete IA</button>
+      </div>
+
+      <div id="ticketEmpty" class="empty-ticket">
+        <strong>Nenhum bilhete gerado</strong>
+        <p>Faça o scan dos jogos e clique em “Gerar bilhete IA”.</p>
+      </div>
+      <div id="ticket" class="ticket-slip hidden"></div>
+    </section>
   </main>
   <script src="app.js"></script>
 </body>
