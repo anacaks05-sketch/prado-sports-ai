@@ -1,105 +1,128 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#050505" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0B0B0B" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Prado IA" />
-  <meta name="description" content="Scanner inteligente de jogos e gerador de bilhetes Prado IA." />
   <link rel="manifest" href="manifest.json" />
-  <link rel="apple-touch-icon" href="icons/icon-192.png" />
-  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
   <link rel="stylesheet" href="styles.css" />
   <title>Prado IA</title>
 </head>
 <body>
   <main class="app-shell">
-    <header class="top-brand">
-      <div class="pai-logo"><span>PAI</span></div>
-      <div>
-        <h1>PRADO <em>IA</em></h1>
-        <p>Inteligência para apostas esportivas</p>
+    <header class="topbar">
+      <div class="brand-mark" aria-label="Prado IA logo">
+        <span>P</span>
       </div>
-      <button id="installBtn" class="install hidden">Instalar</button>
+      <div class="brand-copy">
+        <h1>PRADO IA</h1>
+        <p>Sports Intelligence</p>
+      </div>
+      <div class="status-pill">PRO</div>
     </header>
 
-    <nav class="tabs">
+    <nav class="tabs" aria-label="Navegação principal">
       <button class="tab active" data-tab="scanner">Scanner</button>
       <button class="tab" data-tab="jogos">Jogos</button>
       <button class="tab" data-tab="bilhete">Bilhete</button>
     </nav>
 
-    <section id="scanner" class="panel active">
-      <div class="scanner-card compact-card">
-        <div class="section-head">
-          <div class="icon-tile">☷</div>
+    <section id="scanner" class="screen active-screen">
+      <div class="glass-card scanner-card">
+        <div class="section-head compact">
           <div>
-            <h2>Scanner de alto valor</h2>
-            <p>Escolha o tipo de mercado e a linha desejada</p>
+            <span class="eyebrow">Scanner IA</span>
+            <h2>Buscar oportunidades</h2>
           </div>
+          <span class="live-dot">Hoje</span>
         </div>
 
-        <div class="form-grid">
-          <label><span>Tipo de Mercado</span>
-            <select id="marketType">
-              <option value="match_goals">Gols na Partida</option>
-              <option value="first_half_goals">Gols 1º Tempo</option>
-              <option value="btts">Ambos Times Marcam</option>
-              <option value="corners">Escanteios Partida</option>
-              <option value="cards">Cartões na Partida</option>
-              <option value="games_goals">Jogos para Gols</option>
+        <div class="field-grid">
+          <label class="field">
+            <span>Mercado</span>
+            <select id="marketSelect">
+              <option value="gols">Gols na Partida</option>
+              <option value="gols_ht">Gols 1º Tempo</option>
+              <option value="ambos">Ambos Marcam</option>
+              <option value="escanteios">Escanteios</option>
+              <option value="cartoes">Cartões</option>
+              <option value="jogos_gols">Jogos para Gols</option>
             </select>
           </label>
 
-          <label><span>Linha</span>
+          <label class="field">
+            <span>Linha</span>
             <select id="lineSelect"></select>
           </label>
 
-          <label><span>Quantidade</span>
-            <select id="qtySelect">
-              <option value="2">2 jogos</option>
-              <option value="3" selected>3 jogos</option>
-              <option value="4">4 jogos</option>
-              <option value="5">5 jogos</option>
-              <option value="6">6 jogos</option>
-              <option value="7">7 jogos</option>
-              <option value="8">8 jogos</option>
+          <label class="field">
+            <span>Quantidade</span>
+            <select id="quantitySelect">
+              <option value="2">2 Jogos</option>
+              <option value="3">3 Jogos</option>
+              <option value="4" selected>4 Jogos</option>
+              <option value="5">5 Jogos</option>
+              <option value="6">6 Jogos</option>
+              <option value="7">7 Jogos</option>
+              <option value="8">8 Jogos</option>
             </select>
           </label>
 
-          <label><span>Data</span><input id="date" type="date" /></label>
+          <label class="field">
+            <span>Data</span>
+            <input id="dateInput" type="date" />
+          </label>
         </div>
 
-        <div id="searchPreview" class="search-preview">Buscando: Over +1.5 Gols FT</div>
-        <button id="scanBtn" class="scan-button">Iniciar scan</button>
+        <button id="scanBtn" class="primary-btn">Iniciar Scan</button>
+      </div>
+
+      <div class="mini-dashboard">
+        <div class="metric-card">
+          <span>Modelo</span>
+          <strong>V9</strong>
+        </div>
+        <div class="metric-card">
+          <span>Perfil</span>
+          <strong>Premium</strong>
+        </div>
+        <div class="metric-card">
+          <span>Status</span>
+          <strong>Online</strong>
+        </div>
       </div>
     </section>
 
-    <section id="jogos" class="panel">
-      <div id="gamesList" class="league-list"></div>
-      <button id="generateFromGames" class="scan-button sticky-generate">Gerar bilhete IA</button>
+    <section id="jogos" class="screen">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Oportunidades</span>
+          <h2>Jogos</h2>
+        </div>
+        <button id="generateTicketBtn" class="mini-btn">Gerar Bilhete IA</button>
+      </div>
+      <div id="gamesList" class="games-list"></div>
     </section>
 
-    <section id="bilhete" class="panel">
-      <div class="ticket-builder compact-card">
-        <h3>Escolha o perfil do bilhete</h3>
-        <div class="risk-cards">
-          <button class="risk-card leve" data-risk="leve"><b>🛡️ LEVE</b><small>Odds de 2.00 a 5.00</small><small>Maior taxa de acerto</small><small>2 a 4 seleções</small><span></span></button>
-          <button class="risk-card active moderado" data-risk="moderado"><b>🛡️ MODERADA</b><small>Odds de 5.00 a 20.00</small><small>Equilíbrio risco/retorno</small><small>3 a 8 seleções</small><span></span></button>
-          <button class="risk-card agressivo" data-risk="agressivo"><b>🛡️ AGRESSIVA</b><small>Odds de 20.00 a 100.00</small><small>Alto retorno</small><small>5 a 15 seleções</small><span></span></button>
+    <section id="bilhete" class="screen">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Dashboard</span>
+          <h2>Bilhete</h2>
         </div>
-        <button id="generateTicket" class="scan-button gold-btn">Gerar bilhete IA</button>
       </div>
-
-      <div id="ticketEmpty" class="empty-ticket">
-        <strong>Nenhum bilhete gerado</strong>
-        <p>Faça o scan dos jogos e clique em “Gerar bilhete IA”.</p>
+      <div id="ticketArea" class="ticket-empty">
+        <div class="empty-icon">◈</div>
+        <h3>Nenhum bilhete gerado</h3>
+        <p>Faça um scan e toque em “Gerar Bilhete IA”.</p>
       </div>
-      <div id="ticket" class="ticket-slip hidden"></div>
     </section>
   </main>
+
   <script src="app.js"></script>
 </body>
 </html>

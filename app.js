@@ -1,131 +1,123 @@
-const API_URL = 'https://www.thesportsdb.com/api/v1/json/3/eventsday.php';
-const state = { games: [], marketType: 'match_goals', line: 'over15', qty: 3, risk: 'moderado', ticketGenerated: false };
+const lineOptions = {
+  gols: ['Over +0.5', 'Over +1.5', 'Over +2.5', 'Over +3.5', 'Under +2.5', 'Under +3.5'],
+  gols_ht: ['Over 0.5 HT', 'Over 1.5 HT'],
+  ambos: ['Sim', 'Não'],
+  escanteios: ['Over 7.5', 'Over 8.5', 'Over 9.5', 'Over 10.5'],
+  cartoes: ['Over 2.5', 'Over 3.5', 'Over 4.5'],
+  jogos_gols: ['Mais provável Over 1.5', 'Mais provável Over 2.5', 'Ambas Marcam']
+};
 
-const fallbackTeams = [
-  ['Flamengo','Bahia','Brasil · Série A'], ['Real Madrid','Valencia','Espanha · La Liga'],
-  ['Liverpool','Brighton','Inglaterra · Premier League'], ['Palmeiras','Santos','Brasil · Série A'],
-  ['Manchester City','Everton','Inglaterra · Premier League'], ['Barcelona','Sevilla','Espanha · La Liga'],
-  ['PSG','Lyon','França · Ligue 1'], ['Bayern','Dortmund','Alemanha · Bundesliga'],
-  ['Inter','Roma','Itália · Série A'], ['Porto','Benfica','Portugal · Liga Portugal']
+const fallbackGames = [
+  { league:'Brasil Série A', time:'19:00', home:'Flamengo', away:'Bahia', prob:87, odd:1.62, ev:'+0.14' },
+  { league:'Argentina Liga', time:'20:15', home:'River Plate', away:'Lanús', prob:84, odd:1.55, ev:'+0.09' },
+  { league:'MLS', time:'21:30', home:'Inter Miami', away:'Orlando City', prob:82, odd:1.70, ev:'+0.11' },
+  { league:'Chile Primera', time:'22:00', home:'Colo-Colo', away:'Everton', prob:80, odd:1.66, ev:'+0.08' },
+  { league:'Uruguai', time:'18:30', home:'Peñarol', away:'Danubio', prob:79, odd:1.74, ev:'+0.10' },
+  { league:'Brasil Série B', time:'21:00', home:'Goiás', away:'CRB', prob:77, odd:1.82, ev:'+0.12' },
+  { league:'Peru Liga 1', time:'20:00', home:'Alianza Lima', away:'Cienciano', prob:76, odd:1.88, ev:'+0.13' },
+  { league:'Colômbia', time:'21:45', home:'Nacional', away:'Cali', prob:74, odd:1.95, ev:'+0.15' }
 ];
 
-const lineMap = {
-  match_goals: [
-    ['over05','Over +0.5'], ['over15','Over +1.5'], ['over25','Over +2.5'], ['over35','Over +3.5'],
-    ['under25','Under 2.5'], ['under35','Under 3.5']
-  ],
-  first_half_goals: [['htover05','Over 0.5 HT'], ['htover15','Over 1.5 HT']],
-  btts: [['btts_yes','Sim'], ['btts_no','Não']],
-  corners: [['corners75','Over 7.5'], ['corners85','Over 8.5'], ['corners95','Over 9.5'], ['corners105','Over 10.5']],
-  cards: [['cards25','Over 2.5'], ['cards35','Over 3.5'], ['cards45','Over 4.5']],
-  games_goals: [['best_over15','Mais Provável Over 1.5'], ['best_over25','Mais Provável Over 2.5'], ['best_btts','Ambas Marcam']]
-};
+let currentGames = [...fallbackGames];
+let currentTicket = null;
 
-const marketLabels = {
-  over05:['Over 0.5 Gols','Total de Gols'], over15:['Over 1.5 Gols','Total de Gols'], over25:['Over 2.5 Gols','Total de Gols'], over35:['Over 3.5 Gols','Total de Gols'],
-  under25:['Under 2.5 Gols','Total de Gols'], under35:['Under 3.5 Gols','Total de Gols'],
-  htover05:['Over 0.5 HT','Gols 1º Tempo'], htover15:['Over 1.5 HT','Gols 1º Tempo'],
-  btts_yes:['Ambos Marcam - SIM','Ambas Marcam'], btts_no:['Ambos Marcam - NÃO','Ambas Marcam'],
-  corners75:['Over 7.5 Escanteios','Total de Escanteios'], corners85:['Over 8.5 Escanteios','Total de Escanteios'], corners95:['Over 9.5 Escanteios','Total de Escanteios'], corners105:['Over 10.5 Escanteios','Total de Escanteios'],
-  cards25:['Over 2.5 Cartões','Total de Cartões'], cards35:['Over 3.5 Cartões','Total de Cartões'], cards45:['Over 4.5 Cartões','Total de Cartões'],
-  best_over15:['Mais Provável Over 1.5','Jogos para Gols'], best_over25:['Mais Provável Over 2.5','Jogos para Gols'], best_btts:['Ambas Marcam','Jogos para Gols']
-};
+const marketSelect = document.getElementById('marketSelect');
+const lineSelect = document.getElementById('lineSelect');
+const quantitySelect = document.getElementById('quantitySelect');
+const dateInput = document.getElementById('dateInput');
+const gamesList = document.getElementById('gamesList');
+const ticketArea = document.getElementById('ticketArea');
 
-const $ = s => document.querySelector(s);
-const $$ = s => [...document.querySelectorAll(s)];
-const todayISO = () => new Date().toISOString().slice(0,10);
-function hashScore(text){let h=0;for(const c of text) h=(h*31+c.charCodeAt(0))%997;return h;}
-function label(){return marketLabels[state.line] || ['Over 1.5 Gols','Total de Gols'];}
-function makeFallback(){return fallbackTeams.map(([home,away,league],i)=>({home,away,league,time:`${15+i}:00`}));}
-
-function enrich(game){
-  const h=hashScore(game.home+game.away+state.line);
-  const base = state.line.includes('05') || state.line.includes('15') || state.line === 'best_over15' ? 80 :
-               state.line.includes('25') || state.line === 'btts_yes' || state.line === 'best_btts' ? 64 :
-               state.line.includes('35') || state.line.includes('85') ? 56 : 50;
-  const prob=Math.min(92,Math.max(42,base+(h%24)-8));
-  const odd=+(100/prob*1.08).toFixed(2);
-  const ev=+((prob/100)*odd-1).toFixed(2);
-  return {...game,prob,odd,ev,line:state.line};
+function todayISO(){
+  const d = new Date();
+  d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+  return d.toISOString().slice(0,10);
 }
 
-async function loadGames(){
-  const date=$('#date').value||todayISO();
-  try{
-    const res=await fetch(`${API_URL}?d=${date}&s=Soccer`,{cache:'no-store'});
-    const data=await res.json();
-    const events=(data.events||[]).map(e=>({home:e.strHomeTeam||'Mandante',away:e.strAwayTeam||'Visitante',league:e.strLeague||'Liga',time:(e.strTime||'').slice(0,5)||'Hoje'}));
-    state.games=(events.length?events:makeFallback()).map(enrich).sort((a,b)=>b.prob-a.prob);
-  }catch(e){
-    state.games=makeFallback().map(enrich).sort((a,b)=>b.prob-a.prob);
-  }
-  renderGames();
+function updateLines(){
+  const lines = lineOptions[marketSelect.value] || lineOptions.gols;
+  lineSelect.innerHTML = lines.map(v => `<option value="${v}">${v}</option>`).join('');
 }
 
-function renderLineOptions(){
-  const opts = lineMap[state.marketType];
-  $('#lineSelect').innerHTML = opts.map(([v,t],i)=>`<option value="${v}" ${i===1 || (opts.length===2 && i===0) ? 'selected' : ''}>${t}</option>`).join('');
-  state.line = $('#lineSelect').value;
-  updatePreview();
+function setTab(tabName){
+  document.querySelectorAll('.tab').forEach(btn => btn.classList.toggle('active', btn.dataset.tab === tabName));
+  document.querySelectorAll('.screen').forEach(screen => screen.classList.toggle('active-screen', screen.id === tabName));
 }
 
-function updatePreview(){
-  state.marketType = $('#marketType').value;
-  state.line = $('#lineSelect').value || state.line;
-  state.qty = Number($('#qtySelect').value || 3);
-  $('#searchPreview').textContent = `Buscando: ${label()[0]}`;
-  if(state.games.length){ state.games = state.games.map(enrich).sort((a,b)=>b.prob-a.prob); renderGames(); }
+function renderGames(games = currentGames){
+  const line = lineSelect.value || 'Over +1.5';
+  gamesList.innerHTML = games.map(game => `
+    <article class="game-card">
+      <div class="league-row"><span>${game.league}</span><span>${game.time}</span></div>
+      <div class="match">${game.home} x ${game.away}</div>
+      <div class="game-stats">
+        <div class="stat"><span>Confiança</span><strong>${game.prob}%</strong></div>
+        <div class="stat"><span>Odd</span><strong>${game.odd.toFixed(2)}</strong></div>
+        <div class="stat"><span>Mercado</span><strong>${line}</strong></div>
+      </div>
+      <div class="confidence-bar"><i style="width:${game.prob}%"></i></div>
+    </article>
+  `).join('');
 }
 
-function renderGame(g){
-  return `<article class="game">
-    <div class="league">${g.league}</div>
-    <div class="teams">${g.home} x ${g.away}</div>
-    <div class="meta"><span>🕒 ${g.time}</span><span class="pill">${g.prob}%</span><span>Odd ${g.odd}</span><span>EV ${g.ev>0?'+':''}${g.ev}</span></div>
-  </article>`;
-}
-function renderGames(){
-  const selected = state.games.slice(0, Math.max(state.qty, 3));
-  const groups=selected.reduce((a,g)=>((a[g.league]??=[]).push(g),a),{});
-  $('#gamesList').innerHTML=Object.entries(groups).map(([league,games])=>`<div class="league-block"><h3 class="league-title">${league}</h3><div class="grid">${games.map(renderGame).join('')}</div></div>`).join('');
+async function scanGames(){
+  const qty = Number(quantitySelect.value || 4);
+  const shuffled = fallbackGames
+    .map(game => ({...game, prob: Math.max(70, Math.min(92, game.prob + Math.floor(Math.random()*5)-2))}))
+    .sort((a,b) => b.prob - a.prob);
+  currentGames = shuffled.slice(0, Math.max(qty, 4));
+  renderGames(currentGames);
+  setTab('jogos');
 }
 
-function ticketConfig(){
-  const cfg = {leve:{min:78,label:'LEVE',risk:'BAIXO'},moderado:{min:62,label:'MODERADO',risk:'MODERADO'},agressivo:{min:0,label:'AGRESSIVO',risk:'ALTO'}}[state.risk];
-  return {...cfg,n:state.qty};
+function generateTicket(){
+  const qty = Number(quantitySelect.value || 4);
+  const picks = currentGames.slice(0, qty);
+  const oddTotal = picks.reduce((acc, game) => acc * game.odd, 1);
+  const avgProb = Math.round(picks.reduce((acc, game) => acc + game.prob, 0) / picks.length);
+  const risk = qty <= 3 ? 'Leve' : qty <= 5 ? 'Moderado' : 'Agressivo';
+  const line = lineSelect.value || 'Over +1.5';
+
+  currentTicket = { picks, oddTotal, avgProb, risk, line };
+  renderTicket();
+  setTab('bilhete');
 }
-function pickGames(){
-  const cfg=ticketConfig();
-  let picks=state.games.filter(g=>g.prob>=cfg.min).sort((a,b)=>state.risk==='agressivo'?b.odd-a.odd:b.prob-a.prob).slice(0,cfg.n);
-  if(picks.length<cfg.n)picks=state.games.slice().sort((a,b)=>b.prob-a.prob).slice(0,cfg.n);
-  return picks;
-}
+
 function renderTicket(){
-  const picks=pickGames(), cfg=ticketConfig();
-  const odd=picks.reduce((m,g)=>m*g.odd,1);
-  const confidence=Math.round(picks.reduce((m,g)=>m+g.prob,0)/(picks.length||1));
-  const now=new Date().toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
-  $('#ticketEmpty').classList.add('hidden');
-  $('#ticket').classList.remove('hidden');
-  $('#ticket').innerHTML=`<div class="ticket-header"><h2>✓ BILHETE GERADO</h2><time>Gerado em ${now}</time><span class="verified">VERIFICADO</span></div>
-    <div class="summary"><div>Odd total<b>${odd.toFixed(2)}</b></div><div class="green">Confiança IA<b>${confidence}%</b></div><div>Nível de risco<b>${cfg.risk}</b></div><div>Jogos<b>${picks.length}</b></div></div>
-    <div class="ticket-list">${picks.map((g,i)=>`<div class="pick"><div class="pick-no">${i+1}</div><div class="pick-team"><div class="name">${g.home} x ${g.away}</div><div class="sub">${g.league}</div><div class="market-name">${marketLabels[g.line][0]}</div><div class="market-sub">${marketLabels[g.line][1]}</div></div><div class="odd">${g.odd}</div><div class="bars"><i></i><i></i><i></i><i></i></div></div>`).join('')}</div>`;
+  if(!currentTicket) return;
+  const { picks, oddTotal, avgProb, risk, line } = currentTicket;
+  ticketArea.className = 'ticket-card';
+  ticketArea.innerHTML = `
+    <div class="ticket-top">
+      <h3>Bilhete Gerado</h3>
+      <span class="verify">VERIFICADO</span>
+    </div>
+    <div class="ticket-metrics">
+      <div class="ticket-metric"><span>Odd Total</span><strong>${oddTotal.toFixed(2)}</strong></div>
+      <div class="ticket-metric"><span>Confiança IA</span><strong>${avgProb}%</strong></div>
+      <div class="ticket-metric"><span>Risco</span><strong>${risk}</strong></div>
+      <div class="ticket-metric"><span>Jogos</span><strong>${picks.length}</strong></div>
+    </div>
+    <div class="pick-list">
+      ${picks.map((game, index) => `
+        <div class="pick">
+          <strong>${index + 1}. ${game.home} x ${game.away}</strong>
+          <span>${line} • Odd ${game.odd.toFixed(2)} • ${game.prob}%</span>
+        </div>
+      `).join('')}
+    </div>
+  `;
 }
-function switchTab(name){$$('.tab,.panel').forEach(x=>x.classList.remove('active')); document.querySelector(`[data-tab="${name}"]`).classList.add('active'); $('#'+name).classList.add('active');}
 
-$$('.tab').forEach(b=>b.onclick=()=>switchTab(b.dataset.tab));
-$$('.risk-card').forEach(b=>b.onclick=()=>{$$('.risk-card').forEach(x=>x.classList.remove('active'));b.classList.add('active');state.risk=b.dataset.risk;if(state.ticketGenerated)renderTicket();});
-$('#marketType').onchange=()=>{state.marketType=$('#marketType').value;renderLineOptions();};
-$('#lineSelect').onchange=updatePreview;
-$('#qtySelect').onchange=updatePreview;
-$('#scanBtn').onclick=async()=>{await loadGames();switchTab('jogos');};
-function generate(){state.ticketGenerated=true;if(!state.games.length){loadGames().then(()=>{renderTicket();switchTab('bilhete');});}else{renderTicket();switchTab('bilhete');}}
-$('#generateTicket').onclick=generate;
-$('#generateFromGames').onclick=generate;
-$('#date').value=todayISO();
-renderLineOptions();
-loadGames();
+document.querySelectorAll('.tab').forEach(btn => btn.addEventListener('click', () => setTab(btn.dataset.tab)));
+marketSelect.addEventListener('change', () => { updateLines(); renderGames(currentGames); });
+document.getElementById('scanBtn').addEventListener('click', scanGames);
+document.getElementById('generateTicketBtn').addEventListener('click', generateTicket);
 
-let deferredPrompt;window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;$('#installBtn').classList.remove('hidden');});
-$('#installBtn').onclick=async()=>{if(deferredPrompt){deferredPrompt.prompt();deferredPrompt=null;$('#installBtn').classList.add('hidden');}};
-if('serviceWorker'in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js'));}
+dateInput.value = todayISO();
+updateLines();
+renderGames(currentGames.slice(0,4));
+
+if('serviceWorker' in navigator){
+  window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => {}));
+}
