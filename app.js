@@ -183,3 +183,10 @@ window.addEventListener('load', () => {
     app?.classList.remove('app-hidden');
   }, 1800);
 });
+
+setInterval(()=>{
+ const g=document.getElementById('liveGames');
+ const o=document.getElementById('liveOpps');
+ if(g) g.textContent=String(120+Math.floor(Math.random()*20));
+ if(o) o.textContent=String(10+Math.floor(Math.random()*15));
+},3000);
