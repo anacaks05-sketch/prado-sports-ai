@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Prado Sports V30.12</title>
+<title>Prado Sports V30.13</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&display=swap');
 :root{--gold:#f4bd3b;--gold2:#ffd86f;--muted:#aab0bb;--line:rgba(255,255,255,.09);--card:#151a23;--card2:#202633;--green:#52e78a}
@@ -900,6 +900,59 @@ body.lightMode small,
 body.lightMode .configSub{color:#6b7280!important}
 body.lightMode .metric{background:#f1f3f6!important}
 
+
+/* ===== V30.13 HOME ORGANIZADA POR DIA ===== */
+.daySummary{
+  display:flex;align-items:center;justify-content:space-between;
+  margin:12px 0 14px;padding:12px 14px;border-radius:18px;
+  background:linear-gradient(145deg,#151a23,#202633);
+  border:1px solid rgba(255,255,255,.08)
+}
+.daySummary b{font-size:15px}
+.daySummary small{display:block;color:#9ca3af;font-size:11.5px;font-weight:750;margin-top:2px}
+.daySummary span{color:#f7c34b;font-size:12px;font-weight:900}
+.homeGroup{margin:18px 0}
+.groupTitle{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:10px}
+.groupTitle h2{font-size:19px!important;margin:0!important;letter-spacing:-.6px!important}
+.groupTitle small{color:#f7c34b;font-weight:850;font-size:12.5px}
+.preCard{
+  border-radius:18px;padding:13px 14px;margin-bottom:10px;
+  background:linear-gradient(145deg,#151a23,#202633);
+  border:1px solid rgba(255,255,255,.08)
+}
+.preTop{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.preTop b{font-size:12.5px;color:#aeb4bf}
+.preTop span{font-size:11px;color:#f7c34b;font-weight:900;background:#11141b;padding:5px 9px;border-radius:999px}
+.preBody{display:grid;grid-template-columns:1fr 62px 1fr;align-items:center;gap:8px}
+.preBody div{display:flex;align-items:center;gap:8px;min-width:0}
+.preBody div:last-child{justify-content:flex-end;text-align:right}
+.preBody strong{font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.preBody time{font-size:18px;font-weight:900;text-align:center;color:#fff}
+.emojiLogo{font-size:24px;line-height:1}
+.preFoot{display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding-top:9px;border-top:1px solid rgba(255,255,255,.07)}
+.preFoot span{font-size:11.5px;color:#9ca3af;font-weight:750}
+.preFoot b{color:#f7c34b;font-size:20px}
+.compactMatch{margin-bottom:10px!important}
+.laterList{
+  border-radius:18px;background:linear-gradient(145deg,#151a23,#202633);
+  border:1px solid rgba(255,255,255,.08);overflow:hidden
+}
+.laterRow{
+  min-height:58px;display:grid;grid-template-columns:52px 1fr auto;
+  align-items:center;gap:10px;padding:0 14px;border-bottom:1px solid rgba(255,255,255,.07)
+}
+.laterRow:last-child{border-bottom:0}
+.laterRow span{color:#f7c34b;font-weight:900;font-size:13px}
+.laterRow b{font-size:13.5px;display:block}
+.laterRow small{font-size:11.5px;color:#9ca3af;font-weight:750}
+.laterRow strong{font-size:13px;text-align:right}
+body.lightMode .daySummary,
+body.lightMode .preCard,
+body.lightMode .laterList{background:#fff!important;border-color:#dde1e8!important}
+body.lightMode .preBody time,
+body.lightMode .laterRow b,
+body.lightMode .laterRow strong{color:#10131a!important}
+
 </style>
 </head>
 <body>
@@ -1359,7 +1412,7 @@ document.addEventListener("DOMContentLoaded", function(){
   renderSetup();
   renderApp();
   renderFavorites();
-  if("serviceWorker" in navigator){navigator.serviceWorker.register("service-worker.js?v=3012")}
+  if("serviceWorker" in navigator){navigator.serviceWorker.register("service-worker.js?v=3013")}
 });
 
 (function(){
@@ -1497,6 +1550,94 @@ document.addEventListener("DOMContentLoaded", function(){
     };
   });
 });
+</script>
+
+
+<script>
+(function(){
+  const preGames = [
+    {id:101, league:"Copa do Mundo", time:"13:00", home:"Brasil", away:"Marrocos", hs:"🇧🇷", as:"🇲🇦", tag:"Pré-jogo"},
+    {id:102, league:"Premier League", time:"15:30", home:"Arsenal", away:"Liverpool", hs:"🦁", as:"🔴", tag:"Pré-jogo"},
+    {id:103, league:"Champions League", time:"16:00", home:"Real Madrid", away:"Bayern", hs:"⚪", as:"🔴", tag:"Pré-jogo"},
+    {id:104, league:"Brasileirão Série A", time:"21:30", home:"Vasco", away:"Flamengo", hs:"🛡️", as:"🔴", tag:"Hoje"}
+  ];
+  const liveGames = [
+    {id:1, league:"Brasileirão Série A", minute:"67:15", home:"Vasco", away:"Flamengo", score:"2 - 1", hlogo:"https://upload.wikimedia.org/wikipedia/pt/a/ac/CRVascodaGama.png", alogo:"https://upload.wikimedia.org/wikipedia/commons/9/93/Flamengo-RJ_%28BRA%29.png", corners:"8", pressure:"84%"},
+    {id:2, league:"Brasileirão Série A", minute:"67", home:"Palmeiras", away:"São Paulo", score:"2 - 1", hlogo:"https://upload.wikimedia.org/wikipedia/commons/1/10/Palmeiras_logo.svg", alogo:"https://upload.wikimedia.org/wikipedia/commons/4/4b/Sao_Paulo_Futebol_Clube.png", corners:"10", pressure:"88%"},
+    {id:3, league:"Libertadores", minute:"52", home:"Fluminense", away:"Boca Juniors", score:"1 - 0", hlogo:"https://upload.wikimedia.org/wikipedia/commons/a/ad/Fluminense_FC_escudo.png", alogo:"https://upload.wikimedia.org/wikipedia/commons/f/fc/Logo_Boca_Juniors.png", corners:"6", pressure:"73%"}
+  ];
+  const laterGames = [
+    {league:"Brasileirão Série B", time:"19:00", home:"Goiás", away:"Criciúma", hs:"🟢", as:"🟡"},
+    {league:"Liga Argentina", time:"20:00", home:"River Plate", away:"Racing", hs:"🔴", as:"🔵"},
+    {league:"MLS", time:"22:00", home:"Inter Miami", away:"Atlanta United", hs:"🌴", as:"⚫"}
+  ];
+
+  function preCard(g){
+    return `<div class="preCard">
+      <div class="preTop"><b>${g.league}</b><span>${g.tag}</span></div>
+      <div class="preBody">
+        <div><span class="emojiLogo">${g.hs}</span><strong>${g.home}</strong></div>
+        <time>${g.time}</time>
+        <div><span class="emojiLogo">${g.as}</span><strong>${g.away}</strong></div>
+      </div>
+      <div class="preFoot"><span>Escalações e estatísticas antes do jogo</span><b>›</b></div>
+    </div>`;
+  }
+
+  function liveCard(g){
+    return `<div class="match compactMatch">
+      <div class="mTop"><span>${g.league}</span><b>● 2º Tempo • ${g.minute}</b></div>
+      <div class="scoreRow">
+        <div class="team"><img src="${g.hlogo}"><strong>${g.home}</strong></div>
+        <div class="score">${g.score}</div>
+        <div class="team"><img src="${g.alogo}"><strong>${g.away}</strong></div>
+      </div>
+      <div class="metrics">
+        <div class="metric"><small>Escanteios</small><b>${g.corners}</b></div>
+        <div class="metric"><small>Pressão IA</small><b>${g.pressure}</b></div>
+        <div class="metric"><small>Status</small><b>Ao vivo</b></div>
+      </div>
+    </div>`;
+  }
+
+  function laterRow(g){
+    return `<div class="laterRow">
+      <span>${g.time}</span>
+      <div><b>${g.hs} ${g.home}</b><small>${g.league}</small></div>
+      <strong>${g.as} ${g.away}</strong>
+    </div>`;
+  }
+
+  function renderOrganizedHome(){
+    const home = document.getElementById("home");
+    if(!home) return;
+    const search = home.querySelector(".searchBar")?.outerHTML || "";
+    const days = home.querySelector(".days")?.outerHTML || "";
+    home.innerHTML = `
+      ${search}
+      ${days}
+      <div class="daySummary">
+        <div><b>Hoje, 09</b><small>12 jogos programados</small></div>
+        <span>3 ao vivo</span>
+      </div>
+      <section class="homeGroup">
+        <div class="groupTitle"><h2>🕘 Pré-jogos</h2><small>Começam hoje</small></div>
+        ${preGames.map(preCard).join("")}
+      </section>
+      <section class="homeGroup">
+        <div class="groupTitle"><h2>🔴 Ao vivo agora</h2><small>Tempo real</small></div>
+        ${liveGames.map(liveCard).join("")}
+      </section>
+      <section class="homeGroup">
+        <div class="groupTitle"><h2>📅 Mais tarde</h2><small>Agenda</small></div>
+        <div class="laterList">${laterGames.map(laterRow).join("")}</div>
+      </section>
+    `;
+  }
+
+  window.addEventListener("load", function(){ setTimeout(renderOrganizedHome, 120); });
+  document.addEventListener("DOMContentLoaded", function(){ setTimeout(renderOrganizedHome, 120); });
+})();
 </script>
 
 </body>
