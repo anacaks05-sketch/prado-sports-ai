@@ -33,7 +33,7 @@ async function loadGames(){
   renderAll();
 }
 function makeFallback(){return fallbackTeams.map(([home,away,league],i)=>({home,away,league,time:`${12+i}:00`}));}
-function renderGame(g){return `<article class="game card"><div class="league">${g.league}</div><div class="teams">${g.home} x ${g.away}</div><div class="meta"><span>${g.time}</span><span class="pill">${g.prob}%</span><span>Odd ${g.odd}</span><span>EV ${g.ev>0?'+':''}${g.ev}</span></div></article>`}
+function renderGame(g){const evClass=g.ev>=0?'evpos':'evneg';return `<article class="game"><div class="league">${g.league}</div><div class="teams">${g.home} x ${g.away}</div><div class="meta"><span>🕒 ${g.time}</span><span class="pill">${g.prob}%</span><span>Odd ${g.odd}</span><span class="${evClass}">EV ${g.ev>0?'+':''}${g.ev}</span></div></article>`}
 function renderScanner(){const limit=+$('#limit').value||8;$('#scanResults').innerHTML=state.games.slice().sort((a,b)=>b.prob-a.prob).slice(0,limit).map(renderGame).join('');}
 function renderTicket(){
   const cfg={leve:{n:2,min:78,title:'Bilhete Leve',desc:'Odds baixas, foco em alta probabilidade.'},moderado:{n:4,min:62,title:'Bilhete Moderado',desc:'Equilíbrio entre segurança e retorno.'},agressivo:{n:6,min:0,title:'Bilhete Agressivo',desc:'Múltiplo maior, odds altas e retorno agressivo.'}}[state.risk];
@@ -50,7 +50,7 @@ function renderAll(){renderScanner();renderTicket();renderGames();}
 document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab,.panel').forEach(x=>x.classList.remove('active'));b.classList.add('active');$('#'+b.dataset.tab).classList.add('active');});
 document.querySelectorAll('.risk').forEach(b=>b.onclick=()=>{document.querySelectorAll('.risk').forEach(x=>x.classList.remove('active'));b.classList.add('active');state.risk=b.dataset.risk;renderTicket();});
 $('#market').onchange=e=>{state.market=e.target.value;state.games=state.games.map(g=>enrich(g,e.target.value));renderAll();};
-$('#scanBtn').onclick=loadGames; $('#date').value=todayISO();
+$('#scanBtn').onclick=loadGames; $('#quickTicket').onclick=()=>{document.querySelector('[data-tab=\"bilhete\"]').click();renderTicket();}; $('#date').value=todayISO();
 let deferredPrompt; window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;$('#installBtn').classList.remove('hidden');});
 $('#installBtn').onclick=async()=>{if(deferredPrompt){deferredPrompt.prompt();deferredPrompt=null;$('#installBtn').classList.add('hidden');}};
 if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js'));}

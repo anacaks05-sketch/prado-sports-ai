@@ -15,24 +15,41 @@
   <title>Prado IA</title>
 </head>
 <body>
+  <div class="bg-glow one"></div>
+  <div class="bg-glow two"></div>
+
   <main class="app-shell">
-    <header class="hero">
-      <div>
-        <p class="eyebrow">PRADO IA</p>
-        <h1>Scanner premium de bilhetes</h1>
-        <p>Jogos reais de hoje, probabilidades simuladas e 3 perfis de risco.</p>
+    <header class="hero glass">
+      <div class="hero-top">
+        <div>
+          <p class="eyebrow">PRADO IA</p>
+          <h1>Scanner premium de bilhetes</h1>
+        </div>
+        <div class="score-ring">
+          <span>IA</span>
+          <b>92</b>
+        </div>
       </div>
-      <button id="installBtn" class="ghost hidden">Instalar app</button>
+      <p class="hero-copy">Jogos reais de hoje, leitura automática de valor e 3 perfis de risco para montar bilhetes em segundos.</p>
+      <div class="hero-actions">
+        <button id="quickTicket" class="primary">Gerar bilhete agora</button>
+        <button id="installBtn" class="ghost hidden">Instalar app</button>
+      </div>
+      <div class="mini-stats">
+        <div><span>Mercados</span><b>4</b></div>
+        <div><span>Perfis</span><b>3</b></div>
+        <div><span>Modo</span><b>Hoje</b></div>
+      </div>
     </header>
 
-    <nav class="tabs">
-      <button class="tab active" data-tab="scanner">🔍 Scanner</button>
-      <button class="tab" data-tab="bilhete">🎫 Bilhete</button>
-      <button class="tab" data-tab="jogos">⚽ Jogos</button>
+    <nav class="tabs glass">
+      <button class="tab active" data-tab="scanner"><span>🔍</span> Scanner</button>
+      <button class="tab" data-tab="bilhete"><span>🎫</span> Bilhete</button>
+      <button class="tab" data-tab="jogos"><span>⚽</span> Jogos</button>
     </nav>
 
     <section id="scanner" class="panel active">
-      <div class="filters card">
+      <div class="filters glass">
         <label>Mercado
           <select id="market">
             <option value="over15">Over 1.5 gols</option>
@@ -47,7 +64,7 @@
         <label>Qtd. jogos
           <input id="limit" type="number" min="2" max="20" value="8" />
         </label>
-        <button id="scanBtn">Buscar jogos</button>
+        <button id="scanBtn" class="primary">Buscar jogos</button>
       </div>
       <div id="status" class="status">Carregando jogos de hoje...</div>
       <div id="scanResults" class="grid"></div>
@@ -59,7 +76,7 @@
         <button class="risk" data-risk="moderado">⚖️ Moderado</button>
         <button class="risk" data-risk="agressivo">🔥 Agressivo</button>
       </div>
-      <div id="ticket" class="ticket card"></div>
+      <div id="ticket" class="ticket glass"></div>
     </section>
 
     <section id="jogos" class="panel">
