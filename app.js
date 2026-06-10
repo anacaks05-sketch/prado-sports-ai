@@ -20,6 +20,7 @@ const fallbackGames = [
 
 let currentGames = [...fallbackGames];
 let currentTicket = null;
+let selectedRisk = 'leve';
 
 const marketSelect = document.getElementById('marketSelect');
 const lineSelect = document.getElementById('lineSelect');
@@ -27,6 +28,7 @@ const quantitySelect = document.getElementById('quantitySelect');
 const dateInput = document.getElementById('dateInput');
 const gamesList = document.getElementById('gamesList');
 const ticketArea = document.getElementById('ticketArea');
+const scannerTicketArea = document.getElementById('scannerTicketArea');
 
 function todayISO(){
   const d = new Date();
@@ -60,34 +62,75 @@ function renderGames(games = currentGames){
   `).join('');
 }
 
-async function scanGames(){
+function getRiskQty(){
+  if(selectedRisk === 'leve') return 3;
+  if(selectedRisk === 'moderado') return 5;
+  return 8;
+}
+
+function getRiskLabel(){
+  return selectedRisk === 'leve' ? 'Leve' : selectedRisk === 'moderado' ? 'Moderado' : 'Agressivo';
+}
+
+function buildTicket(qty){
+  const picks = currentGames.slice(0, qty);
+  const oddTotal = picks.reduce((acc, game) => acc * game.odd, 1);
+  const avgProb = Math.round(picks.reduce((acc, game) => acc + game.prob, 0) / picks.length);
+  const line = lineSelect.value || 'Over +1.5';
+  return { picks, oddTotal, avgProb, risk: getRiskLabel(), line };
+}
+
+function scanGames(){
   const qty = Number(quantitySelect.value || 4);
   const shuffled = fallbackGames
     .map(game => ({...game, prob: Math.max(70, Math.min(92, game.prob + Math.floor(Math.random()*5)-2))}))
     .sort((a,b) => b.prob - a.prob);
   currentGames = shuffled.slice(0, Math.max(qty, 4));
   renderGames(currentGames);
-  setTab('jogos');
+  currentTicket = buildTicket(qty);
+  renderTicket(ticketArea);
+  renderInlineTicket();
 }
 
-function generateTicket(){
-  const qty = Number(quantitySelect.value || 4);
-  const picks = currentGames.slice(0, qty);
-  const oddTotal = picks.reduce((acc, game) => acc * game.odd, 1);
-  const avgProb = Math.round(picks.reduce((acc, game) => acc + game.prob, 0) / picks.length);
-  const risk = qty <= 3 ? 'Leve' : qty <= 5 ? 'Moderado' : 'Agressivo';
-  const line = lineSelect.value || 'Over +1.5';
-
-  currentTicket = { picks, oddTotal, avgProb, risk, line };
-  renderTicket();
-  setTab('bilhete');
+function generateTicketFromRisk(){
+  const qty = getRiskQty();
+  const shuffled = fallbackGames
+    .map(game => ({...game, prob: Math.max(69, Math.min(93, game.prob + Math.floor(Math.random()*6)-2))}))
+    .sort((a,b) => selectedRisk === 'agressivo' ? b.odd - a.odd : b.prob - a.prob);
+  currentGames = shuffled.slice(0, qty);
+  renderGames(currentGames);
+  currentTicket = buildTicket(qty);
+  renderTicket(ticketArea);
+  renderInlineTicket();
 }
 
-function renderTicket(){
-  if(!currentTicket) return;
+function renderInlineTicket(){
+  if(!currentTicket || !scannerTicketArea) return;
   const { picks, oddTotal, avgProb, risk, line } = currentTicket;
-  ticketArea.className = 'ticket-card';
-  ticketArea.innerHTML = `
+  scannerTicketArea.className = 'inline-ticket-card';
+  scannerTicketArea.innerHTML = `
+    <div class="inline-ticket-head">
+      <div><span class="eyebrow">Bilhete do Scan</span><h3>${risk}</h3></div>
+      <strong>${oddTotal.toFixed(2)}</strong>
+    </div>
+    <div class="inline-ticket-meta">
+      <span>${avgProb}% confiança</span>
+      <span>${picks.length} jogos</span>
+      <span>${line}</span>
+    </div>
+    <div class="inline-picks">
+      ${picks.map((game, index) => `
+        <div><b>${index + 1}</b><span>${game.home} x ${game.away}</span><em>${game.odd.toFixed(2)}</em></div>
+      `).join('')}
+    </div>
+  `;
+}
+
+function renderTicket(target = ticketArea){
+  if(!currentTicket || !target) return;
+  const { picks, oddTotal, avgProb, risk, line } = currentTicket;
+  target.className = 'ticket-card';
+  target.innerHTML = `
     <div class="ticket-top">
       <h3>Bilhete Gerado</h3>
       <span class="verify">VERIFICADO</span>
@@ -110,9 +153,14 @@ function renderTicket(){
 }
 
 document.querySelectorAll('.tab').forEach(btn => btn.addEventListener('click', () => setTab(btn.dataset.tab)));
+document.querySelectorAll('.risk-card').forEach(btn => btn.addEventListener('click', () => {
+  selectedRisk = btn.dataset.risk;
+  document.querySelectorAll('.risk-card').forEach(card => card.classList.toggle('active', card === btn));
+}));
 marketSelect.addEventListener('change', () => { updateLines(); renderGames(currentGames); });
 document.getElementById('scanBtn').addEventListener('click', scanGames);
-document.getElementById('generateTicketBtn').addEventListener('click', generateTicket);
+document.getElementById('generateTicketBtn').addEventListener('click', () => { generateTicketFromRisk(); setTab('bilhete'); });
+document.getElementById('ticketScanBtn').addEventListener('click', generateTicketFromRisk);
 
 dateInput.value = todayISO();
 updateLines();
@@ -121,7 +169,6 @@ renderGames(currentGames.slice(0,4));
 if('serviceWorker' in navigator){
   window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => {}));
 }
-
 
 window.addEventListener('load', () => {
   const splash = document.getElementById('splashScreen');

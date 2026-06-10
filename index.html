@@ -92,6 +92,14 @@
         <button id="scanBtn" class="primary-btn">Iniciar Scan</button>
       </div>
 
+      <div id="scannerTicketArea" class="inline-ticket-empty">
+        <div>
+          <span class="eyebrow">Resultado</span>
+          <h3>Bilhete do scan</h3>
+        </div>
+        <p>Toque em “Iniciar Scan” para gerar um bilhete organizado aqui embaixo.</p>
+      </div>
+
       <div class="mini-dashboard">
         <div class="metric-card">
           <span>Modelo</span>
@@ -122,14 +130,35 @@
     <section id="bilhete" class="screen">
       <div class="section-head">
         <div>
-          <span class="eyebrow">Dashboard</span>
-          <h2>Bilhete</h2>
+          <span class="eyebrow">Perfis de risco</span>
+          <h2>Gerar bilhete</h2>
         </div>
       </div>
-      <div id="ticketArea" class="ticket-empty">
+
+      <div class="risk-grid" role="radiogroup" aria-label="Perfil do bilhete">
+        <button class="risk-card active" data-risk="leve" type="button">
+          <strong>Leve</strong>
+          <span>Odd menor</span>
+          <small>2 a 3 jogos</small>
+        </button>
+        <button class="risk-card" data-risk="moderado" type="button">
+          <strong>Moderado</strong>
+          <span>Equilíbrio</span>
+          <small>4 a 5 jogos</small>
+        </button>
+        <button class="risk-card" data-risk="agressivo" type="button">
+          <strong>Agressivo</strong>
+          <span>Retorno alto</span>
+          <small>6 a 8 jogos</small>
+        </button>
+      </div>
+
+      <button id="ticketScanBtn" class="primary-btn ticket-action">Iniciar Scan</button>
+
+      <div id="ticketArea" class="ticket-empty compact-empty">
         <div class="empty-icon">◈</div>
         <h3>Nenhum bilhete gerado</h3>
-        <p>Faça um scan e toque em “Gerar Bilhete IA”.</p>
+        <p>Escolha Leve, Moderado ou Agressivo e toque em “Iniciar Scan”.</p>
       </div>
     </section>
   </main>
