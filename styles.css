@@ -15,3 +15,41 @@
 .ticket-builder{padding:22px}.ticket-builder h3{margin:0 0 16px;color:var(--gold);text-transform:uppercase;font-size:18px}.risk-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.risk-card{text-align:left;border:1px solid #2a2a2a;background:#101010;color:#fff;border-radius:12px;padding:16px;min-height:132px;position:relative}.risk-card b{display:block;color:var(--gold);font-size:18px}.risk-card small{display:block;color:#aaa;font-size:13px;margin-top:9px;font-weight:800}.risk-card span{position:absolute;right:14px;top:16px;width:20px;height:20px;border:2px solid #555;border-radius:50%}.risk-card.active{border-color:var(--gold);box-shadow:0 0 0 1px rgba(243,197,55,.2)}.risk-card.active span{background:var(--gold);border-color:var(--gold)}.gold-btn{margin:18px 0 0;width:100%;height:62px;font-size:19px}.empty-ticket{border:1px dashed #333;border-radius:18px;margin-top:18px;padding:34px;text-align:center;color:#aaa;background:#0b0b0b}.empty-ticket strong{display:block;color:#fff;font-size:24px}.empty-ticket p{margin:8px 0 0;font-size:16px}
 .ticket-slip{border:1px solid #252525;background:#080808;border-radius:12px;margin-top:18px;overflow:hidden}.ticket-header{padding:28px 30px;border-bottom:1px solid #252525}.ticket-header h2{margin:0;color:var(--green);font-size:34px}.ticket-header time{display:block;color:#aaa;margin:20px 0;font-size:20px}.verified{display:block;background:#123615;color:var(--green);border-radius:22px;padding:12px 24px;font-size:20px}.summary{display:grid;grid-template-columns:1fr 1fr;gap:0;border-bottom:1px solid #252525}.summary div{padding:26px 30px;border-right:1px solid #252525;border-bottom:1px solid #252525;color:#aaa;text-transform:uppercase;font-size:18px}.summary b{display:block;color:var(--gold);font-size:42px;margin-top:12px}.summary .green b{color:var(--green)}.pick{display:grid;grid-template-columns:52px 1fr 70px 48px;gap:14px;align-items:center;padding:22px 28px;border-bottom:1px solid #1f1f1f}.pick-no{width:44px;height:44px;border-radius:12px;background:#123615;color:var(--green);display:grid;place-items:center;font-size:24px}.name{font-size:22px;color:#fff;line-height:1.12}.sub,.market-sub{color:#aaa;font-size:16px;margin-top:6px}.market-name{font-size:20px;color:#fff;margin-top:14px}.odd{color:var(--gold);font-size:28px;font-weight:1000}.bars{display:flex;align-items:flex-end;gap:5px;height:42px}.bars i{width:9px;background:var(--green);border-radius:4px}.bars i:nth-child(1){height:16px}.bars i:nth-child(2){height:24px}.bars i:nth-child(3){height:32px}.bars i:nth-child(4){height:40px}
 @media(max-width:620px){.app-shell{padding:18px 14px 32px}.top-brand{grid-template-columns:58px 1fr;gap:14px}.pai-logo{width:56px;height:62px}.pai-logo span{font-size:18px;border-width:3px}.top-brand p{letter-spacing:.08em}.tabs{gap:9px}.tab{height:50px;font-size:14px}.section-head{grid-template-columns:62px 1fr;padding:20px 18px}.icon-tile{width:54px;height:54px;border-radius:18px;font-size:28px}.form-grid{grid-template-columns:1fr;gap:16px;padding:20px 18px 0}.form-grid span{font-size:17px}select,input{height:58px;border-radius:18px;font-size:20px}.search-preview{margin:18px 18px 14px;height:60px;border-radius:20px;font-size:19px}.scan-button{width:calc(100% - 36px);margin:0 18px 22px;height:64px;font-size:20px}.game{padding:20px}.teams{font-size:24px}.meta{grid-template-columns:1fr 1fr;gap:14px;font-size:18px}.risk-cards{grid-template-columns:1fr}.summary b{font-size:36px}.pick{grid-template-columns:44px 1fr 58px;gap:12px;padding:18px}.bars{display:none}.ticket-header h2{font-size:29px}}
+
+
+/* V8 - padrão celular compacto */
+body{font-weight:750;letter-spacing:-.025em;}
+.app-shell{max-width:430px;padding:14px 15px 28px;}
+.top-brand{grid-template-columns:50px 1fr;gap:12px;margin-bottom:14px;padding:0 0 14px;}
+.pai-logo{width:48px;height:54px;}
+.pai-logo span{font-size:15px;border-width:2.5px;padding:6px 4px;}
+.top-brand h1{font-size:clamp(34px,11vw,46px);line-height:.9;white-space:nowrap;}
+.top-brand p{font-size:clamp(11px,3.3vw,15px);line-height:1.35;margin-top:8px;letter-spacing:.08em;}
+.install{display:none!important;}
+.tabs{gap:10px;margin:12px 0 16px;}
+.tab{height:48px;border-radius:24px;font-size:13px;letter-spacing:.09em;border-width:1.5px;}
+.compact-card{border-radius:9px;}
+.section-head{grid-template-columns:56px 1fr;gap:14px;padding:18px 18px;}
+.icon-tile{width:50px;height:50px;border-radius:16px;font-size:25px;}
+.section-head h2{font-size:clamp(26px,8vw,34px);line-height:.98;letter-spacing:.035em;}
+.section-head p{font-size:clamp(14px,4.1vw,17px);line-height:1.25;margin-top:8px;font-weight:800;}
+.form-grid{grid-template-columns:1fr;gap:13px;padding:18px 18px 0;}
+.form-grid span{font-size:16px;margin-bottom:8px;}
+select,input{height:54px;border-radius:17px;font-size:19px;padding:0 18px;border-width:1.5px;}
+.search-preview{margin:16px 18px 14px;height:54px;border-radius:18px;font-size:17px;padding:0 18px;}
+.scan-button{width:calc(100% - 36px);margin:0 18px 20px;height:58px;border-radius:20px;font-size:18px;}
+.game{padding:17px 18px;border-radius:20px;}
+.league-title{font-size:18px;margin:18px 0 10px;}
+.league{font-size:13px;}
+.teams{font-size:21px;line-height:1.15;}
+.meta{font-size:16px;margin-top:16px;grid-template-columns:1fr 1fr;}
+.pill{min-width:auto;padding:8px 12px;}
+.ticket-builder{padding:16px;}
+.ticket-builder h3{font-size:15px;}
+.risk-card{min-height:auto;padding:13px;}
+.risk-card b{font-size:15px;}.risk-card small{font-size:12px;margin-top:6px;}
+.empty-ticket{padding:24px 16px;}.empty-ticket strong{font-size:20px;}
+.ticket-header{padding:20px 18px;}.ticket-header h2{font-size:25px;}.ticket-header time{font-size:16px;margin:12px 0;}.verified{font-size:16px;padding:10px 18px;}
+.summary div{padding:18px 18px;font-size:14px;}.summary b{font-size:30px;}
+.pick{grid-template-columns:38px 1fr 52px;gap:10px;padding:16px 18px;}.pick-no{width:36px;height:36px;font-size:20px}.name{font-size:19px}.market-name{font-size:17px}.sub,.market-sub{font-size:14px}.odd{font-size:23px}.bars{display:none;}
+@media(max-width:380px){.app-shell{padding-left:12px;padding-right:12px}.top-brand h1{font-size:36px}.tab{font-size:12px}.section-head h2{font-size:27px}select,input{font-size:18px}.teams{font-size:19px}}
