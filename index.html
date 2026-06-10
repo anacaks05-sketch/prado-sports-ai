@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Prado Sports V30.16</title>
+<title>Prado Sports V30.17</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&display=swap');
 :root{--gold:#f4bd3b;--gold2:#ffd86f;--muted:#aab0bb;--line:rgba(255,255,255,.09);--card:#151a23;--card2:#202633;--green:#52e78a}
@@ -1050,121 +1050,170 @@ body.lightMode .statLine span,
 body.lightMode .aiMini span{color:#10131a!important}
 
 
-/* ===== V30.16 HOME MAIS LIMPA + PRÉ-JOGO VISÍVEL ===== */
-.dayHeader{display:none!important}
-
+/* ===== V30.17 CORREÇÃO FORÇADA ===== */
+#home .searchBar,
 .searchBar{
-  height:40px!important;
-  min-height:40px!important;
-  border-radius:14px!important;
-  padding:0 13px!important;
-  font-size:12.8px!important;
-  margin:8px auto 8px!important;
-  max-width:calc(100% - 54px)!important;
+  height:38px!important;
+  min-height:38px!important;
+  border-radius:13px!important;
+  padding:0 12px!important;
+  font-size:12px!important;
+  line-height:38px!important;
+  margin:8px auto!important;
+  max-width:72%!important;
 }
 
-.daysClean{
+.daysClean,
+.days{
   gap:3px!important;
   margin:6px 0 10px!important;
 }
-.daysClean button{
-  height:38px!important;
-  border-radius:11px!important;
+.daysClean button,
+.days button{
+  height:34px!important;
+  min-height:34px!important;
+  border-radius:10px!important;
+  padding:0!important;
 }
-.daysClean button span{
-  font-size:8.8px!important;
-  letter-spacing:.7px!important;
+.daysClean button span,
+.days button span{
+  font-size:8px!important;
+  letter-spacing:.5px!important;
 }
-.daysClean button b{
-  font-size:12.8px!important;
+.daysClean button b,
+.days button b{
+  font-size:12px!important;
 }
-.daysClean button.active:after{
-  width:20px!important;
+.daysClean button.active:after,
+.days button.active:after{
+  width:18px!important;
   height:3px!important;
 }
 
-.groupTitle{
-  margin-top:8px!important;
-}
-.groupTitle h2{
-  font-size:18px!important;
-}
-.groupTitle small{
-  font-size:11px!important;
+.dayHeader{
+  display:none!important;
 }
 
-.scheduleCard{
-  padding:12px 13px!important;
-  border-radius:17px!important;
-  cursor:pointer!important;
-}
-.scheduleBody{
-  grid-template-columns:1fr 58px 1fr!important;
-}
-.scheduleBody time{
-  font-size:16.5px!important;
-}
-.club strong{
-  font-size:12.8px!important;
-}
-.club i{
-  font-size:21px!important;
-}
-.scheduleFoot span{
-  font-size:10.8px!important;
-}
-
-/* Corrige pré-jogo que estava abrindo preto */
-#pregame.pregamePage,
-.pregamePage{
-  padding:18px 18px 115px!important;
-  min-height:calc(100vh - 90px)!important;
+/* Pré-jogo com fundo real e botão voltar */
+#pregame{
   background:#000!important;
   color:#fff!important;
+  min-height:calc(100vh - 80px)!important;
+  padding:18px 18px 120px!important;
+  display:none;
 }
-#pregame .configBack{
+#pregame.active{
   display:block!important;
-  color:#fff!important;
+  visibility:visible!important;
   opacity:1!important;
+}
+.pgBackBtn{
+  display:block!important;
+  width:36px!important;
+  height:36px!important;
+  border:0!important;
+  background:transparent!important;
+  color:#fff!important;
+  font-size:42px!important;
+  line-height:30px!important;
+  margin:4px 0 18px!important;
+  z-index:999!important;
 }
 .pregameHero{
   display:block!important;
   border-radius:20px!important;
   padding:16px!important;
   background:linear-gradient(145deg,#151a23,#202633)!important;
-  border:1px solid rgba(255,255,255,.08)!important;
+  border:1px solid rgba(255,255,255,.10)!important;
   margin-bottom:14px!important;
 }
-.pregameHero small{color:#9ca3af!important;font-size:12px!important;font-weight:800!important}
-.pregameHero h1{font-size:24px!important;line-height:1.05!important;margin:8px 0!important;color:#fff!important}
-.pregameHero span{display:inline-block!important;color:#f7c34b!important;font-weight:900!important;font-size:18px!important}
-.pregameTabs{display:flex!important;gap:8px!important;overflow-x:auto!important;margin-bottom:14px!important}
+.pregameHero small{
+  display:block!important;
+  color:#aeb4bf!important;
+  font-size:12px!important;
+  font-weight:800!important;
+}
+.pregameHero h1{
+  display:block!important;
+  color:#fff!important;
+  font-size:24px!important;
+  line-height:1.05!important;
+  margin:8px 0!important;
+}
+.pregameHero span{
+  display:inline-block!important;
+  color:#f7c34b!important;
+  font-size:18px!important;
+  font-weight:900!important;
+}
+.pregameTabs{
+  display:flex!important;
+  gap:8px!important;
+  overflow-x:auto!important;
+  margin-bottom:14px!important;
+}
 .pregameTabs button{
-  height:34px!important;border:1px solid rgba(255,255,255,.08)!important;background:#151922!important;
-  color:#aeb4bf!important;border-radius:999px!important;padding:0 13px!important;font-size:12px!important;font-weight:850!important;
+  height:34px!important;
+  border:1px solid rgba(255,255,255,.10)!important;
+  background:#151922!important;
+  color:#aeb4bf!important;
+  border-radius:999px!important;
+  padding:0 13px!important;
+  font-size:12px!important;
+  font-weight:850!important;
 }
-.pregameTabs button.active{background:#f7c34b!important;color:#090909!important}
-.pgPanel{display:none!important}
-.pgPanel.active{display:block!important}
-.pgPanel h2{font-size:18px!important;margin:0 0 12px!important;color:#fff!important}
-.fieldMini{
-  height:220px!important;border-radius:20px!important;background:linear-gradient(180deg,#18351f,#0d1f13)!important;
-  border:1px solid rgba(255,255,255,.10)!important;display:grid!important;grid-template-rows:repeat(4,1fr)!important;
-  place-items:center!important;color:#fff!important;font-weight:900!important;margin-bottom:12px!important;
+.pregameTabs button.active{
+  background:#f7c34b!important;
+  color:#090909!important;
 }
-.statLine,.aiMini{
-  min-height:54px!important;border-radius:16px!important;background:#141923!important;border:1px solid rgba(255,255,255,.08)!important;
-  display:flex!important;align-items:center!important;justify-content:space-between!important;padding:0 14px!important;margin-bottom:9px!important;
+.pgPanel{
+  display:none!important;
 }
-.statLine span,.aiMini span{color:#c8cdd6!important;font-size:13px!important;font-weight:760!important}
-.statLine b,.aiMini b{color:#f7c34b!important;font-size:16px!important}
-
-body.lightMode #pregame.pregamePage{background:#f4f5f7!important;color:#10131a!important}
-body.lightMode .pregameHero,
-body.lightMode .statLine,
-body.lightMode .aiMini{background:#fff!important;border-color:#dde1e8!important}
-body.lightMode .pregameHero h1,
-body.lightMode .pgPanel h2{color:#10131a!important}
+.pgPanel.active{
+  display:block!important;
+}
+.pgPanel h2{
+  color:#fff!important;
+  font-size:18px!important;
+  margin:0 0 12px!important;
+}
+.lineupBox{
+  height:220px!important;
+  border-radius:20px!important;
+  background:linear-gradient(180deg,#18351f,#0d1f13)!important;
+  border:1px solid rgba(255,255,255,.10)!important;
+  display:grid!important;
+  grid-template-rows:repeat(4,1fr)!important;
+  place-items:center!important;
+  color:#fff!important;
+  font-weight:900!important;
+  margin-bottom:12px!important;
+}
+.pgPanel p{
+  color:#9ca3af!important;
+  font-size:13px!important;
+  font-weight:750!important;
+}
+.statLine{
+  min-height:54px!important;
+  border-radius:16px!important;
+  background:#141923!important;
+  border:1px solid rgba(255,255,255,.08)!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  padding:0 14px!important;
+  margin-bottom:9px!important;
+}
+.statLine span{
+  color:#c8cdd6!important;
+  font-size:13px!important;
+  font-weight:760!important;
+}
+.statLine b{
+  color:#f7c34b!important;
+  font-size:16px!important;
+}
 
 </style>
 </head>
@@ -1625,7 +1674,7 @@ document.addEventListener("DOMContentLoaded", function(){
   renderSetup();
   renderApp();
   renderFavorites();
-  if("serviceWorker" in navigator){navigator.serviceWorker.register("service-worker.js?v=3016")}
+  if("serviceWorker" in navigator){navigator.serviceWorker.register("service-worker.js?v=3017")}
 });
 
 (function(){
@@ -1795,42 +1844,7 @@ document.addEventListener("DOMContentLoaded", function(){
 </script>
 
 
-<section id="pregame" class="page pregamePage">
-  <button class="configBack" type="button" onclick="goBackHome()">‹</button>
-  <div class="pregameHero">
-    <small id="pgLeague">Competição</small>
-    <h1 id="pgTitle">Brasil x Marrocos</h1>
-    <span id="pgTime">13:00</span>
-  </div>
 
-  <div class="pregameTabs">
-    <button class="active" data-pg="lineup">Escalação</button>
-    <button data-pg="stats">Estatísticas</button>
-    <button data-pg="ia">IA</button>
-  </div>
-
-  <div id="pg_lineup" class="pgPanel active">
-    <h2>👥 Provável escalação</h2>
-    <div class="fieldMini">
-      <span>ATA</span><span>MEI</span><span>DEF</span><span>GOL</span>
-    </div>
-    <p>Escalação provável será atualizada antes do início do jogo.</p>
-  </div>
-
-  <div id="pg_stats" class="pgPanel">
-    <h2>📊 Estatísticas pré-jogo</h2>
-    <div class="statLine"><span>Média de gols</span><b>2.4</b></div>
-    <div class="statLine"><span>Média de escanteios</span><b>9.6</b></div>
-    <div class="statLine"><span>Últimos 5 jogos</span><b>3V · 1E · 1D</b></div>
-  </div>
-
-  <div id="pg_ia" class="pgPanel">
-    <h2>🤖 Análise IA</h2>
-    <div class="aiMini"><span>Probabilidade Over 8.5</span><b>87%</b></div>
-    <div class="aiMini"><span>Pressão projetada</span><b>Forte</b></div>
-    <div class="aiMini"><span>Escanteios projetados</span><b>10.2</b></div>
-  </div>
-</section>
 
 
 <script>
@@ -1856,25 +1870,66 @@ document.addEventListener("click", function(e){
 </script>
 
 
+<section id="pregame" class="page pregamePage">
+  <button class="pgBackBtn" type="button">‹</button>
+  <div class="pregameHero">
+    <small id="pgLeague">Competição</small>
+    <h1 id="pgTitle">Pré-jogo</h1>
+    <span id="pgTime">Horário</span>
+  </div>
+
+  <div class="pregameTabs">
+    <button class="active" data-pg="lineup">Escalação</button>
+    <button data-pg="stats">Estatísticas</button>
+    <button data-pg="ia">IA</button>
+  </div>
+
+  <div id="pg_lineup" class="pgPanel active">
+    <h2>👥 Provável escalação</h2>
+    <div class="lineupBox">
+      <div>ATA</div><div>MEI</div><div>DEF</div><div>GOL</div>
+    </div>
+    <p>Escalação provável será atualizada antes do início do jogo.</p>
+  </div>
+
+  <div id="pg_stats" class="pgPanel">
+    <h2>📊 Estatísticas pré-jogo</h2>
+    <div class="statLine"><span>Média de gols</span><b>2.4</b></div>
+    <div class="statLine"><span>Média de escanteios</span><b>9.6</b></div>
+    <div class="statLine"><span>Últimos 5 jogos</span><b>3V · 1E · 1D</b></div>
+  </div>
+
+  <div id="pg_ia" class="pgPanel">
+    <h2>🤖 Análise IA</h2>
+    <div class="statLine"><span>Over 8.5 escanteios</span><b>87%</b></div>
+    <div class="statLine"><span>Pressão projetada</span><b>Forte</b></div>
+    <div class="statLine"><span>Escanteios projetados</span><b>10.2</b></div>
+  </div>
+</section>
+
+
 <script>
 (function(){
-  function fixHome(){
-    var home = document.getElementById("home");
-    if(!home) return;
-
-    // remove resumo "Hoje, 09 / jogos programados"
-    home.querySelectorAll(".dayHeader").forEach(function(el){ el.remove(); });
-
-    // torna cards clicáveis novamente
-    home.querySelectorAll(".scheduleCard").forEach(function(card){
-      card.onclick = function(){
-        var league = card.querySelector(".scheduleTop b")?.textContent || "Pré-jogo";
-        var time = card.querySelector("time")?.textContent || "";
-        var teams = Array.from(card.querySelectorAll(".club strong")).map(x=>x.textContent);
-        openPreGame((teams[0] || "Time A") + " x " + (teams[1] || "Time B"), league, time);
-      };
+  function hideAllPages(){
+    document.querySelectorAll(".page").forEach(function(p){
+      p.classList.remove("active");
+      p.style.display = "none";
+      p.style.visibility = "hidden";
+      p.style.opacity = "0";
     });
   }
+
+  window.forceShowHome = function(){
+    hideAllPages();
+    var home = document.getElementById("home");
+    if(home){
+      home.classList.add("active");
+      home.style.display = "block";
+      home.style.visibility = "visible";
+      home.style.opacity = "1";
+    }
+    window.scrollTo(0,0);
+  };
 
   window.openPreGame = function(title, league, time){
     var titleEl = document.getElementById("pgTitle");
@@ -1883,46 +1938,79 @@ document.addEventListener("click", function(e){
     if(titleEl) titleEl.textContent = title || "Pré-jogo";
     if(leagueEl) leagueEl.textContent = league || "Competição";
     if(timeEl) timeEl.textContent = time || "";
-
-    document.querySelectorAll(".page").forEach(function(p){
-      p.classList.remove("active");
-      p.style.display = "none";
-    });
+    hideAllPages();
     var pg = document.getElementById("pregame");
     if(pg){
       pg.classList.add("active");
       pg.style.display = "block";
+      pg.style.visibility = "visible";
+      pg.style.opacity = "1";
     }
     window.scrollTo(0,0);
   };
 
-  window.goBackHome = function(){
-    document.querySelectorAll(".page").forEach(function(p){
-      p.classList.remove("active");
-      p.style.display = "none";
-    });
+  function compactHome(){
     var home = document.getElementById("home");
-    if(home){
-      home.classList.add("active");
-      home.style.display = "block";
-      setTimeout(fixHome,80);
-    }
-    window.scrollTo(0,0);
-  };
+    if(!home) return;
 
-  document.addEventListener("click", function(e){
-    var tab = e.target.closest(".pregameTabs button");
-    if(tab){
-      document.querySelectorAll(".pregameTabs button").forEach(function(b){b.classList.remove("active")});
-      tab.classList.add("active");
-      document.querySelectorAll(".pgPanel").forEach(function(p){p.classList.remove("active")});
-      var panel = document.getElementById("pg_"+tab.getAttribute("data-pg"));
-      if(panel) panel.classList.add("active");
-    }
+    // remove resumo grande se existir
+    home.querySelectorAll(".dayHeader").forEach(function(x){ x.remove(); });
+
+    // compacta busca direto no elemento
+    home.querySelectorAll(".searchBar").forEach(function(s){
+      s.style.height = "38px";
+      s.style.minHeight = "38px";
+      s.style.borderRadius = "13px";
+      s.style.fontSize = "12px";
+      s.style.maxWidth = "72%";
+      s.style.margin = "8px auto";
+      s.style.padding = "0 12px";
+    });
+
+    // compacta os dias
+    home.querySelectorAll(".daysClean button, .days button").forEach(function(b){
+      b.style.height = "34px";
+      b.style.minHeight = "34px";
+      b.style.borderRadius = "10px";
+      b.style.padding = "0";
+      b.style.fontSize = "10px";
+    });
+    home.querySelectorAll(".daysClean button span, .days button span").forEach(function(x){x.style.fontSize="8px";});
+    home.querySelectorAll(".daysClean button b, .days button b").forEach(function(x){x.style.fontSize="12px";});
+
+    // clique nos cards
+    home.querySelectorAll(".scheduleCard").forEach(function(card){
+      card.onclick = function(){
+        var league = card.querySelector(".scheduleTop b")?.textContent || "Pré-jogo";
+        var time = card.querySelector("time")?.textContent || "";
+        var teams = Array.from(card.querySelectorAll(".club strong")).map(function(x){return x.textContent;});
+        openPreGame((teams[0]||"Time A")+" x "+(teams[1]||"Time B"), league, time);
+      };
+    });
+  }
+
+  function bindPreGame(){
+    document.querySelectorAll(".pgBackBtn").forEach(function(btn){
+      btn.onclick = forceShowHome;
+    });
+    document.querySelectorAll(".pregameTabs button").forEach(function(btn){
+      btn.onclick = function(){
+        document.querySelectorAll(".pregameTabs button").forEach(function(b){b.classList.remove("active");});
+        btn.classList.add("active");
+        document.querySelectorAll(".pgPanel").forEach(function(p){p.classList.remove("active"); p.style.display="none";});
+        var panel = document.getElementById("pg_"+btn.getAttribute("data-pg"));
+        if(panel){panel.classList.add("active"); panel.style.display="block";}
+      };
+    });
+  }
+
+  window.addEventListener("load", function(){
+    setTimeout(function(){compactHome(); bindPreGame();}, 300);
+    setTimeout(function(){compactHome(); bindPreGame();}, 900);
   });
-
-  window.addEventListener("load", function(){ setTimeout(fixHome,250); });
-  document.addEventListener("DOMContentLoaded", function(){ setTimeout(fixHome,250); });
+  document.addEventListener("click", function(e){
+    setTimeout(function(){compactHome(); bindPreGame();}, 50);
+  });
 })();
 </script>
 
