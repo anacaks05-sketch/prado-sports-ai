@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Prado Sports V30.14</title>
+<title>Prado Sports V30.15</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&display=swap');
 :root{--gold:#f4bd3b;--gold2:#ffd86f;--muted:#aab0bb;--line:rgba(255,255,255,.09);--card:#151a23;--card2:#202633;--green:#52e78a}
@@ -915,6 +915,140 @@ body.lightMode .metric{background:#f1f3f6!important}
 .scheduleFoot{margin-top:10px;padding-top:9px;border-top:1px solid rgba(255,255,255,.07);display:flex;justify-content:space-between}.scheduleFoot span{color:#9ca3af;font-size:11.5px;font-weight:750}.scheduleFoot b{color:#f7c34b;font-size:20px}.emptyDay{padding:20px;border-radius:18px;background:#151a23;color:#9ca3af;font-weight:750}
 body.lightMode .dayHeader,body.lightMode .scheduleCard,body.lightMode .emptyDay{background:#fff!important;border-color:#dde1e8!important}body.lightMode .daysClean button.active{background:#e9edf3!important}body.lightMode .scheduleBody time,body.lightMode .club strong,body.lightMode .dayHeader b{color:#10131a!important}
 
+
+/* ===== V30.15 HOME MAIS COMPACTA + PRÉ-JOGO ===== */
+.searchBar{
+  height:44px!important;
+  min-height:44px!important;
+  border-radius:15px!important;
+  padding:0 14px!important;
+  font-size:13.5px!important;
+  margin:10px auto 8px!important;
+  max-width:calc(100% - 26px)!important;
+}
+.daysClean{
+  gap:4px!important;
+  margin:8px 0 10px!important;
+}
+.daysClean button{
+  height:42px!important;
+  border-radius:12px!important;
+}
+.daysClean button span{
+  font-size:9.5px!important;
+}
+.daysClean button b{
+  font-size:14px!important;
+}
+.daysClean button.active:after{
+  width:22px!important;
+  height:3px!important;
+}
+.dayHeader{
+  padding:10px 12px!important;
+  border-radius:15px!important;
+  margin:8px 0 14px!important;
+}
+.dayHeader b{font-size:14.5px!important}
+.dayHeader small{font-size:10.5px!important}
+.dayHeader span{font-size:11.5px!important}
+.scheduleCard{cursor:pointer!important}
+
+/* Pré-jogo */
+.pregamePage{padding:18px 18px 115px!important}
+.pregameHero{
+  border-radius:20px;
+  padding:16px;
+  background:linear-gradient(145deg,#151a23,#202633);
+  border:1px solid rgba(255,255,255,.08);
+  margin-bottom:14px;
+}
+.pregameHero small{
+  color:#9ca3af;
+  font-size:12px;
+  font-weight:800;
+}
+.pregameHero h1{
+  font-size:24px!important;
+  line-height:1.05!important;
+  margin:8px 0!important;
+}
+.pregameHero span{
+  display:inline-block;
+  color:#f7c34b;
+  font-weight:900;
+  font-size:18px;
+}
+.pregameTabs{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  margin-bottom:14px;
+}
+.pregameTabs button{
+  height:34px;
+  border:1px solid rgba(255,255,255,.08);
+  background:#151922;
+  color:#aeb4bf;
+  border-radius:999px;
+  padding:0 13px;
+  font-size:12px;
+  font-weight:850;
+}
+.pregameTabs button.active{
+  background:#f7c34b;
+  color:#090909;
+}
+.pgPanel{display:none}
+.pgPanel.active{display:block}
+.pgPanel h2{
+  font-size:18px!important;
+  margin:0 0 12px!important;
+}
+.fieldMini{
+  height:230px;
+  border-radius:20px;
+  background:linear-gradient(180deg,#18351f,#0d1f13);
+  border:1px solid rgba(255,255,255,.10);
+  display:grid;
+  grid-template-rows:repeat(4,1fr);
+  place-items:center;
+  color:#fff;
+  font-weight:900;
+  margin-bottom:12px;
+}
+.pgPanel p{
+  color:#9ca3af;
+  font-size:13px;
+  font-weight:750;
+}
+.statLine,.aiMini{
+  min-height:54px;
+  border-radius:16px;
+  background:#141923;
+  border:1px solid rgba(255,255,255,.08);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 14px;
+  margin-bottom:9px;
+}
+.statLine span,.aiMini span{
+  color:#c8cdd6;
+  font-size:13px;
+  font-weight:760;
+}
+.statLine b,.aiMini b{
+  color:#f7c34b;
+  font-size:16px;
+}
+body.lightMode .pregameHero,
+body.lightMode .statLine,
+body.lightMode .aiMini{background:#fff!important;border-color:#dde1e8!important}
+body.lightMode .pregameHero h1,
+body.lightMode .statLine span,
+body.lightMode .aiMini span{color:#10131a!important}
+
 </style>
 </head>
 <body>
@@ -1374,7 +1508,7 @@ document.addEventListener("DOMContentLoaded", function(){
   renderSetup();
   renderApp();
   renderFavorites();
-  if("serviceWorker" in navigator){navigator.serviceWorker.register("service-worker.js?v=3014")}
+  if("serviceWorker" in navigator){navigator.serviceWorker.register("service-worker.js?v=3015")}
 });
 
 (function(){
@@ -1529,7 +1663,7 @@ document.addEventListener("DOMContentLoaded", function(){
   const days=[["SA","06"],["DO","07"],["SE","08"],["HOJE","09"],["QU","10"],["QT","11"],["SX","12"]];
   let cur="09";
   function daysHtml(){return '<div class="daysClean">'+days.map(d=>'<button class="'+(d[1]===cur?'active':'')+'" data-day="'+d[1]+'"><span>'+d[0]+'</span><b>'+d[1]+'</b></button>').join('')+'</div>'}
-  function card(g){return '<div class="scheduleCard"><div class="scheduleTop"><b>'+g[0]+'</b><span>'+g[6]+'</span></div><div class="scheduleBody"><div class="club"><i>'+g[4]+'</i><strong>'+g[2]+'</strong></div><time>'+g[1]+'</time><div class="club right"><i>'+g[5]+'</i><strong>'+g[3]+'</strong></div></div><div class="scheduleFoot"><span>Escalações, estatísticas e IA antes do jogo</span><b>›</b></div></div>'}
+  function card(g){return '<div class="scheduleCard" onclick="openPreGame(\''+g[2]+' x '+g[3]+'\',\''+g[0]+'\',\''+g[1]+'\')"><div class="scheduleTop"><b>'+g[0]+'</b><span>'+g[6]+'</span></div><div class="scheduleBody"><div class="club"><i>'+g[4]+'</i><strong>'+g[2]+'</strong></div><time>'+g[1]+'</time><div class="club right"><i>'+g[5]+'</i><strong>'+g[3]+'</strong></div></div><div class="scheduleFoot"><span>Escalações, estatísticas e IA antes do jogo</span><b>›</b></div></div>'}
   function render(day){
     cur=day||cur;
     var home=document.getElementById("home"); if(!home) return;
@@ -1541,6 +1675,67 @@ document.addEventListener("DOMContentLoaded", function(){
   window.addEventListener("load",()=>setTimeout(()=>render("09"),120));
   document.addEventListener("DOMContentLoaded",()=>setTimeout(()=>render("09"),120));
 })();
+</script>
+
+
+<section id="pregame" class="page pregamePage">
+  <button class="configBack" type="button" onclick="goBackHome()">‹</button>
+  <div class="pregameHero">
+    <small id="pgLeague">Competição</small>
+    <h1 id="pgTitle">Brasil x Marrocos</h1>
+    <span id="pgTime">13:00</span>
+  </div>
+
+  <div class="pregameTabs">
+    <button class="active" data-pg="lineup">Escalação</button>
+    <button data-pg="stats">Estatísticas</button>
+    <button data-pg="ia">IA</button>
+  </div>
+
+  <div id="pg_lineup" class="pgPanel active">
+    <h2>👥 Provável escalação</h2>
+    <div class="fieldMini">
+      <span>ATA</span><span>MEI</span><span>DEF</span><span>GOL</span>
+    </div>
+    <p>Escalação provável será atualizada antes do início do jogo.</p>
+  </div>
+
+  <div id="pg_stats" class="pgPanel">
+    <h2>📊 Estatísticas pré-jogo</h2>
+    <div class="statLine"><span>Média de gols</span><b>2.4</b></div>
+    <div class="statLine"><span>Média de escanteios</span><b>9.6</b></div>
+    <div class="statLine"><span>Últimos 5 jogos</span><b>3V · 1E · 1D</b></div>
+  </div>
+
+  <div id="pg_ia" class="pgPanel">
+    <h2>🤖 Análise IA</h2>
+    <div class="aiMini"><span>Probabilidade Over 8.5</span><b>87%</b></div>
+    <div class="aiMini"><span>Pressão projetada</span><b>Forte</b></div>
+    <div class="aiMini"><span>Escanteios projetados</span><b>10.2</b></div>
+  </div>
+</section>
+
+
+<script>
+function openPreGame(title, league, time){
+  var titleEl = document.getElementById("pgTitle");
+  var leagueEl = document.getElementById("pgLeague");
+  var timeEl = document.getElementById("pgTime");
+  if(titleEl) titleEl.textContent = title || "Pré-jogo";
+  if(leagueEl) leagueEl.textContent = league || "Competição";
+  if(timeEl) timeEl.textContent = time || "";
+  if(typeof activatePage === "function"){ activatePage("pregame"); }
+  else if(typeof show === "function"){ show("pregame"); }
+}
+document.addEventListener("click", function(e){
+  var tab = e.target.closest(".pregameTabs button");
+  if(!tab) return;
+  document.querySelectorAll(".pregameTabs button").forEach(function(b){b.classList.remove("active")});
+  tab.classList.add("active");
+  document.querySelectorAll(".pgPanel").forEach(function(p){p.classList.remove("active")});
+  var panel = document.getElementById("pg_"+tab.getAttribute("data-pg"));
+  if(panel) panel.classList.add("active");
+});
 </script>
 
 </body>
