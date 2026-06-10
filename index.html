@@ -117,10 +117,41 @@
     </section>
 
     <section id="jogos" class="screen">
-      <div class="section-head">
+      <div class="ai-live-panel">
+        <div class="ai-panel-top">
+          <div>
+            <span class="pulse-dot"></span>
+            <strong>PRADO IA</strong>
+            <small>analisando oportunidades</small>
+          </div>
+          <span id="liveCount">Ao vivo</span>
+        </div>
+
+        <div class="ai-panel-body">
+          <div class="heatmap-card">
+            <div class="field-lines"></div>
+            <span class="heat h1"></span><span class="heat h2"></span><span class="heat h3"></span><span class="heat h4"></span><span class="heat h5"></span>
+            <small>Mapa de pressão IA</small>
+          </div>
+
+          <div class="signal-stack">
+            <div class="signal-title">Scanner</div>
+            <div class="signal-row active"><span>Over +1.5</span><b>92%</b></div>
+            <div class="signal-row"><span>Ambas Marcam</span><b>84%</b></div>
+            <div class="signal-row"><span>Escanteios +8.5</span><b>79%</b></div>
+          </div>
+        </div>
+
+        <div class="ai-panel-footer">
+          <span>Motor IA v4.0</span>
+          <span>buscando melhores entradas</span>
+        </div>
+      </div>
+
+      <div class="section-head games-title-row">
         <div>
           <span class="eyebrow">Oportunidades</span>
-          <h2>Jogos</h2>
+          <h2>Jogos analisados</h2>
         </div>
         <button id="generateTicketBtn" class="mini-btn">Gerar Bilhete IA</button>
       </div>
@@ -163,6 +194,6 @@
     </section>
   </main>
 
-  <script src="app.js?v=12"></script>
+  <script src="app.js?v=13"></script>
 </body>
 </html>
