@@ -45,77 +45,68 @@ button,input,select{font:inherit}.app-shell{width:100%;max-width:430px;margin:0 
 .ai-live-panel{padding:9px!important}.ai-panel-body{grid-template-columns:1fr!important;gap:8px!important}.heatmap-card{min-height:72px!important}.signal-stack{padding:7px!important}.signal-row{height:23px!important}.field-lines{inset:12px 12px 23px!important}.heat{width:23px!important;height:23px!important}.games-title-row h2{font-size:20px!important}.eyebrow{font-size:9px;letter-spacing:3.2px}.live-summary{padding:9px 11px!important;border-radius:15px!important}.live-summary h3{font-size:15px!important}.live-summary p{font-size:12px!important}
 @media (max-width:390px){.compact-metrics{grid-template-columns:1fr 66px 66px;gap:5px}.metric-box{min-height:45px;padding:6px}.metric-box strong{font-size:15px}.confidence-box strong{font-size:20px}.team-logo{width:31px!important;height:31px!important;font-size:9px!important}.opp-match{font-size:16px!important}.compact-market span{font-size:11px}.compact-market b{font-size:8px;padding:3px 6px}.opportunity-card.compact-rank{padding:9px}.match-row{gap:8px}.rank-badge{width:28px;height:28px}.tag{font-size:7.5px}}
 
-
-/* V18 Premium Beta - painel IA compacto + escudos oficiais/transparentes + cards menores */
-.ai-live-panel{
-  padding:9px 10px!important;
-  border-radius:16px!important;
-  margin-bottom:8px!important;
-  min-height:0!important;
-}
-.ai-panel-top{padding:0!important;margin:0!important;border:0!important}
-.ai-panel-top>div{gap:6px!important}
-.ai-panel-top strong{font-size:13px!important;letter-spacing:1.2px!important}
-.ai-panel-top small{font-size:10px!important;text-transform:none!important;letter-spacing:.6px!important}
-#liveCount{font-size:9px!important;padding:5px 8px!important;border-radius:999px!important}
-.ai-panel-body,.ai-panel-footer{display:none!important}
-.games-title-row{margin:7px 0 7px!important}
-.games-title-row h2{font-size:18px!important;line-height:1.05!important}
-.games-title-row .eyebrow{font-size:8px!important;letter-spacing:2.5px!important}
-.mini-btn{padding:8px 10px!important;font-size:10.5px!important;border-radius:12px!important;min-height:34px!important}
-.games-list{gap:7px!important}
-.live-summary.v18-summary{
-  display:grid!important;
-  grid-template-columns:1fr auto!important;
-  align-items:center!important;
-  gap:8px!important;
+/* V19 - painel IA verde, cards menores e escudos em formato oficial/PNG transparente */
+:root{--neon:#20f079;--neon2:#7dffae;}
+#jogos .ai-live-panel{
+  border-color:rgba(32,240,121,.42)!important;
+  background:linear-gradient(145deg,rgba(14,70,38,.34),rgba(7,9,8,.94))!important;
+  box-shadow:0 0 24px rgba(32,240,121,.10), inset 0 0 22px rgba(32,240,121,.035)!important;
   padding:8px 10px!important;
-  border-radius:15px!important;
-  margin-bottom:7px!important;
-  background:linear-gradient(145deg,rgba(212,175,55,.10),rgba(255,255,255,.025))!important;
-  border:1px solid rgba(212,175,55,.26)!important;
+  margin-bottom:9px!important;
+  border-radius:17px!important;
 }
-.v18-summary h3{display:flex!important;align-items:center!important;gap:6px!important;margin:0!important;font-size:13px!important;line-height:1!important;letter-spacing:1px!important;color:#fff!important}
-.v18-summary p{margin:4px 0 0!important;font-size:10.5px!important;color:#b9b9b9!important;font-weight:800!important}
-.live-dot-mini{width:7px;height:7px;border-radius:50%;display:inline-block;background:#f4c542;box-shadow:0 0 0 4px rgba(212,175,55,.10),0 0 12px rgba(212,175,55,.45);animation:pulseLive 1.5s infinite}
-.hot-markets{display:grid!important;gap:3px!important;min-width:88px!important}
-.hot-markets span{height:19px;display:flex;align-items:center;justify-content:space-between;gap:5px;padding:0 7px;border-radius:8px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.06);font-size:8.5px;font-weight:900;color:#dcdcdc;white-space:nowrap}
-.hot-markets b{color:var(--gold2);font-size:9px}
-@keyframes pulseLive{50%{transform:scale(.82);opacity:.68}}
-.opportunity-card.v18-card{
-  padding:8px 9px!important;
-  border-radius:16px!important;
-  min-height:0!important;
-  background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.018))!important;
-  border:1px solid rgba(255,255,255,.08)!important;
-  box-shadow:0 8px 22px rgba(0,0,0,.18)!important;
+#jogos .ai-panel-top{padding-bottom:6px!important;border-bottom-color:rgba(32,240,121,.14)!important;}
+#jogos .pulse-dot{width:9px!important;height:9px!important;background:var(--neon)!important;box-shadow:0 0 14px var(--neon)!important;}
+#jogos .ai-panel-top strong{color:var(--neon2)!important;letter-spacing:2.6px!important;font-size:11px!important;}
+#jogos .ai-panel-top small{color:#b6b6b6!important;font-size:8px!important;letter-spacing:1.7px!important;}
+#jogos .ai-panel-top #liveCount{border-color:rgba(32,240,121,.35)!important;color:var(--neon2)!important;background:rgba(32,240,121,.09)!important;padding:5px 8px!important;font-size:10px!important;}
+#jogos .ai-panel-body{display:grid!important;grid-template-columns:.9fr 1.1fr!important;gap:7px!important;margin-top:8px!important;}
+#jogos .heatmap-card{min-height:62px!important;border-color:rgba(32,240,121,.28)!important;background:rgba(32,240,121,.045)!important;border-radius:14px!important;}
+#jogos .field-lines{inset:10px 10px 20px!important;border-color:rgba(125,255,174,.25)!important;}
+#jogos .field-lines:before,#jogos .field-lines:after{border-color:rgba(125,255,174,.22)!important;}
+#jogos .heat{width:18px!important;height:18px!important;background:radial-gradient(circle,rgba(125,255,174,.80),rgba(32,240,121,.20),transparent 72%)!important;}
+#jogos .heatmap-card small{font-size:7px!important;letter-spacing:.8px!important;color:#9beeb7!important;bottom:6px!important;}
+#jogos .signal-stack{padding:6px!important;border-radius:14px!important;border-color:rgba(32,240,121,.15)!important;background:rgba(0,0,0,.22)!important;}
+#jogos .signal-title{font-size:8px!important;letter-spacing:2.1px!important;color:#bfc8c0!important;margin-bottom:4px!important;}
+#jogos .signal-row{height:21px!important;border-radius:9px!important;margin-top:4px!important;border-color:rgba(255,255,255,.075)!important;}
+#jogos .signal-row span,#jogos .signal-row b{font-size:9.5px!important;}
+#jogos .signal-row b{color:var(--neon2)!important;}
+#jogos .signal-row.active{border-color:rgba(32,240,121,.42)!important;background:rgba(32,240,121,.12)!important;}
+#jogos .ai-panel-footer{margin-top:7px!important;padding-top:6px!important;border-top-color:rgba(32,240,121,.11)!important;font-size:7.5px!important;letter-spacing:1.5px!important;color:#9beeb7!important;}
+#jogos .live-summary{
+  border-color:rgba(32,240,121,.38)!important;
+  background:linear-gradient(145deg,rgba(32,240,121,.11),rgba(255,255,255,.018))!important;
+  box-shadow:0 0 16px rgba(32,240,121,.08)!important;
 }
-.opportunity-card.v18-card.best{border-color:rgba(255,224,122,.68)!important;background:linear-gradient(145deg,rgba(212,175,55,.09),rgba(255,255,255,.018))!important;box-shadow:0 0 18px rgba(212,175,55,.11),0 8px 22px rgba(0,0,0,.18)!important}
-.v18-card-head{display:flex!important;align-items:center!important;justify-content:space-between!important;margin-bottom:7px!important}
-.v18-card-head .rank-wrap{display:flex!important;align-items:center!important;gap:6px!important}
-.v18-card .rank-badge{width:25px!important;height:25px!important;border-radius:8px!important;font-size:12px!important;box-shadow:none!important}
-.v18-card .tag{font-size:7.3px!important;letter-spacing:1.4px!important;max-width:160px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.score-chip{height:22px;display:inline-flex;align-items:center;padding:0 8px;border-radius:999px;background:rgba(212,175,55,.10);border:1px solid rgba(212,175,55,.28);color:var(--gold2);font-size:10px;font-weight:950;white-space:nowrap}
-.v18-match-line{display:grid!important;grid-template-columns:34px 1fr 34px!important;align-items:center!important;gap:7px!important;margin-bottom:7px!important}
-.team-crest{width:32px!important;height:32px!important;object-fit:contain!important;display:block!important;filter:drop-shadow(0 2px 2px rgba(0,0,0,.26))!important;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important}
-.v18-teams{min-width:0;text-align:center}
-.v18-teams strong{display:block;color:#fff;font-size:14.5px;font-weight:950;line-height:1.08;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.v18-teams strong span{color:var(--gold2);font-size:12px;margin:0 3px}
-.v18-teams small{display:block;margin-top:3px;color:#9e9e9e;font-size:9px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.v18-metrics{display:grid!important;grid-template-columns:72px 58px 1fr!important;gap:5px!important}
-.v18-metrics div{height:40px;border-radius:11px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.065);display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:0;padding:0 5px}
-.v18-metrics b{font-size:14px;line-height:1;color:var(--gold2);font-weight:950;white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis}
-.v18-metrics div:first-child b{font-size:17px;color:var(--green)}
-.v18-metrics span{font-size:7.5px;color:#aaa;text-transform:uppercase;letter-spacing:.8px;font-weight:900;margin-top:3px;white-space:nowrap}
-.teams-logos,.compact-metrics,.compact-market,.match-row,.opp-topline{display:none!important}
+#jogos .live-summary h3{color:var(--neon2)!important;font-size:14px!important;}
+#jogos .live-summary p{font-size:11.5px!important;}
+
+.opportunity-card.compact-rank{padding:8px 9px!important;border-radius:16px!important;}
+.opp-topline{margin-bottom:6px!important;}
+.rank-badge{width:27px!important;height:27px!important;border-radius:10px!important;font-size:14px!important;}
+.fav-star{font-size:17px!important;top:8px!important;right:9px!important;}
+.match-row{grid-template-columns:1fr!important;gap:5px!important;margin-bottom:7px!important;}
+.match-copy{text-align:center!important;}
+.opp-match{font-size:16px!important;line-height:1.05!important;}
+.opp-match span{color:var(--gold2);font-size:15px;margin:0 5px;}
+.opp-meta{justify-content:center!important;font-size:9.5px!important;margin-top:3px!important;}
+.teams-logos.official-crests{justify-content:center!important;gap:8px!important;order:2;margin-top:2px!important;}
+.club-crest{width:34px;height:40px;object-fit:contain;display:block;filter:drop-shadow(0 2px 3px rgba(0,0,0,.18));}
+.crest-fallback{clip-path:polygon(50% 0,91% 13%,84% 73%,50% 100%,16% 73%,9% 13%);background:linear-gradient(145deg,#e5e5e5,#303030);border:1px solid rgba(255,255,255,.16);}
+.crest-fallback.a{background:linear-gradient(145deg,#e62435,#111)}.crest-fallback.b{background:linear-gradient(145deg,#bfe6ff,#2468a5)}.crest-fallback.c{background:linear-gradient(145deg,#fff,#b40f22)}.crest-fallback.d{background:linear-gradient(145deg,#c42f59,#631129)}.crest-fallback.e{background:linear-gradient(145deg,#1477c9,#053b72)}.crest-fallback.f{background:linear-gradient(145deg,#f7e47d,#174c9d)}
+.team-logo{display:none!important;}
+.compact-metrics{grid-template-columns:1fr 72px 72px!important;gap:5px!important;}
+.metric-box{min-height:43px!important;border-radius:12px!important;padding:5px 7px!important;}
+.metric-box span{font-size:7.2px!important;letter-spacing:1px!important;}.metric-box strong{font-size:15px!important;}.confidence-box strong{font-size:20px!important;}
+.compact-market{height:29px!important;margin-top:6px!important;border-radius:10px!important;padding:0 9px!important;}.compact-market span{font-size:11px!important;}.compact-market b{font-size:7.5px!important;padding:3px 6px!important;}
+.games-list{gap:7px!important;}
+.games-title-row h2{font-size:20px!important;}.mini-btn{padding:9px 12px!important;font-size:11px!important;}
 @media (max-width:390px){
-  .app-shell{padding:7px 9px 16px!important}
-  .ai-live-panel{padding:8px 9px!important;margin-bottom:7px!important}
-  .v18-match-line{grid-template-columns:31px 1fr 31px!important;gap:6px!important}
-  .team-crest{width:30px!important;height:30px!important}
-  .v18-teams strong{font-size:13.3px!important}
-  .v18-metrics{grid-template-columns:66px 54px 1fr!important;gap:4px!important}
-  .v18-metrics div{height:38px!important;border-radius:10px!important}
-  .v18-card .tag{font-size:6.8px!important;letter-spacing:1px!important;max-width:145px}
-  .hot-markets{min-width:78px!important}.hot-markets span{font-size:7.8px!important;height:18px!important;padding:0 6px!important}
+  #jogos .ai-panel-body{grid-template-columns:1fr!important;}
+  #jogos .heatmap-card{min-height:55px!important;}
+  .club-crest{width:31px;height:37px;}
+  .compact-metrics{grid-template-columns:1fr 62px 62px!important;}
+  .metric-box{min-height:40px!important;}
+  .metric-box strong{font-size:14px!important;}.confidence-box strong{font-size:19px!important;}
+  .opp-match{font-size:15px!important;}
 }

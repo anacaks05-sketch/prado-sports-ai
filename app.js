@@ -8,14 +8,14 @@ const lineOptions = {
 };
 
 const fallbackGames = [
-  { league:'Brasil Série A', flag:'🇧🇷', time:'19:00', home:'Flamengo', away:'Bahia', prob:90, odd:1.62, ev:'+0.18', homeLogo:'assets/teams/flamengo.svg', awayLogo:'assets/teams/bahia.svg' },
-  { league:'Argentina Liga', flag:'🇦🇷', time:'20:15', home:'River Plate', away:'Lanús', prob:82, odd:1.55, ev:'+0.12', homeLogo:'assets/teams/river.svg', awayLogo:'assets/teams/lanus.svg' },
-  { league:'Chile Primera', flag:'🇨🇱', time:'22:00', home:'Colo-Colo', away:'Everton', prob:82, odd:1.66, ev:'+0.11', homeLogo:'assets/teams/colo-colo.svg', awayLogo:'assets/teams/everton.svg' },
-  { league:'MLS', flag:'🇺🇸', time:'21:30', home:'Inter Miami', away:'Orlando City', prob:80, odd:1.70, ev:'+0.10', homeLogo:'assets/teams/inter-miami.svg', awayLogo:'assets/teams/orlando.svg' },
-  { league:'Uruguai', flag:'🇺🇾', time:'18:30', home:'Peñarol', away:'Danubio', prob:79, odd:1.74, ev:'+0.10', homeLogo:'assets/teams/penarol.svg', awayLogo:'assets/teams/danubio.svg' },
-  { league:'Brasil Série B', flag:'🇧🇷', time:'21:00', home:'Goiás', away:'CRB', prob:77, odd:1.82, ev:'+0.12', homeLogo:'assets/teams/goias.svg', awayLogo:'assets/teams/crb.svg' },
-  { league:'Peru Liga 1', flag:'🇵🇪', time:'20:00', home:'Alianza Lima', away:'Cienciano', prob:76, odd:1.88, ev:'+0.13', homeLogo:'assets/teams/alianza.svg', awayLogo:'assets/teams/cienciano.svg' },
-  { league:'Colômbia', flag:'🇨🇴', time:'21:45', home:'Nacional', away:'Cali', prob:74, odd:1.95, ev:'+0.15', homeLogo:'assets/teams/nacional.svg', awayLogo:'assets/teams/cali.svg' }
+  { league:'Brasil Série A', flag:'🇧🇷', time:'19:00', home:'Flamengo', away:'Bahia', prob:90, odd:1.62, ev:'+0.18', homeLogo:'assets/escudo-flamengo.svg', awayLogo:'assets/escudo-bahia.svg' },
+  { league:'Argentina Liga', flag:'🇦🇷', time:'20:15', home:'River Plate', away:'Lanús', prob:82, odd:1.55, ev:'+0.12', homeLogo:'assets/escudo-river.svg', awayLogo:'assets/escudo-lanus.svg' },
+  { league:'Chile Primera', flag:'🇨🇱', time:'22:00', home:'Colo-Colo', away:'Everton', prob:82, odd:1.66, ev:'+0.11', homeLogo:'assets/escudo-colocolo.svg', awayLogo:'assets/escudo-everton.svg' },
+  { league:'MLS', flag:'🇺🇸', time:'21:30', home:'Inter Miami', away:'Orlando City', prob:80, odd:1.70, ev:'+0.10', homeLogo:'assets/escudo-miami.svg', awayLogo:'assets/escudo-orlando.svg' },
+  { league:'Uruguai', flag:'🇺🇾', time:'18:30', home:'Peñarol', away:'Danubio', prob:79, odd:1.74, ev:'+0.10', homeLogo:'assets/escudo-penarol.svg', awayLogo:'assets/escudo-danubio.svg' },
+  { league:'Brasil Série B', flag:'🇧🇷', time:'21:00', home:'Goiás', away:'CRB', prob:77, odd:1.82, ev:'+0.12', homeLogo:'assets/escudo-goias.svg', awayLogo:'assets/escudo-crb.svg' },
+  { league:'Peru Liga 1', flag:'🇵🇪', time:'20:00', home:'Alianza Lima', away:'Cienciano', prob:76, odd:1.88, ev:'+0.13', homeLogo:'assets/escudo-alianza.svg', awayLogo:'assets/escudo-cienciano.svg' },
+  { league:'Colômbia', flag:'🇨🇴', time:'21:45', home:'Nacional', away:'Cali', prob:74, odd:1.95, ev:'+0.15', homeLogo:'assets/escudo-nacional.svg', awayLogo:'assets/escudo-cali.svg' }
 ];
 
 let currentGames = [...fallbackGames];
@@ -39,48 +39,42 @@ function tagFor(index){ return index === 0 ? '🔥 Entrada do Dia' : index === 1
 function qualityFor(index){ return index === 0 ? 'Excelente' : index === 1 ? 'Muito Boa' : 'Boa'; }
 function rankClass(index){ return index === 0 ? '' : index === 1 ? ' silver' : ' bronze'; }
 function logoClass(i){ return ['a','b','c','d','e','f'][i % 6]; }
-
-function crestImg(src, name){
-  return `<img class="team-crest" src="${src}" alt="Escudo ${name}" loading="lazy" />`;
-}
+function crest(src, name, cls){ return src ? `<img class="club-crest" src="${src}" alt="${name}" loading="lazy" />` : `<span class="club-crest crest-fallback ${cls}" aria-label="${name}"></span>`; }
 
 function renderGames(games = currentGames){
   const line = lineSelect.value || 'Over +1.5';
   const topGames = [...games].sort((a,b)=> b.prob - a.prob).slice(0, Math.max(Number(quantitySelect.value || 4), 3));
-  const liveSummary = `
-    <div class="live-summary v18-summary">
-      <div class="live-left">
-        <h3><span class="live-dot-mini"></span>IA AO VIVO</h3>
-        <p><span id="monitoredCount">143</span> Jogos • <span id="oppCount">24</span> Oportunidades</p>
-      </div>
-      <div class="hot-markets">
-        <span>Over 1.5 <b>92%</b></span>
-        <span>BTTS <b>84%</b></span>
-        <span>Esc. <b>79%</b></span>
-      </div>
-    </div>`;
+  const liveSummary = `<div class="live-summary"><h3>🟡 PRADO IA AO VIVO</h3><p><span id="monitoredCount">138</span> Jogos Monitorados • <span id="oppCount">16</span> Oportunidades</p></div>`;
   gamesList.innerHTML = liveSummary + topGames.map((game, index) => {
     const score = scoreFor(game, index);
     return `
-      <article class="opportunity-card v18-card ${index === 0 ? 'best' : ''}">
-        <div class="v18-card-head">
+      <article class="opportunity-card compact-rank ${index === 0 ? 'best' : ''}">
+        <div class="opp-topline">
           <div class="rank-wrap"><span class="rank-badge${rankClass(index)}">${index + 1}</span><span class="tag ${index === 2 ? 'green' : ''}">${tagFor(index)}</span></div>
-          <span class="score-chip">IA ${score}</span>
+          ${index === 0 ? '<div class="fav-star">★</div>' : '<div class="fav-star muted">☆</div>'}
         </div>
 
-        <div class="v18-match-line">
-          ${crestImg(game.homeLogo, game.home)}
-          <div class="v18-teams">
-            <strong>${game.home} <span>x</span> ${game.away}</strong>
-            <small>${game.flag || '⚽'} ${game.league} • ${game.time}</small>
+        <div class="match-row">
+          <div class="teams-logos official-crests">
+            ${crest(game.homeLogo, game.home, logoClass(index*2))}
+            <span class="versus">x</span>
+            ${crest(game.awayLogo, game.away, logoClass(index*2+1))}
           </div>
-          ${crestImg(game.awayLogo, game.away)}
+          <div class="match-copy">
+            <div class="opp-match">${game.home} <span>x</span> ${game.away}</div>
+            <div class="opp-meta"><span>${game.flag || '⚽'} ${game.league}</span><span>•</span><span>${game.time}</span></div>
+          </div>
         </div>
 
-        <div class="v18-metrics">
-          <div><b>${game.prob}%</b><span>Confiança</span></div>
-          <div><b>${game.odd.toFixed(2)}</b><span>Odd</span></div>
-          <div><b>${line.replace('+0.5','+1.5')}</b><span>Mercado</span></div>
+        <div class="compact-metrics">
+          <div class="metric-box confidence-box"><span>Confiança IA</span><strong>${game.prob}%</strong></div>
+          <div class="metric-box"><span>Odd</span><strong>${game.odd.toFixed(2)}</strong></div>
+          <div class="metric-box"><span>Score IA</span><strong>${score}</strong></div>
+        </div>
+
+        <div class="compact-market">
+          <span>⚽ ${line.replace('+0.5','+1.5')}</span>
+          <b>${qualityFor(index)}</b>
         </div>
       </article>`;
   }).join('');
