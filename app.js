@@ -47,32 +47,37 @@ function renderGames(games = currentGames){
   gamesList.innerHTML = liveSummary + topGames.map((game, index) => {
     const score = scoreFor(game, index);
     return `
-      <article class="opportunity-card ${index === 0 ? 'best' : ''}">
-        ${index === 0 ? '<div class="fav-star">★</div>' : '<div class="fav-star" style="opacity:.35">☆</div>'}
-        <div class="opp-grid">
-          <div class="opp-left">
-            <div class="rankline"><span class="rank-badge${rankClass(index)}">${index + 1}</span><span class="tag ${index === 2 ? 'green' : ''}">${tagFor(index)}</span></div>
-            <div class="teams-logos"><span class="team-logo ${logoClass(index*2)}">${game.logos?.[0] || game.home.slice(0,3).toUpperCase()}</span><span class="versus">x</span><span class="team-logo ${logoClass(index*2+1)}">${game.logos?.[1] || game.away.slice(0,3).toUpperCase()}</span></div>
+      <article class="opportunity-card compact-rank ${index === 0 ? 'best' : ''}">
+        <div class="opp-topline">
+          <div class="rank-wrap"><span class="rank-badge${rankClass(index)}">${index + 1}</span><span class="tag ${index === 2 ? 'green' : ''}">${tagFor(index)}</span></div>
+          ${index === 0 ? '<div class="fav-star">★</div>' : '<div class="fav-star muted">☆</div>'}
+        </div>
+
+        <div class="match-row">
+          <div class="teams-logos">
+            <span class="team-logo ${logoClass(index*2)}">${game.logos?.[0] || game.home.slice(0,3).toUpperCase()}</span>
+            <span class="versus">x</span>
+            <span class="team-logo ${logoClass(index*2+1)}">${game.logos?.[1] || game.away.slice(0,3).toUpperCase()}</span>
+          </div>
+          <div class="match-copy">
             <div class="opp-match">${game.home} x ${game.away}</div>
             <div class="opp-meta"><span>${game.flag || '⚽'} ${game.league}</span><span>•</span><span>${game.time}</span></div>
           </div>
-          <div class="divider"></div>
-          <div class="opp-right">
-            <div>
-              <div class="confidence-big"><strong>${game.prob}%</strong><span>Confiança IA</span></div>
-              <div class="market-pill">⚽ ${line.replace('+0.5','+1.5')}</div>
-              <div class="odd-line">Odd <b>${game.odd.toFixed(2)}</b></div>
-            </div>
-            <div>
-              <div class="score-ring" style="--score:${score}"><div><span>Score<br>IA</span><b>${score}</b></div></div>
-              <span class="quality">${qualityFor(index)}</span>
-            </div>
-          </div>
+        </div>
+
+        <div class="compact-metrics">
+          <div class="metric-box confidence-box"><span>Confiança IA</span><strong>${game.prob}%</strong></div>
+          <div class="metric-box"><span>Odd</span><strong>${game.odd.toFixed(2)}</strong></div>
+          <div class="metric-box"><span>Score IA</span><strong>${score}</strong></div>
+        </div>
+
+        <div class="compact-market">
+          <span>⚽ ${line.replace('+0.5','+1.5')}</span>
+          <b>${qualityFor(index)}</b>
         </div>
       </article>`;
   }).join('');
 }
-
 function getRiskQty(){ if(selectedRisk === 'leve') return 3; if(selectedRisk === 'moderado') return 5; return 8; }
 function getRiskLabel(){ return selectedRisk === 'leve' ? 'Leve' : selectedRisk === 'moderado' ? 'Moderado' : 'Agressivo'; }
 function buildTicket(qty){ const picks = currentGames.slice(0, qty); const oddTotal = picks.reduce((acc, game) => acc * game.odd, 1); const avgProb = Math.round(picks.reduce((acc, game) => acc + game.prob, 0) / picks.length); const line = lineSelect.value || 'Over +1.5'; return { picks, oddTotal, avgProb, risk: getRiskLabel(), line }; }
