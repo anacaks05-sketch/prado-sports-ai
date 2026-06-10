@@ -1,18 +1,10 @@
 {
-  "name": "prado-ia-v20-react-premium",
-  "version": "20.0.0",
+  "name": "prado-ia-v21-api-football",
+  "version": "21.0.0",
   "private": true,
-  "type": "module",
   "scripts": {
-    "dev": "vite --host 0.0.0.0",
-    "build": "vite build",
-    "preview": "vite preview --host 0.0.0.0"
+    "dev": "vercel dev",
+    "start": "vercel dev"
   },
-  "dependencies": {
-    "@vitejs/plugin-react": "latest",
-    "vite": "latest",
-    "react": "latest",
-    "react-dom": "latest"
-  },
-  "devDependencies": {}
+  "dependencies": {}
 }

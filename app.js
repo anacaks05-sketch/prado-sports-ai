@@ -8,14 +8,14 @@ const lineOptions = {
 };
 
 const fallbackGames = [
-  { league:'Brasil Série A', flag:'🇧🇷', time:'19:00', home:'Flamengo', away:'Bahia', prob:90, odd:1.62, ev:'+0.18', homeLogo:'assets/escudo-flamengo.svg', awayLogo:'assets/escudo-bahia.svg' },
-  { league:'Argentina Liga', flag:'🇦🇷', time:'20:15', home:'River Plate', away:'Lanús', prob:82, odd:1.55, ev:'+0.12', homeLogo:'assets/escudo-river.svg', awayLogo:'assets/escudo-lanus.svg' },
-  { league:'Chile Primera', flag:'🇨🇱', time:'22:00', home:'Colo-Colo', away:'Everton', prob:82, odd:1.66, ev:'+0.11', homeLogo:'assets/escudo-colocolo.svg', awayLogo:'assets/escudo-everton.svg' },
-  { league:'MLS', flag:'🇺🇸', time:'21:30', home:'Inter Miami', away:'Orlando City', prob:80, odd:1.70, ev:'+0.10', homeLogo:'assets/escudo-miami.svg', awayLogo:'assets/escudo-orlando.svg' },
-  { league:'Uruguai', flag:'🇺🇾', time:'18:30', home:'Peñarol', away:'Danubio', prob:79, odd:1.74, ev:'+0.10', homeLogo:'assets/escudo-penarol.svg', awayLogo:'assets/escudo-danubio.svg' },
-  { league:'Brasil Série B', flag:'🇧🇷', time:'21:00', home:'Goiás', away:'CRB', prob:77, odd:1.82, ev:'+0.12', homeLogo:'assets/escudo-goias.svg', awayLogo:'assets/escudo-crb.svg' },
-  { league:'Peru Liga 1', flag:'🇵🇪', time:'20:00', home:'Alianza Lima', away:'Cienciano', prob:76, odd:1.88, ev:'+0.13', homeLogo:'assets/escudo-alianza.svg', awayLogo:'assets/escudo-cienciano.svg' },
-  { league:'Colômbia', flag:'🇨🇴', time:'21:45', home:'Nacional', away:'Cali', prob:74, odd:1.95, ev:'+0.15', homeLogo:'assets/escudo-nacional.svg', awayLogo:'assets/escudo-cali.svg' }
+  { league:'Brasil Série A', flag:'🇧🇷', time:'19:00', home:'Flamengo', away:'Bahia', prob:90, odd:1.62, ev:'+0.18', homeLogo:'', awayLogo:'' },
+  { league:'Argentina Liga', flag:'🇦🇷', time:'20:15', home:'River Plate', away:'Lanús', prob:82, odd:1.55, ev:'+0.12', homeLogo:'', awayLogo:'' },
+  { league:'Chile Primera', flag:'🇨🇱', time:'22:00', home:'Colo-Colo', away:'Everton', prob:82, odd:1.66, ev:'+0.11', homeLogo:'', awayLogo:'' },
+  { league:'MLS', flag:'🇺🇸', time:'21:30', home:'Inter Miami', away:'Orlando City', prob:80, odd:1.70, ev:'+0.10', homeLogo:'', awayLogo:'' },
+  { league:'Uruguai', flag:'🇺🇾', time:'18:30', home:'Peñarol', away:'Danubio', prob:79, odd:1.74, ev:'+0.10', homeLogo:'', awayLogo:'' },
+  { league:'Brasil Série B', flag:'🇧🇷', time:'21:00', home:'Goiás', away:'CRB', prob:77, odd:1.82, ev:'+0.12', homeLogo:'', awayLogo:'' },
+  { league:'Peru Liga 1', flag:'🇵🇪', time:'20:00', home:'Alianza Lima', away:'Cienciano', prob:76, odd:1.88, ev:'+0.13', homeLogo:'', awayLogo:'' },
+  { league:'Colômbia', flag:'🇨🇴', time:'21:45', home:'Nacional', away:'Cali', prob:74, odd:1.95, ev:'+0.15', homeLogo:'', awayLogo:'' }
 ];
 
 let currentGames = [...fallbackGames];
@@ -39,7 +39,55 @@ function tagFor(index){ return index === 0 ? '🔥 Entrada do Dia' : index === 1
 function qualityFor(index){ return index === 0 ? 'Excelente' : index === 1 ? 'Muito Boa' : 'Boa'; }
 function rankClass(index){ return index === 0 ? '' : index === 1 ? ' silver' : ' bronze'; }
 function logoClass(i){ return ['a','b','c','d','e','f'][i % 6]; }
-function crest(src, name, cls){ return src ? `<img class="club-crest" src="${src}" alt="${name}" loading="lazy" />` : `<span class="club-crest crest-fallback ${cls}" aria-label="${name}"></span>`; }
+
+function escapeHtml(value){
+  return String(value ?? '').replace(/[&<>'"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch]));
+}
+function crestFallback(name){
+  return `<span class="club-crest-fallback" aria-hidden="true"><i></i></span>`;
+}
+function crestImg(url, name){
+  const safeUrl = escapeHtml(url || '');
+  const safeName = escapeHtml(name || 'Time');
+  if(!safeUrl) return crestFallback(name);
+  return `<img class="club-crest-img" src="${safeUrl}" alt="Escudo ${safeName}" loading="lazy" referrerpolicy="no-referrer" onerror="this.replaceWith(this.nextElementSibling)">${crestFallback(name)}`;
+}
+function normalizeApiGames(games){
+  return (games || []).map(g => ({
+    league: g.league || 'Liga',
+    flag: g.flag || '⚽',
+    time: g.time || '--:--',
+    home: g.home || 'Mandante',
+    away: g.away || 'Visitante',
+    prob: Number(g.prob || 75),
+    odd: Number(g.odd || 1.65),
+    ev: g.ev || '+0.08',
+    homeLogo: g.homeLogo || '',
+    awayLogo: g.awayLogo || ''
+  }));
+}
+async function fetchRealGames(date){
+  const res = await fetch(`/api/games?date=${encodeURIComponent(date || todayISO())}`, { cache:'no-store' });
+  if(!res.ok) throw new Error('Erro ao buscar jogos');
+  const data = await res.json();
+  return normalizeApiGames(data.games || []);
+}
+async function loadRealGames(){
+  const selectedDate = dateInput.value || todayISO();
+  gamesList.innerHTML = `<div class="loading-card"><h3>🟢 Prado IA buscando jogos reais</h3><p>Carregando jogos e escudos oficiais da API-Football...</p><div class="progress"><i></i></div></div>`;
+  try{
+    const games = await fetchRealGames(selectedDate);
+    if(games.length){
+      currentGames = games.sort((a,b)=>b.prob-a.prob);
+    } else {
+      currentGames = [...fallbackGames];
+    }
+  } catch(err){
+    console.warn(err);
+    currentGames = [...fallbackGames];
+  }
+  renderGames(currentGames);
+}
 
 function renderGames(games = currentGames){
   const line = lineSelect.value || 'Over +1.5';
@@ -56,12 +104,12 @@ function renderGames(games = currentGames){
 
         <div class="match-row">
           <div class="teams-logos official-crests">
-            ${crest(game.homeLogo, game.home, logoClass(index*2))}
+            ${crestImg(game.homeLogo, game.home)}
             <span class="versus">x</span>
-            ${crest(game.awayLogo, game.away, logoClass(index*2+1))}
+            ${crestImg(game.awayLogo, game.away)}
           </div>
           <div class="match-copy">
-            <div class="opp-match">${game.home} <span>x</span> ${game.away}</div>
+            <div class="opp-match">${game.home} x ${game.away}</div>
             <div class="opp-meta"><span>${game.flag || '⚽'} ${game.league}</span><span>•</span><span>${game.time}</span></div>
           </div>
         </div>
@@ -82,7 +130,7 @@ function renderGames(games = currentGames){
 function getRiskQty(){ if(selectedRisk === 'leve') return 3; if(selectedRisk === 'moderado') return 5; return 8; }
 function getRiskLabel(){ return selectedRisk === 'leve' ? 'Leve' : selectedRisk === 'moderado' ? 'Moderado' : 'Agressivo'; }
 function buildTicket(qty){ const picks = currentGames.slice(0, qty); const oddTotal = picks.reduce((acc, game) => acc * game.odd, 1); const avgProb = Math.round(picks.reduce((acc, game) => acc + game.prob, 0) / picks.length); const line = lineSelect.value || 'Over +1.5'; return { picks, oddTotal, avgProb, risk: getRiskLabel(), line }; }
-function shuffleGames(qty, aggressive=false){ const shuffled = fallbackGames.map(game => ({...game, prob: Math.max(70, Math.min(93, game.prob + Math.floor(Math.random()*7)-3))})).sort((a,b) => aggressive ? b.odd - a.odd : b.prob - a.prob); currentGames = shuffled.slice(0, Math.max(qty, 4)); renderGames(currentGames); return currentGames; }
+function shuffleGames(qty, aggressive=false){ const base = currentGames.length ? currentGames : fallbackGames; const shuffled = base.map(game => ({...game, prob: Math.max(70, Math.min(93, Number(game.prob || 75) + Math.floor(Math.random()*5)-2))})).sort((a,b) => aggressive ? b.odd - a.odd : b.prob - a.prob); currentGames = shuffled.slice(0, Math.max(qty, 4)); renderGames(currentGames); return currentGames; }
 
 function scanGames(event){
   event?.preventDefault();
@@ -123,7 +171,7 @@ function renderTicket(target = ticketArea){
   if(!currentTicket || !target) return;
   const { picks, oddTotal, avgProb, risk, line } = currentTicket;
   target.className = 'ticket-card';
-  target.innerHTML = `<div class="ticket-top"><h3>✅ Bilhete Gerado</h3><span class="verify">IA VERIFICADO</span></div><div class="ticket-metrics"><div class="ticket-metric"><span>Odd Total</span><strong>${oddTotal.toFixed(2)}</strong></div><div class="ticket-metric"><span>Confiança</span><strong>${avgProb}%</strong></div><div class="ticket-metric"><span>Risco</span><strong>${risk}</strong></div><div class="ticket-metric"><span>Jogos</span><strong>${picks.length}</strong></div></div><div class="pick-list">${picks.map((game,index)=>`<div class="pick"><strong>${index+1}. ${game.home} x ${game.away}</strong><span>${line} • Odd ${game.odd.toFixed(2)} • Score IA ${scoreFor(game,index)}</span></div>`).join('')}</div>`;
+  target.innerHTML = `<div class="ticket-top"><h3>✅ Bilhete Gerado</h3><span class="verify">IA VERIFICADO</span></div><div class="ticket-metrics"><div class="ticket-metric"><span>Odd Total</span><strong>${oddTotal.toFixed(2)}</strong></div><div class="ticket-metric"><span>Confiança</span><strong>${avgProb}%</strong></div><div class="ticket-metric"><span>Risco</span><strong>${risk}</strong></div><div class="ticket-metric"><span>Jogos</span><strong>${picks.length}</strong></div></div><div class="pick-list">${picks.map((game,index)=>`<div class="pick premium-pick"><b>${index+1}</b><div><strong>${game.home} x ${game.away}</strong><span>${line} • Odd ${game.odd.toFixed(2)} • Score IA ${scoreFor(game,index)}</span></div></div>`).join('')}</div>`;
 }
 
 function updateLiveNumbers(){
@@ -143,8 +191,10 @@ generateTicketBtn.addEventListener('click', generateTicketFromGames);
 document.getElementById('ticketScanBtn').addEventListener('click', generateTicketFromRisk);
 
 dateInput.value = todayISO();
+dateInput.addEventListener('change', loadRealGames);
 updateLines();
 renderGames(currentGames.slice(0,4));
+loadRealGames();
 setInterval(updateLiveNumbers, 4500);
 
 if('serviceWorker' in navigator){ window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => {})); }
