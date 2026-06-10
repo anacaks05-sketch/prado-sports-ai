@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Prado Sports V30.15</title>
+<title>Prado Sports V30.16</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&display=swap');
 :root{--gold:#f4bd3b;--gold2:#ffd86f;--muted:#aab0bb;--line:rgba(255,255,255,.09);--card:#151a23;--card2:#202633;--green:#52e78a}
@@ -1049,6 +1049,123 @@ body.lightMode .pregameHero h1,
 body.lightMode .statLine span,
 body.lightMode .aiMini span{color:#10131a!important}
 
+
+/* ===== V30.16 HOME MAIS LIMPA + PRÉ-JOGO VISÍVEL ===== */
+.dayHeader{display:none!important}
+
+.searchBar{
+  height:40px!important;
+  min-height:40px!important;
+  border-radius:14px!important;
+  padding:0 13px!important;
+  font-size:12.8px!important;
+  margin:8px auto 8px!important;
+  max-width:calc(100% - 54px)!important;
+}
+
+.daysClean{
+  gap:3px!important;
+  margin:6px 0 10px!important;
+}
+.daysClean button{
+  height:38px!important;
+  border-radius:11px!important;
+}
+.daysClean button span{
+  font-size:8.8px!important;
+  letter-spacing:.7px!important;
+}
+.daysClean button b{
+  font-size:12.8px!important;
+}
+.daysClean button.active:after{
+  width:20px!important;
+  height:3px!important;
+}
+
+.groupTitle{
+  margin-top:8px!important;
+}
+.groupTitle h2{
+  font-size:18px!important;
+}
+.groupTitle small{
+  font-size:11px!important;
+}
+
+.scheduleCard{
+  padding:12px 13px!important;
+  border-radius:17px!important;
+  cursor:pointer!important;
+}
+.scheduleBody{
+  grid-template-columns:1fr 58px 1fr!important;
+}
+.scheduleBody time{
+  font-size:16.5px!important;
+}
+.club strong{
+  font-size:12.8px!important;
+}
+.club i{
+  font-size:21px!important;
+}
+.scheduleFoot span{
+  font-size:10.8px!important;
+}
+
+/* Corrige pré-jogo que estava abrindo preto */
+#pregame.pregamePage,
+.pregamePage{
+  padding:18px 18px 115px!important;
+  min-height:calc(100vh - 90px)!important;
+  background:#000!important;
+  color:#fff!important;
+}
+#pregame .configBack{
+  display:block!important;
+  color:#fff!important;
+  opacity:1!important;
+}
+.pregameHero{
+  display:block!important;
+  border-radius:20px!important;
+  padding:16px!important;
+  background:linear-gradient(145deg,#151a23,#202633)!important;
+  border:1px solid rgba(255,255,255,.08)!important;
+  margin-bottom:14px!important;
+}
+.pregameHero small{color:#9ca3af!important;font-size:12px!important;font-weight:800!important}
+.pregameHero h1{font-size:24px!important;line-height:1.05!important;margin:8px 0!important;color:#fff!important}
+.pregameHero span{display:inline-block!important;color:#f7c34b!important;font-weight:900!important;font-size:18px!important}
+.pregameTabs{display:flex!important;gap:8px!important;overflow-x:auto!important;margin-bottom:14px!important}
+.pregameTabs button{
+  height:34px!important;border:1px solid rgba(255,255,255,.08)!important;background:#151922!important;
+  color:#aeb4bf!important;border-radius:999px!important;padding:0 13px!important;font-size:12px!important;font-weight:850!important;
+}
+.pregameTabs button.active{background:#f7c34b!important;color:#090909!important}
+.pgPanel{display:none!important}
+.pgPanel.active{display:block!important}
+.pgPanel h2{font-size:18px!important;margin:0 0 12px!important;color:#fff!important}
+.fieldMini{
+  height:220px!important;border-radius:20px!important;background:linear-gradient(180deg,#18351f,#0d1f13)!important;
+  border:1px solid rgba(255,255,255,.10)!important;display:grid!important;grid-template-rows:repeat(4,1fr)!important;
+  place-items:center!important;color:#fff!important;font-weight:900!important;margin-bottom:12px!important;
+}
+.statLine,.aiMini{
+  min-height:54px!important;border-radius:16px!important;background:#141923!important;border:1px solid rgba(255,255,255,.08)!important;
+  display:flex!important;align-items:center!important;justify-content:space-between!important;padding:0 14px!important;margin-bottom:9px!important;
+}
+.statLine span,.aiMini span{color:#c8cdd6!important;font-size:13px!important;font-weight:760!important}
+.statLine b,.aiMini b{color:#f7c34b!important;font-size:16px!important}
+
+body.lightMode #pregame.pregamePage{background:#f4f5f7!important;color:#10131a!important}
+body.lightMode .pregameHero,
+body.lightMode .statLine,
+body.lightMode .aiMini{background:#fff!important;border-color:#dde1e8!important}
+body.lightMode .pregameHero h1,
+body.lightMode .pgPanel h2{color:#10131a!important}
+
 </style>
 </head>
 <body>
@@ -1508,7 +1625,7 @@ document.addEventListener("DOMContentLoaded", function(){
   renderSetup();
   renderApp();
   renderFavorites();
-  if("serviceWorker" in navigator){navigator.serviceWorker.register("service-worker.js?v=3015")}
+  if("serviceWorker" in navigator){navigator.serviceWorker.register("service-worker.js?v=3016")}
 });
 
 (function(){
@@ -1736,6 +1853,77 @@ document.addEventListener("click", function(e){
   var panel = document.getElementById("pg_"+tab.getAttribute("data-pg"));
   if(panel) panel.classList.add("active");
 });
+</script>
+
+
+<script>
+(function(){
+  function fixHome(){
+    var home = document.getElementById("home");
+    if(!home) return;
+
+    // remove resumo "Hoje, 09 / jogos programados"
+    home.querySelectorAll(".dayHeader").forEach(function(el){ el.remove(); });
+
+    // torna cards clicáveis novamente
+    home.querySelectorAll(".scheduleCard").forEach(function(card){
+      card.onclick = function(){
+        var league = card.querySelector(".scheduleTop b")?.textContent || "Pré-jogo";
+        var time = card.querySelector("time")?.textContent || "";
+        var teams = Array.from(card.querySelectorAll(".club strong")).map(x=>x.textContent);
+        openPreGame((teams[0] || "Time A") + " x " + (teams[1] || "Time B"), league, time);
+      };
+    });
+  }
+
+  window.openPreGame = function(title, league, time){
+    var titleEl = document.getElementById("pgTitle");
+    var leagueEl = document.getElementById("pgLeague");
+    var timeEl = document.getElementById("pgTime");
+    if(titleEl) titleEl.textContent = title || "Pré-jogo";
+    if(leagueEl) leagueEl.textContent = league || "Competição";
+    if(timeEl) timeEl.textContent = time || "";
+
+    document.querySelectorAll(".page").forEach(function(p){
+      p.classList.remove("active");
+      p.style.display = "none";
+    });
+    var pg = document.getElementById("pregame");
+    if(pg){
+      pg.classList.add("active");
+      pg.style.display = "block";
+    }
+    window.scrollTo(0,0);
+  };
+
+  window.goBackHome = function(){
+    document.querySelectorAll(".page").forEach(function(p){
+      p.classList.remove("active");
+      p.style.display = "none";
+    });
+    var home = document.getElementById("home");
+    if(home){
+      home.classList.add("active");
+      home.style.display = "block";
+      setTimeout(fixHome,80);
+    }
+    window.scrollTo(0,0);
+  };
+
+  document.addEventListener("click", function(e){
+    var tab = e.target.closest(".pregameTabs button");
+    if(tab){
+      document.querySelectorAll(".pregameTabs button").forEach(function(b){b.classList.remove("active")});
+      tab.classList.add("active");
+      document.querySelectorAll(".pgPanel").forEach(function(p){p.classList.remove("active")});
+      var panel = document.getElementById("pg_"+tab.getAttribute("data-pg"));
+      if(panel) panel.classList.add("active");
+    }
+  });
+
+  window.addEventListener("load", function(){ setTimeout(fixHome,250); });
+  document.addEventListener("DOMContentLoaded", function(){ setTimeout(fixHome,250); });
+})();
 </script>
 
 </body>
