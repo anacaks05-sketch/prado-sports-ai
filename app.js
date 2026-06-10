@@ -121,3 +121,13 @@ renderGames(currentGames.slice(0,4));
 if('serviceWorker' in navigator){
   window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => {}));
 }
+
+
+window.addEventListener('load', () => {
+  const splash = document.getElementById('splashScreen');
+  const app = document.querySelector('.app-shell');
+  setTimeout(() => {
+    splash?.classList.add('hide');
+    app?.classList.remove('app-hidden');
+  }, 1800);
+});
