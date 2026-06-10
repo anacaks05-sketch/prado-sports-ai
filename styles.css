@@ -44,3 +44,78 @@ button,input,select{font:inherit}.app-shell{width:100%;max-width:430px;margin:0 
 .match-copy{min-width:0}.opp-match{font-size:17px!important;line-height:1.05!important;margin:0!important;white-space:normal}.opp-meta{margin-top:4px!important;font-size:10.5px!important;gap:6px!important;flex-wrap:wrap}.compact-metrics{display:grid;grid-template-columns:1fr 78px 78px;gap:6px}.metric-box{min-height:49px;border:1px solid rgba(255,255,255,.075);border-radius:13px;background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.018));padding:7px 8px;display:flex;flex-direction:column;justify-content:center}.metric-box span{font-size:8px;color:#aaa;text-transform:uppercase;letter-spacing:1.1px;font-weight:900}.metric-box strong{font-size:17px;color:var(--gold2);font-weight:950;line-height:1.05;margin-top:3px}.confidence-box strong{font-size:22px;color:var(--green)}.compact-market{height:32px;margin-top:7px;border-radius:11px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.07);display:flex;align-items:center;justify-content:space-between;padding:0 10px}.compact-market span{font-weight:900;font-size:12px}.compact-market b{font-size:9px;color:#9cff77;text-transform:uppercase;border-radius:999px;background:rgba(88,227,94,.13);padding:4px 7px;white-space:nowrap}.divider,.opp-right,.opp-left,.opp-grid{display:contents!important}.score-ring,.quality,.confidence-big,.market-pill,.odd-line{display:none!important}
 .ai-live-panel{padding:9px!important}.ai-panel-body{grid-template-columns:1fr!important;gap:8px!important}.heatmap-card{min-height:72px!important}.signal-stack{padding:7px!important}.signal-row{height:23px!important}.field-lines{inset:12px 12px 23px!important}.heat{width:23px!important;height:23px!important}.games-title-row h2{font-size:20px!important}.eyebrow{font-size:9px;letter-spacing:3.2px}.live-summary{padding:9px 11px!important;border-radius:15px!important}.live-summary h3{font-size:15px!important}.live-summary p{font-size:12px!important}
 @media (max-width:390px){.compact-metrics{grid-template-columns:1fr 66px 66px;gap:5px}.metric-box{min-height:45px;padding:6px}.metric-box strong{font-size:15px}.confidence-box strong{font-size:20px}.team-logo{width:31px!important;height:31px!important;font-size:9px!important}.opp-match{font-size:16px!important}.compact-market span{font-size:11px}.compact-market b{font-size:8px;padding:3px 6px}.opportunity-card.compact-rank{padding:9px}.match-row{gap:8px}.rank-badge{width:28px;height:28px}.tag{font-size:7.5px}}
+
+
+/* V18 Premium Beta - painel IA compacto + escudos oficiais/transparentes + cards menores */
+.ai-live-panel{
+  padding:9px 10px!important;
+  border-radius:16px!important;
+  margin-bottom:8px!important;
+  min-height:0!important;
+}
+.ai-panel-top{padding:0!important;margin:0!important;border:0!important}
+.ai-panel-top>div{gap:6px!important}
+.ai-panel-top strong{font-size:13px!important;letter-spacing:1.2px!important}
+.ai-panel-top small{font-size:10px!important;text-transform:none!important;letter-spacing:.6px!important}
+#liveCount{font-size:9px!important;padding:5px 8px!important;border-radius:999px!important}
+.ai-panel-body,.ai-panel-footer{display:none!important}
+.games-title-row{margin:7px 0 7px!important}
+.games-title-row h2{font-size:18px!important;line-height:1.05!important}
+.games-title-row .eyebrow{font-size:8px!important;letter-spacing:2.5px!important}
+.mini-btn{padding:8px 10px!important;font-size:10.5px!important;border-radius:12px!important;min-height:34px!important}
+.games-list{gap:7px!important}
+.live-summary.v18-summary{
+  display:grid!important;
+  grid-template-columns:1fr auto!important;
+  align-items:center!important;
+  gap:8px!important;
+  padding:8px 10px!important;
+  border-radius:15px!important;
+  margin-bottom:7px!important;
+  background:linear-gradient(145deg,rgba(212,175,55,.10),rgba(255,255,255,.025))!important;
+  border:1px solid rgba(212,175,55,.26)!important;
+}
+.v18-summary h3{display:flex!important;align-items:center!important;gap:6px!important;margin:0!important;font-size:13px!important;line-height:1!important;letter-spacing:1px!important;color:#fff!important}
+.v18-summary p{margin:4px 0 0!important;font-size:10.5px!important;color:#b9b9b9!important;font-weight:800!important}
+.live-dot-mini{width:7px;height:7px;border-radius:50%;display:inline-block;background:#f4c542;box-shadow:0 0 0 4px rgba(212,175,55,.10),0 0 12px rgba(212,175,55,.45);animation:pulseLive 1.5s infinite}
+.hot-markets{display:grid!important;gap:3px!important;min-width:88px!important}
+.hot-markets span{height:19px;display:flex;align-items:center;justify-content:space-between;gap:5px;padding:0 7px;border-radius:8px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.06);font-size:8.5px;font-weight:900;color:#dcdcdc;white-space:nowrap}
+.hot-markets b{color:var(--gold2);font-size:9px}
+@keyframes pulseLive{50%{transform:scale(.82);opacity:.68}}
+.opportunity-card.v18-card{
+  padding:8px 9px!important;
+  border-radius:16px!important;
+  min-height:0!important;
+  background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.018))!important;
+  border:1px solid rgba(255,255,255,.08)!important;
+  box-shadow:0 8px 22px rgba(0,0,0,.18)!important;
+}
+.opportunity-card.v18-card.best{border-color:rgba(255,224,122,.68)!important;background:linear-gradient(145deg,rgba(212,175,55,.09),rgba(255,255,255,.018))!important;box-shadow:0 0 18px rgba(212,175,55,.11),0 8px 22px rgba(0,0,0,.18)!important}
+.v18-card-head{display:flex!important;align-items:center!important;justify-content:space-between!important;margin-bottom:7px!important}
+.v18-card-head .rank-wrap{display:flex!important;align-items:center!important;gap:6px!important}
+.v18-card .rank-badge{width:25px!important;height:25px!important;border-radius:8px!important;font-size:12px!important;box-shadow:none!important}
+.v18-card .tag{font-size:7.3px!important;letter-spacing:1.4px!important;max-width:160px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.score-chip{height:22px;display:inline-flex;align-items:center;padding:0 8px;border-radius:999px;background:rgba(212,175,55,.10);border:1px solid rgba(212,175,55,.28);color:var(--gold2);font-size:10px;font-weight:950;white-space:nowrap}
+.v18-match-line{display:grid!important;grid-template-columns:34px 1fr 34px!important;align-items:center!important;gap:7px!important;margin-bottom:7px!important}
+.team-crest{width:32px!important;height:32px!important;object-fit:contain!important;display:block!important;filter:drop-shadow(0 2px 2px rgba(0,0,0,.26))!important;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important}
+.v18-teams{min-width:0;text-align:center}
+.v18-teams strong{display:block;color:#fff;font-size:14.5px;font-weight:950;line-height:1.08;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.v18-teams strong span{color:var(--gold2);font-size:12px;margin:0 3px}
+.v18-teams small{display:block;margin-top:3px;color:#9e9e9e;font-size:9px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.v18-metrics{display:grid!important;grid-template-columns:72px 58px 1fr!important;gap:5px!important}
+.v18-metrics div{height:40px;border-radius:11px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.065);display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:0;padding:0 5px}
+.v18-metrics b{font-size:14px;line-height:1;color:var(--gold2);font-weight:950;white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis}
+.v18-metrics div:first-child b{font-size:17px;color:var(--green)}
+.v18-metrics span{font-size:7.5px;color:#aaa;text-transform:uppercase;letter-spacing:.8px;font-weight:900;margin-top:3px;white-space:nowrap}
+.teams-logos,.compact-metrics,.compact-market,.match-row,.opp-topline{display:none!important}
+@media (max-width:390px){
+  .app-shell{padding:7px 9px 16px!important}
+  .ai-live-panel{padding:8px 9px!important;margin-bottom:7px!important}
+  .v18-match-line{grid-template-columns:31px 1fr 31px!important;gap:6px!important}
+  .team-crest{width:30px!important;height:30px!important}
+  .v18-teams strong{font-size:13.3px!important}
+  .v18-metrics{grid-template-columns:66px 54px 1fr!important;gap:4px!important}
+  .v18-metrics div{height:38px!important;border-radius:10px!important}
+  .v18-card .tag{font-size:6.8px!important;letter-spacing:1px!important;max-width:145px}
+  .hot-markets{min-width:78px!important}.hot-markets span{font-size:7.8px!important;height:18px!important;padding:0 6px!important}
+}
