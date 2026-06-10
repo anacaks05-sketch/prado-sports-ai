@@ -80,7 +80,8 @@ function buildTicket(qty){
   return { picks, oddTotal, avgProb, risk: getRiskLabel(), line };
 }
 
-function scanGames(){
+function scanGames(event){
+  if(event) event.preventDefault();
   const qty = Number(quantitySelect.value || 4);
   const shuffled = fallbackGames
     .map(game => ({...game, prob: Math.max(70, Math.min(92, game.prob + Math.floor(Math.random()*5)-2))}))
@@ -88,11 +89,14 @@ function scanGames(){
   currentGames = shuffled.slice(0, Math.max(qty, 4));
   renderGames(currentGames);
   currentTicket = buildTicket(qty);
-  renderTicket(ticketArea);
+  // Importante: não muda para a aba Jogos. O resultado aparece aqui mesmo.
+  setTab('scanner');
   renderInlineTicket();
+  scannerTicketArea?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-function generateTicketFromRisk(){
+function generateTicketFromRisk(event){
+  if(event) event.preventDefault();
   const qty = getRiskQty();
   const shuffled = fallbackGames
     .map(game => ({...game, prob: Math.max(69, Math.min(93, game.prob + Math.floor(Math.random()*6)-2))}))
@@ -102,6 +106,7 @@ function generateTicketFromRisk(){
   currentTicket = buildTicket(qty);
   renderTicket(ticketArea);
   renderInlineTicket();
+  ticketArea?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function renderInlineTicket(){
@@ -159,7 +164,7 @@ document.querySelectorAll('.risk-card').forEach(btn => btn.addEventListener('cli
 }));
 marketSelect.addEventListener('change', () => { updateLines(); renderGames(currentGames); });
 document.getElementById('scanBtn').addEventListener('click', scanGames);
-document.getElementById('generateTicketBtn').addEventListener('click', () => { generateTicketFromRisk(); setTab('bilhete'); });
+document.getElementById('generateTicketBtn').addEventListener('click', () => { setTab('bilhete'); });
 document.getElementById('ticketScanBtn').addEventListener('click', generateTicketFromRisk);
 
 dateInput.value = todayISO();
