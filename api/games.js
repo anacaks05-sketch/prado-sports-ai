@@ -13,16 +13,110 @@ function leaguePriority(name = "", country = "") {
   if (n.includes("champions")) return 95;
   if (n.includes("libertadores")) return 94;
   if (n.includes("sudamericana")) return 92;
-  if (n.includes("brasileiro") || n.includes("serie a")) return 90;
+  if (n.includes("brasil") || n.includes("serie a")) return 90;
   if (n.includes("premier league")) return 89;
   if (n.includes("la liga")) return 88;
-  if (n.includes("serie a") && n.includes("italy")) return 87;
   if (n.includes("bundesliga")) return 86;
-  if (n.includes("ligue 1")) return 85;
   if (n.includes("mls")) return 80;
-  if (n.includes("cup") || n.includes("copa")) return 75;
 
   return 50;
+}
+
+async function apiFetch(url) {
+  const response = await fetch(url, {
+    headers: {
+      "x-apisports-key": process.env.API_FOOTBALL_KEY
+    }
+  });
+
+  const data = await response.json();
+
+  if (!response.ok || data.errors?.length) {
+    throw new Error(JSON.stringify(data.errors || data));
+  }
+
+  return data;
+}
+
+function pickBestOdd(bookmakers = []) {
+  const preferredMarkets = [
+    "Goals Over/Under",
+    "Goals Over/Under First Half",
+    "Both Teams Score",
+    "Match Winner"
+  ];
+
+  for (const marketName of preferredMarkets) {
+    for (const bookmaker of bookmakers) {
+      const bet = bookmaker.bets?.find(
+        (b) => String(b.name || "").toLowerCase() === marketName.toLowerCase()
+      );
+
+      if (!bet?.values?.length) continue;
+
+      const preferredValues = [
+        "Over 1.5",
+        "Over 2.5",
+        "Yes",
+        "Home",
+        "Away"
+      ];
+
+      for (const valueName of preferredValues) {
+        const found = bet.values.find(
+          (v) => String(v.value || "").toLowerCase() === valueName.toLowerCase()
+        );
+
+        if (found?.odd) {
+          return {
+            odd: Number(found.odd),
+            market: bet.name,
+            pick: found.value,
+            bookmaker: bookmaker.name
+          };
+        }
+      }
+
+      const first = bet.values[0];
+      if (first?.odd) {
+        return {
+          odd: Number(first.odd),
+          market: bet.name,
+          pick: first.value,
+          bookmaker: bookmaker.name
+        };
+      }
+    }
+  }
+
+  return null;
+}
+
+async function getOddsMap(date) {
+  const oddsMap = {};
+  let page = 1;
+  let totalPages = 1;
+
+  do {
+    const data = await apiFetch(
+      `https://v3.football.api-sports.io/odds?date=${date}&timezone=America/Sao_Paulo&page=${page}`
+    );
+
+    totalPages = data.paging?.total || 1;
+
+    for (const item of data.response || []) {
+      const fixtureId = item.fixture?.id;
+      const picked = pickBestOdd(item.bookmakers || []);
+
+      if (fixtureId && picked) {
+        oddsMap[fixtureId] = picked;
+      }
+    }
+
+    page++;
+  } while (page <= totalPages && page <= 5);
+
+  return oddsMap;
 }
 
 export default async function handler(req, res) {
@@ -36,37 +130,25 @@ export default async function handler(req, res) {
   }
 
   try {
-    const response = await fetch(
-      `https://v3.football.api-sports.io/fixtures?date=${date}&timezone=America/Sao_Paulo`,
-      {
-        headers: {
-          "x-apisports-key": process.env.API_FOOTBALL_KEY
-        }
-      }
-    );
+    const [fixturesData, oddsMap] = await Promise.all([
+      apiFetch(`https://v3.football.api-sports.io/fixtures?date=${date}&timezone=America/Sao_Paulo`),
+      getOddsMap(date).catch(() => ({}))
+    ]);
 
-    const data = await response.json();
-
-    if (!response.ok || data.errors?.length) {
-      return res.status(500).json({
-        error: "Erro na API-Football",
-        details: data.errors,
-        games: []
-      });
-    }
-
-    const games = (data.response || [])
+    const games = (fixturesData.response || [])
       .map((item) => {
         const home = item.teams.home;
         const away = item.teams.away;
-        const key = `${item.fixture.id}-${home.name}-${away.name}`;
+        const fixtureId = item.fixture.id;
+        const key = `${fixtureId}-${home.name}-${away.name}`;
 
         const priority = leaguePriority(item.league.name, item.league.country);
         const prob = Math.min(93, stableNumber(key, 70, 88) + Math.floor(priority / 20));
-        const odd = Number((1.30 + (100 - prob) / 35 + stableNumber(key, 0, 25) / 100).toFixed(2));
+
+        const realOdd = oddsMap[fixtureId];
 
         return {
-          fixtureId: item.fixture.id,
+          fixtureId,
           home: home.name,
           away: away.name,
           homeLogo: home.logo,
@@ -83,10 +165,16 @@ export default async function handler(req, res) {
           status: item.fixture.status.short,
           priority,
           prob,
-          odd
+
+          odd: realOdd ? realOdd.odd : null,
+          oddReal: !!realOdd,
+          oddMarket: realOdd?.market || null,
+          oddPick: realOdd?.pick || null,
+          bookmaker: realOdd?.bookmaker || null
         };
       })
       .filter((g) => !["FT", "AET", "PEN", "CANC", "PST"].includes(g.status))
+      .filter((g) => g.oddReal)
       .sort((a, b) => {
         if (b.priority !== a.priority) return b.priority - a.priority;
         return b.prob - a.prob;
@@ -95,7 +183,7 @@ export default async function handler(req, res) {
     res.status(200).json({ games });
   } catch (error) {
     res.status(500).json({
-      error: "Falha ao buscar jogos",
+      error: "Falha ao buscar jogos/odds reais",
       details: error.message,
       games: []
     });
