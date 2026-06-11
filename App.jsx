@@ -79,6 +79,14 @@ function ShieldCrest({ name, logo, size = 32 }){
   );
 }
 
+function Flag({ flag, country }){
+  if (!flag) return <>{country || ''}</>;
+  if (String(flag).startsWith('http')) {
+    return <img src={flag} alt={country || 'flag'} style={{width:16,height:11,objectFit:'cover',borderRadius:2,verticalAlign:'-1px',marginRight:5}}/>;
+  }
+  return <>{flag} </>;
+}
+
 function todayStr(){
   const d = new Date();
   d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
@@ -91,7 +99,7 @@ function fmtDate(iso){
 }
 
 function scoreFor(g,i){
-  return Math.max(7.5, Math.min(9.8, (g.prob / 10 + (g.odd - 1) * .35 - i * .1))).toFixed(1);
+  return Math.max(7.5, Math.min(9.8, (Number(g.prob || 0) / 10 + (Number(g.odd || 1) - 1) * .35 - i * .1))).toFixed(1);
 }
 
 function autoMarket(game, index){
@@ -102,12 +110,16 @@ function autoMarket(game, index){
     'Ambas Marcam',
     'Escanteios +7.5',
     'Escanteios +8.5',
-    'Cartões +3.5'
+    'Cartões +3.5',
+    'Under +3.5'
   ];
 
-  if (game.prob >= 88) return 'Over +0.5';
+  if (index % 7 === 0) return 'Ambas Marcam';
+  if (index % 6 === 0) return 'Escanteios +8.5';
+  if (index % 5 === 0) return 'Over +2.5';
+  if (game.prob >= 89) return 'Over +0.5';
   if (game.prob >= 84) return 'Over +1.5';
-  if (game.odd >= 2.05) return 'Over +2.5';
+  if (Number(game.odd) >= 2.05) return 'Over +2.5';
 
   return markets[index % markets.length];
 }
@@ -117,8 +129,9 @@ function riskConfig(risk){
     return {
       label: 'Leve',
       qty: 3,
-      markets: ['Over +0.5', 'Over +1.5', 'Dupla Chance'],
-      sort: 'prob'
+      markets: ['Over +0.5', 'Over +1.5', 'Under +3.5'],
+      sort: 'prob',
+      start: 0
     };
   }
 
@@ -126,16 +139,18 @@ function riskConfig(risk){
     return {
       label: 'Moderado',
       qty: 5,
-      markets: ['Over +1.5', 'Ambas Marcam', 'Escanteios +7.5', 'Over +2.5'],
-      sort: 'balanced'
+      markets: ['Over +1.5', 'Ambas Marcam', 'Escanteios +7.5', 'Over +2.5', 'Under +3.5'],
+      sort: 'balanced',
+      start: 3
     };
   }
 
   return {
     label: 'Agressivo',
     qty: 8,
-    markets: ['Over +2.5', 'Ambas Marcam', 'Escanteios +8.5', 'Escanteios +9.5', 'Cartões +3.5'],
-    sort: 'odd'
+    markets: ['Over +2.5', 'Ambas Marcam', 'Escanteios +8.5', 'Escanteios +9.5', 'Cartões +3.5', 'Resultado + Gols'],
+    sort: 'odd',
+    start: 0
   };
 }
 
@@ -218,7 +233,7 @@ function GameCard({game, index, line}){
         <ShieldCrest name={game.home} logo={game.homeLogo}/>
         <div>
           <h3>{game.home} <span>x</span> {game.away}</h3>
-          <p>{game.flag} {game.league} • {game.time}</p>
+          <p><Flag flag={game.flag} country={game.country}/>{game.league} • {game.time}</p>
         </div>
         <ShieldCrest name={game.away} logo={game.awayLogo}/>
       </div>
@@ -266,7 +281,7 @@ function TicketView({ticket, defaultLine}){
       </div>
 
       {ticket.picks.map((g,i) => (
-        <div className="pick" key={i}>
+        <div className="pick" key={`${g.fixtureId || g.home}-${i}`}>
           <span>{i + 1}</span>
           <div>
             <b>{g.home} x {g.away}</b>
@@ -326,18 +341,23 @@ export default function PradoIA(){
     return () => clearInterval(id);
   }, []);
 
-  const shown = games.slice(0, Math.max(4, qty));
+  const jogosOpportunities = useMemo(() => {
+    return games
+      .map((g,i) => ({...g, pickLine:autoMarket(g,i), autoIndex:i}))
+      .sort((a,b) => (Number(b.prob) + Number(b.odd) * 8) - (Number(a.prob) + Number(a.odd) * 8))
+      .slice(0, Math.max(6, qty));
+  }, [games, qty]);
 
   function sortGamesForRisk(list, riskName){
     if (riskName === 'agressivo') {
-      return [...list].sort((a,b) => b.odd - a.odd);
+      return [...list].sort((a,b) => Number(b.odd) - Number(a.odd));
     }
 
     if (riskName === 'moderado') {
       return [...list].sort((a,b) => ((b.prob * 0.65) + (b.odd * 15)) - ((a.prob * 0.65) + (a.odd * 15)));
     }
 
-    return [...list].sort((a,b) => b.prob - a.prob);
+    return [...list].sort((a,b) => Number(b.prob) - Number(a.prob));
   }
 
   function buildTicketFromPicks(picks, riskLabel, defaultLine){
@@ -359,7 +379,7 @@ export default function PradoIA(){
     setGenerating(true);
 
     const picks = [...games]
-      .sort((a,b) => b.prob - a.prob)
+      .sort((a,b) => Number(b.prob) - Number(a.prob))
       .slice(0, qty)
       .map(g => ({ ...g, pickLine: curLine }));
 
@@ -376,7 +396,7 @@ export default function PradoIA(){
     const cfg = riskConfig(risk);
 
     const picks = sortGamesForRisk(games, risk)
-      .slice(0, cfg.qty)
+      .slice(cfg.start || 0, (cfg.start || 0) + cfg.qty)
       .map((g,i) => ({
         ...g,
         pickLine: marketForPick(risk, i)
@@ -506,12 +526,12 @@ export default function PradoIA(){
 
           {loading
             ? <LoadingBar label="Buscando jogos"/>
-            : shown.map((g,i) => (
+            : jogosOpportunities.map((g,i) => (
               <GameCard
-                key={i}
+                key={`${g.fixtureId || g.home}-${i}`}
                 game={g}
                 index={i}
-                line={autoMarket(g,i)}
+                line={g.pickLine}
               />
             ))
           }
