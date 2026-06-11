@@ -99,6 +99,13 @@ function todayStr(){
   return d.toISOString().slice(0,10);
 }
 
+function addDays(iso, days){
+  const d = new Date(`${iso}T12:00:00`);
+  d.setDate(d.getDate() + days);
+  d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+  return d.toISOString().slice(0,10);
+}
+
 function fmtDate(iso){
   const [y,m,d] = iso.split('-');
   return `${d}/${m}/${y}`;
@@ -162,14 +169,47 @@ function marketForPick(risk, index){
   return cfg.markets[index % cfg.markets.length];
 }
 
+function normalizeGames(list, dateLabel){
+  return (list || []).map((g, i) => ({
+    ...g,
+    fixtureId: g.fixtureId || `${dateLabel}-${g.home}-${g.away}-${g.time}-${i}`,
+    sourceDate: dateLabel
+  }));
+}
+
+function uniqueGames(list){
+  const seen = new Set();
+  return list.filter(g => {
+    const key = g.fixtureId || `${g.home}-${g.away}-${g.time}`;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
 async function getGames(date){
   try {
     const r = await fetch(`/api/games?date=${date}`, { cache:'no-store' });
     const j = await r.json();
-    return j.games || [];
+    return normalizeGames(j.games || [], date);
   } catch {
     return [];
   }
+}
+
+/*
+  IMPORTANTE:
+  Antes estava vindo só 4 jogos em algumas datas. Aí Leve, Moderado e Agressivo
+  ficavam obrigados a usar quase os mesmos times.
+  Agora o app busca a data escolhida + os próximos 3 dias e monta um pool maior.
+*/
+async function getGamesPool(date){
+  const dates = [date, addDays(date, 1), addDays(date, 2), addDays(date, 3)];
+
+  const results = await Promise.all(dates.map(d => getGames(d)));
+  const all = uniqueGames(results.flat());
+
+  return all.sort((a,b) => Number(b.prob) - Number(a.prob));
 }
 
 function LoadingBar({label}){
@@ -322,12 +362,11 @@ export default function PradoIA(){
     let ok = true;
     setLoading(true);
 
-    getGames(date).then(g => {
+    getGamesPool(date).then(g => {
       if(ok){
-        const sorted = g.sort((a,b) => Number(b.prob) - Number(a.prob));
-        setGames(sorted);
-        setMonitored(Math.max(120, sorted.length * 12));
-        setOpps(Math.max(12, Math.floor(sorted.length * 3.5)));
+        setGames(g);
+        setMonitored(Math.max(120, g.length * 12));
+        setOpps(Math.max(12, Math.floor(g.length * 3.5)));
         setLoading(false);
       }
     });
@@ -348,7 +387,7 @@ export default function PradoIA(){
     return games
       .map((g,i) => ({...g, pickLine:autoMarket(g,i), autoIndex:i}))
       .sort((a,b) => (Number(b.prob) + Number(b.odd) * 8) - (Number(a.prob) + Number(a.odd) * 8))
-      .slice(0, Math.max(6, qty));
+      .slice(0, Math.max(8, qty));
   }, [games, qty]);
 
   function buildTicketFromPicks(picks, riskLabel, defaultLine){
