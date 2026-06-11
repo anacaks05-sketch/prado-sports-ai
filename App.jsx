@@ -135,8 +135,8 @@ function riskConfig(risk){
     return {
       label: 'Leve',
       qty: 3,
-      markets: ['Over +0.5', 'Over +1.5', 'Under +3.5'],
-      sort: 'prob'
+      start: 0,
+      markets: ['Over +0.5', 'Over +1.5', 'Under +3.5']
     };
   }
 
@@ -144,16 +144,16 @@ function riskConfig(risk){
     return {
       label: 'Moderado',
       qty: 5,
-      markets: ['Over +1.5', 'Ambas Marcam', 'Escanteios +7.5', 'Over +2.5', 'Under +3.5'],
-      sort: 'balanced'
+      start: 5,
+      markets: ['Over +1.5', 'Ambas Marcam', 'Escanteios +7.5', 'Over +2.5', 'Under +3.5']
     };
   }
 
   return {
     label: 'Agressivo',
     qty: 8,
-    markets: ['Over +2.5', 'Ambas Marcam', 'Escanteios +8.5', 'Escanteios +9.5', 'Cartões +3.5', 'Resultado + Gols'],
-    sort: 'odd'
+    start: 12,
+    markets: ['Over +2.5', 'Ambas Marcam', 'Escanteios +8.5', 'Escanteios +9.5', 'Cartões +3.5', 'Resultado + Gols']
   };
 }
 
@@ -324,7 +324,7 @@ export default function PradoIA(){
 
     getGames(date).then(g => {
       if(ok){
-        const sorted = g.sort((a,b) => b.prob - a.prob);
+        const sorted = g.sort((a,b) => Number(b.prob) - Number(a.prob));
         setGames(sorted);
         setMonitored(Math.max(120, sorted.length * 12));
         setOpps(Math.max(12, Math.floor(sorted.length * 3.5)));
@@ -350,54 +350,6 @@ export default function PradoIA(){
       .sort((a,b) => (Number(b.prob) + Number(b.odd) * 8) - (Number(a.prob) + Number(a.odd) * 8))
       .slice(0, Math.max(6, qty));
   }, [games, qty]);
-
-  function sortGamesForRisk(list, riskName){
-    if (riskName === 'agressivo') {
-      return [...list].sort((a,b) => Number(b.odd) - Number(a.odd));
-    }
-
-    if (riskName === 'moderado') {
-      return [...list].sort((a,b) => ((b.prob * 0.65) + (b.odd * 15)) - ((a.prob * 0.65) + (a.odd * 15)));
-    }
-
-    return [...list].sort((a,b) => Number(b.prob) - Number(a.prob));
-  }
-
-  function uniqueByFixture(list){
-    const seen = new Set();
-    return list.filter(g => {
-      const key = g.fixtureId || `${g.home}-${g.away}-${g.time}`;
-      if (seen.has(key)) return false;
-      seen.add(key);
-      return true;
-    });
-  }
-
-  function getRiskPool(riskName){
-    const safe = uniqueByFixture(sortGamesForRisk(games, 'leve'));
-    const balanced = uniqueByFixture(sortGamesForRisk(games, 'moderado'));
-    const odds = uniqueByFixture(sortGamesForRisk(games, 'agressivo'));
-
-    if (riskName === 'leve') {
-      return safe.slice(0, 3);
-    }
-
-    if (riskName === 'moderado') {
-      const pool = [
-        ...balanced.slice(5, 10),
-        ...safe.slice(8, 12),
-        ...odds.slice(8, 12)
-      ];
-      return uniqueByFixture(pool).slice(0, 5);
-    }
-
-    const pool = [
-      ...odds.slice(0, 4),
-      ...odds.slice(10, 16),
-      ...balanced.slice(12, 18)
-    ];
-    return uniqueByFixture(pool).slice(0, 8);
-  }
 
   function buildTicketFromPicks(picks, riskLabel, defaultLine){
     const oddTotal = picks.reduce((a,g) => a * Number(g.odd || 1), 1);
@@ -434,20 +386,29 @@ export default function PradoIA(){
 
     const cfg = riskConfig(risk);
 
-    let picks = getRiskPool(risk).map((g,i) => ({
-      ...g,
-      pickLine: marketForPick(risk, i)
-    }));
+    const ordered = [...games].sort((a,b) => {
+      if (risk === 'agressivo') return Number(b.odd) - Number(a.odd);
+      return Number(b.prob) - Number(a.prob);
+    });
+
+    let picks = ordered
+      .slice(cfg.start, cfg.start + cfg.qty)
+      .map((g,i) => ({
+        ...g,
+        pickLine: marketForPick(risk, i)
+      }));
 
     if (picks.length < cfg.qty) {
-      const fallback = uniqueByFixture(sortGamesForRisk(games, risk))
-        .filter(g => !picks.some(p => (p.fixtureId || p.home) === (g.fixtureId || g.home)))
+      const fallback = ordered
+        .filter(g => !picks.some(p => (p.fixtureId || `${p.home}-${p.away}`) === (g.fixtureId || `${g.home}-${g.away}`)))
         .slice(0, cfg.qty - picks.length)
-        .map((g,i) => ({...g, pickLine: marketForPick(risk, picks.length + i)}));
+        .map((g,i) => ({
+          ...g,
+          pickLine: marketForPick(risk, picks.length + i)
+        }));
+
       picks = [...picks, ...fallback];
     }
-
-    picks = picks.slice(0, cfg.qty);
 
     const t = buildTicketFromPicks(picks, cfg.label, 'Mercados variados');
 
