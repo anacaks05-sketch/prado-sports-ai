@@ -1,5 +1,3 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
-
 const LINE_OPTIONS = {
   gols: ['Over +0.5','Over +1.5','Over +2.5','Over +3.5','Under +2.5','Under +3.5'],
   gols_ht: ['Over 0.5 HT','Over 1.5 HT'],
