@@ -102,12 +102,7 @@ async function loadRealGames(){
 
   try{
     const games = await fetchRealGames(selectedDate);
-
-    if(games.length){
-      currentGames = games.sort((a,b)=>b.prob-a.prob);
-    } else {
-      currentGames = [];
-    }
+    currentGames = games.length ? games.sort((a,b)=>b.prob-a.prob) : [];
   } catch(err){
     console.warn(err);
     currentGames = [];
@@ -116,9 +111,24 @@ async function loadRealGames(){
   renderGames(currentGames);
 }
 
-function renderGames(games = currentGames){
-  const line = lineSelect.value || 'Over +1.5';
+function autoLineForGame(game, index){
+  const lines = ['Over +1.5', 'Ambas Marcam', 'Over +2.5', 'Escanteios +8.5', 'Over 0.5 HT', 'Under +3.5'];
+  if(game.prob >= 90) return 'Over +1.5';
+  if(game.odd >= 2.10) return 'Over +2.5';
+  return lines[index % lines.length];
+}
 
+function riskLine(index){
+  const leve = ['Over +0.5', 'Over +1.5', 'Under +3.5'];
+  const moderado = ['Over +1.5', 'Ambas Marcam', 'Over +2.5', 'Escanteios +8.5', 'Over 0.5 HT'];
+  const agressivo = ['Over +2.5', 'Ambas Marcam', 'Escanteios +9.5', 'Cartões +3.5', 'Resultado + Gols', 'Over 1.5 HT'];
+
+  if(selectedRisk === 'leve') return leve[index % leve.length];
+  if(selectedRisk === 'moderado') return moderado[index % moderado.length];
+  return agressivo[index % agressivo.length];
+}
+
+function renderGames(games = currentGames){
   if(!games.length){
     gamesList.innerHTML = `<div class="loading-card"><h3>⚠️ Nenhum jogo encontrado</h3><p>A API-Football não retornou jogos para essa data. Escolha outra data.</p></div>`;
     return;
@@ -130,6 +140,8 @@ function renderGames(games = currentGames){
 
   gamesList.innerHTML = liveSummary + topGames.map((game, index) => {
     const score = scoreFor(game, index);
+    const gameLine = autoLineForGame(game, index);
+
     return `
       <article class="opportunity-card compact-rank ${index === 0 ? 'best' : ''}">
         <div class="opp-topline">
@@ -156,7 +168,7 @@ function renderGames(games = currentGames){
         </div>
 
         <div class="compact-market">
-          <span>⚽ ${escapeHtml(line)}</span>
+          <span>⚽ ${escapeHtml(gameLine)}</span>
           <b>${qualityFor(index)}</b>
         </div>
       </article>`;
@@ -173,22 +185,24 @@ function getRiskLabel(){
   return selectedRisk === 'leve' ? 'Leve' : selectedRisk === 'moderado' ? 'Moderado' : 'Agressivo';
 }
 
-function buildTicket(qty){
-  const line = lineSelect.value || 'Over +1.5';
+function buildTicket(qty, source = 'risk'){
+  const scannerLine = lineSelect.value || 'Over +1.5';
 
   if(!currentGames.length){
     return {
       picks: [],
       oddTotal: 0,
       avgProb: 0,
-      risk: getRiskLabel(),
-      line
+      risk: source === 'scanner' ? 'Scan' : getRiskLabel(),
+      line: scannerLine
     };
   }
 
   let gamesBase = [...currentGames];
 
-  if(selectedRisk === 'agressivo'){
+  if(source === 'scanner'){
+    gamesBase = gamesBase.sort((a,b) => b.prob - a.prob);
+  } else if(selectedRisk === 'agressivo'){
     gamesBase = gamesBase.sort((a,b) => b.odd - a.odd);
   } else if(selectedRisk === 'moderado'){
     gamesBase = gamesBase.sort((a,b) => (b.prob + b.odd * 8) - (a.prob + a.odd * 8));
@@ -196,31 +210,35 @@ function buildTicket(qty){
     gamesBase = gamesBase.sort((a,b) => b.prob - a.prob);
   }
 
-  const start = selectedRisk === 'leve' ? 0 : selectedRisk === 'moderado' ? 3 : 8;
+  const start = source === 'scanner' ? 0 : selectedRisk === 'leve' ? 0 : selectedRisk === 'moderado' ? 4 : 10;
   let picks = gamesBase.slice(start, start + qty);
 
   if(picks.length < qty){
     picks = gamesBase.slice(0, qty);
   }
 
+  picks = picks.map((game, index) => ({
+    ...game,
+    pickLine: source === 'scanner' ? scannerLine : riskLine(index)
+  }));
+
   const oddTotal = picks.reduce((acc, game) => acc * game.odd, 1);
   const avgProb = picks.length ? Math.round(picks.reduce((acc, game) => acc + game.prob, 0) / picks.length) : 0;
 
-  return { picks, oddTotal, avgProb, risk: getRiskLabel(), line };
+  return {
+    picks,
+    oddTotal,
+    avgProb,
+    risk: source === 'scanner' ? 'Scan' : getRiskLabel(),
+    line: source === 'scanner' ? scannerLine : 'Mercados IA'
+  };
 }
 
 function scanGames(event){
   event?.preventDefault();
 
-  if(!currentGames.length){
-    currentTicket = buildTicket(0);
-    setTab('scanner');
-    renderInlineTicket();
-    return;
-  }
-
   const qty = Number(quantitySelect.value || 4);
-  currentTicket = buildTicket(qty);
+  currentTicket = buildTicket(qty, 'scanner');
   setTab('scanner');
   renderInlineTicket();
   scannerTicketArea?.scrollIntoView({ behavior:'smooth', block:'start' });
@@ -230,13 +248,13 @@ function generateTicketFromRisk(event){
   event?.preventDefault();
 
   const qty = getRiskQty();
-  currentTicket = buildTicket(qty);
+  currentTicket = buildTicket(qty, 'risk');
   showTicketLoading(ticketArea, () => renderTicket(ticketArea));
 }
 
 function generateTicketFromGames(){
   const qty = Number(quantitySelect.value || 4);
-  currentTicket = buildTicket(qty);
+  currentTicket = buildTicket(qty, 'risk');
   setTab('bilhete');
   showTicketLoading(ticketArea, () => renderTicket(ticketArea));
 }
@@ -267,7 +285,7 @@ function renderInlineTicket(){
 function renderTicket(target = ticketArea){
   if(!currentTicket || !target) return;
 
-  const { picks, oddTotal, avgProb, risk, line } = currentTicket;
+  const { picks, oddTotal, avgProb, risk } = currentTicket;
 
   if(!picks.length){
     target.className = 'ticket-card';
@@ -276,7 +294,7 @@ function renderTicket(target = ticketArea){
   }
 
   target.className = 'ticket-card';
-  target.innerHTML = `<div class="ticket-top"><h3>✅ Bilhete Gerado</h3><span class="verify">IA VERIFICADO</span></div><div class="ticket-metrics"><div class="ticket-metric"><span>Odd Total</span><strong>${oddTotal.toFixed(2)}</strong></div><div class="ticket-metric"><span>Confiança</span><strong>${avgProb}%</strong></div><div class="ticket-metric"><span>Risco</span><strong>${escapeHtml(risk)}</strong></div><div class="ticket-metric"><span>Jogos</span><strong>${picks.length}</strong></div></div><div class="pick-list">${picks.map((game,index)=>`<div class="pick premium-pick"><b>${index+1}</b><div><strong>${escapeHtml(game.home)} x ${escapeHtml(game.away)}</strong><span>${escapeHtml(line)} • Odd ${game.odd.toFixed(2)} • Score IA ${scoreFor(game,index)}</span></div></div>`).join('')}</div>`;
+  target.innerHTML = `<div class="ticket-top"><h3>✅ Bilhete Gerado</h3><span class="verify">IA VERIFICADO</span></div><div class="ticket-metrics"><div class="ticket-metric"><span>Odd Total</span><strong>${oddTotal.toFixed(2)}</strong></div><div class="ticket-metric"><span>Confiança</span><strong>${avgProb}%</strong></div><div class="ticket-metric"><span>Risco</span><strong>${escapeHtml(risk)}</strong></div><div class="ticket-metric"><span>Jogos</span><strong>${picks.length}</strong></div></div><div class="pick-list">${picks.map((game,index)=>`<div class="pick premium-pick"><b>${index+1}</b><div><strong>${escapeHtml(game.home)} x ${escapeHtml(game.away)}</strong><span>${escapeHtml(game.pickLine)} • Odd ${game.odd.toFixed(2)} • Score IA ${scoreFor(game,index)}</span></div></div>`).join('')}</div>`;
 }
 
 function updateLiveNumbers(){
