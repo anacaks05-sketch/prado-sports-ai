@@ -1,199 +1,66 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="theme-color" content="#0B0B0B" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="Prado IA" />
-  <link rel="manifest" href="manifest.json" />
-  <link rel="apple-touch-icon" href="icon-192.png" />
-  <link rel="stylesheet" href="styles.css" />
-  <title>Prado IA</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<title>Prado Sports AI</title>
+<meta name="description" content="Estatísticas de futebol em tempo real, IA de palpites e os principais campeonatos do mundo.">
+<meta name="theme-color" content="#070B11">
+
+<!-- PWA -->
+<link rel="manifest" href="./manifest.json">
+<link rel="apple-touch-icon" href="./icons/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Prado Sports AI">
+
+<link rel="stylesheet" href="./style.css">
 </head>
 <body>
-  <div id="splashScreen" class="splash-screen" aria-label="Carregando Prado IA">
-    <div class="splash-orb"></div>
-    <div class="splash-logo">
-      <div class="splash-shield"><span>PI</span><i></i></div>
-      <h1>PRADO <b>IA</b></h1>
-      <p>Sports Intelligence</p>
-      <div class="loader-dots"><span></span><span></span><span></span></div>
-      <small>Carregando plataforma...</small>
+<div id="splash-screen" aria-hidden="true">
+  <div class="splash-logo"><span>P</span></div>
+  <div class="splash-title">Prado AI</div>
+  <div class="splash-sub">Sports intelligence</div>
+  <div class="splash-loader"><i></i></div>
+</div>
+<div id="app">
+
+  <header class="topbar">
+    <div class="logo">
+      <div class="logo-mark"><span>P</span></div>
+      <div>
+        <div class="logo-text">Prado Sports<span> AI</span></div>
+        <div class="logo-sub">Futebol &amp; Inteligência</div>
+      </div>
     </div>
-  </div>
+    <div class="topbar-actions">
+      <button class="icon-btn" id="search-btn">🔍</button>
+    </div>
+  </header>
 
-  <main class="app-shell app-hidden">
-    <header class="topbar">
-      <div class="brand-mark" aria-label="Prado IA logo">
-        <span>P</span>
-      </div>
-      <div class="brand-copy">
-        <h1>PRADO IA</h1>
-        <p>Sports Intelligence</p>
-      </div>
-      <div class="status-pill">PRO</div>
-    </header>
-
-    <nav class="tabs" aria-label="Navegação principal">
-      <button class="tab active" data-tab="scanner">Scanner</button>
-      <button class="tab" data-tab="jogos">Jogos</button>
-      <button class="tab" data-tab="bilhete">Bilhete</button>
-    </nav>
-
-    <section id="scanner" class="screen active-screen">
-      <div class="glass-card scanner-card">
-        <div class="section-head compact">
-          <div>
-            <span class="eyebrow">Scanner IA</span>
-            <h2>Buscar oportunidades</h2>
-          </div>
-          <span class="live-dot">Hoje</span>
-        </div>
-
-        <div class="field-grid">
-          <label class="field">
-            <span>Mercado</span>
-            <select id="marketSelect">
-              <option value="gols">Gols na Partida</option>
-              <option value="gols_ht">Gols 1º Tempo</option>
-              <option value="ambos">Ambos Marcam</option>
-              <option value="escanteios">Escanteios</option>
-              <option value="cartoes">Cartões</option>
-              <option value="jogos_gols">Jogos para Gols</option>
-            </select>
-          </label>
-
-          <label class="field">
-            <span>Linha</span>
-            <select id="lineSelect"></select>
-          </label>
-
-          <label class="field">
-            <span>Quantidade</span>
-            <select id="quantitySelect">
-              <option value="2">2 Jogos</option>
-              <option value="3">3 Jogos</option>
-              <option value="4" selected>4 Jogos</option>
-              <option value="5">5 Jogos</option>
-              <option value="6">6 Jogos</option>
-              <option value="7">7 Jogos</option>
-              <option value="8">8 Jogos</option>
-            </select>
-          </label>
-
-          <label class="field">
-            <span>Data</span>
-            <input id="dateInput" type="date" />
-          </label>
-        </div>
-
-        <button id="scanBtn" class="primary-btn">Iniciar Scan</button>
-      </div>
-
-      <div id="scannerTicketArea" class="inline-ticket-empty">
-        <div>
-          <span class="eyebrow">Resultado</span>
-          <h3>Bilhete do scan</h3>
-        </div>
-        <p>Toque em “Iniciar Scan” para gerar um bilhete organizado aqui embaixo.</p>
-      </div>
-
-      <div class="mini-dashboard">
-        <div class="metric-card">
-          <span>Modelo</span>
-          <strong>V17</strong>
-        </div>
-        <div class="metric-card">
-          <span>Perfil</span>
-          <strong>Premium</strong>
-        </div>
-        <div class="metric-card">
-          <span>Status</span>
-          <strong>Online</strong>
-        </div>
-      </div>
-    </section>
-
-    <section id="jogos" class="screen">
-      <div class="ai-live-panel">
-        <div class="ai-panel-top">
-          <div>
-            <span class="pulse-dot"></span>
-            <strong>PRADO IA</strong>
-            <small>analisando oportunidades</small>
-          </div>
-          <span id="liveCount">Ao vivo</span>
-        </div>
-
-        <div class="ai-panel-body">
-          <div class="heatmap-card">
-            <div class="field-lines"></div>
-            <span class="heat h1"></span><span class="heat h2"></span><span class="heat h3"></span><span class="heat h4"></span><span class="heat h5"></span>
-            <small>Mapa de pressão IA</small>
-          </div>
-
-          <div class="signal-stack">
-            <div class="signal-title">Scanner</div>
-            <div class="signal-row active"><span>Over +1.5</span><b>92%</b></div>
-            <div class="signal-row"><span>Ambas Marcam</span><b>84%</b></div>
-            <div class="signal-row"><span>Escanteios +8.5</span><b>79%</b></div>
-          </div>
-        </div>
-
-        <div class="ai-panel-footer">
-          <span>Motor IA v4.0</span>
-          <span>buscando melhores entradas</span>
-        </div>
-      </div>
-
-      <div class="section-head games-title-row">
-        <div>
-          <span class="eyebrow">Ranking gerado pela IA</span>
-          <h2>Melhores oportunidades</h2>
-        </div>
-        <button id="generateTicketBtn" class="mini-btn">Gerar Bilhete IA</button>
-      </div>
-      <div id="gamesList" class="games-list"></div>
-    </section>
-
-    <section id="bilhete" class="screen">
-      <div class="section-head">
-        <div>
-          <span class="eyebrow">Perfis de risco</span>
-          <h2>Gerar bilhete</h2>
-        </div>
-      </div>
-
-      <div class="risk-grid" role="radiogroup" aria-label="Perfil do bilhete">
-        <button class="risk-card active" data-risk="leve" type="button">
-          <strong>Leve</strong>
-          <span>Odd menor</span>
-          <small>2 a 3 jogos</small>
-        </button>
-        <button class="risk-card" data-risk="moderado" type="button">
-          <strong>Moderado</strong>
-          <span>Equilíbrio</span>
-          <small>4 a 5 jogos</small>
-        </button>
-        <button class="risk-card" data-risk="agressivo" type="button">
-          <strong>Agressivo</strong>
-          <span>Retorno alto</span>
-          <small>6 a 8 jogos</small>
-        </button>
-      </div>
-
-      <button id="ticketScanBtn" class="primary-btn ticket-action">Iniciar Scan</button>
-
-      <div id="ticketArea" class="ticket-empty compact-empty">
-        <div class="empty-icon">◈</div>
-        <h3>Nenhum bilhete gerado</h3>
-        <p>Escolha Leve, Moderado ou Agressivo e toque em “Iniciar Scan”.</p>
-      </div>
-    </section>
+  <main>
+    <section id="page-home" class="page active"></section>
+    <section id="page-live" class="page"></section>
+    <section id="page-ai" class="page"></section>
+    <section id="page-rank" class="page"></section>
+    <section id="page-more" class="page"></section>
   </main>
 
-  <script src="app.js?v=21"></script>
+  <nav class="bottom-nav">
+    <button class="nav-item active" data-page="home"><span class="nav-icon nav-home">⌂</span>Início</button>
+    <button class="nav-item" data-page="live"><span class="nav-icon-wrap"><span class="nav-icon nav-live">▶</span><span class="nav-dot"></span></span>Ao Vivo</button>
+    <button class="nav-item" data-page="ai"><span class="nav-icon nav-ai">✦</span>IA Palpites</button>
+    <button class="nav-item" data-page="rank"><span class="nav-icon nav-news">◈</span>Notícias</button>
+    <button class="nav-item" data-page="more"><span class="nav-icon">☰</span>Mais</button>
+  </nav>
+
+  <div class="detail-overlay" id="match-detail"></div>
+  <div id="toast"></div>
+</div>
+
+<script src="./data.js"></script>
+<script src="./config.js"></script>
+<script src="./api.js"></script>
+<script src="./app.js"></script>
 </body>
 </html>
